@@ -11,8 +11,11 @@ import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +28,7 @@ public class LetterService {
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
     private final AesUtils aesUtils;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
@@ -33,8 +37,13 @@ public class LetterService {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
         letterRepository.save(letter);
+        notifyLetterSent(letter);
         return new LetterResponse(letter.getId(), user.getName(),
                 request.getSenderName(), request.getContents(), request.getImageUrl());
+    }
+
+    private void notifyLetterSent(Letter letter) {
+        letter.publishEvent(eventPublisher);
     }
 
     public List<AllLetterResponse> findLettersByUserId(Long id) {
@@ -48,6 +57,9 @@ public class LetterService {
     public LetterResponse findLetter(String email, Long id) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Letter letter = letterRepository.findById(id).orElseThrow(LetterNotFoundException::new);
+        if (user != letter.getUser()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "편지를 볼 권한이 없습니다.");
+        }
         return new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
                 letter.getContents(), letter.getImageUrl());
     }

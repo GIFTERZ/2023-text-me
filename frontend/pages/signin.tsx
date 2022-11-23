@@ -8,11 +8,7 @@ import { FormTitle, Input, InputContainer } from "../styles/components/Form";
 import { Frame } from "../styles/components/Frame";
 import visitorApi from "../auth/visitorApi";
 import { setCookie } from "../auth/Cookie";
-import {
-  FormLayout,
-  HeaderLayout,
-  LayoutSpan,
-} from "../styles/components/Layout";
+import { FormLayout, HeaderLayout, LayoutSpan } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
 import Head from "next/head";
@@ -46,18 +42,15 @@ function SignIn() {
   const signIn = async (data: SignInForm) => {
     await visitorApi
       .post("/users/login", data)
-      .then((res) => {
+      .then(res => {
         let createdTime = new Date().getTime();
         const {
           data: { token },
         } = res;
         setCookie("textMeAccessToken", token);
-        localStorage.setItem(
-          "textMeAccessExpiryTime",
-          (createdTime + ACCESS_EXPIRY_TIME).toString()
-        );
+        localStorage.setItem("textMeAccessExpiryTime", (createdTime + ACCESS_EXPIRY_TIME).toString());
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
@@ -115,16 +108,16 @@ function SignIn() {
               {...register("password", {
                 required: "비밀번호를 입력해주세요.",
                 minLength: {
-                  value: 10,
-                  message: "최소 10자 이상의 비밀번호를 입력해주세요.",
+                  value: 8,
+                  message: "최소 8자 이상의 비밀번호를 입력해주세요.",
                 },
                 maxLength: {
-                  value: 20,
-                  message: "비밀번호는 20자를 초과하면 안됩니다.",
+                  value: 64,
+                  message: "비밀번호는 64자를 초과하면 안됩니다.",
                 },
                 pattern: {
-                  value: /^(?=.*\d)(?=.*[A-Za-z])[\40-\176]{10,220}$/,
-                  message: "영문, 숫자를 혼용하여 입력해주세요.",
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,64}$/,
+                  message: "영소문자, 숫자가 포함된 8자 이상의 비밀번호를 입력해주세요",
                 },
               })}
               placeholder="비밀번호를 입력해주세요."

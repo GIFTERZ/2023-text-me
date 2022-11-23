@@ -13,8 +13,7 @@ import Compressor from "compressorjs";
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const { setPictureUrl, constCard, getConstCard, setPictureImage } =
-    useCardPicture();
+  const { setPictureUrl, constCard, getConstCard, setPictureImage } = useCardPicture();
 
   useEffect(() => {
     getConstCard();
@@ -36,16 +35,14 @@ export default function index() {
     } = e;
     let file = files[0];
     new Compressor(file, {
+      maxWidth: 550,
+      maxHeight: 550,
       success(result) {
         file = new File([result], "image", { type: result.type });
-        setPictureImage(file, () =>
-          router.push(`/${userId}/write/preview-card-picture`)
-        );
+        setPictureImage(file, () => router.push(`/${userId}/write/preview-card-picture`));
       },
       error() {
-        setPictureImage(file, () =>
-          router.push(`/${userId}/write/preview-card-picture`)
-        );
+        setPictureImage(file, () => router.push(`/${userId}/write/preview-card-picture`));
       },
     });
   };
@@ -66,14 +63,7 @@ export default function index() {
         <InputDiv id="image" onClick={handleClick}>
           <CameraIcon />
         </InputDiv>
-        <input
-          style={{ display: "none" }}
-          ref={fileRef}
-          name="file"
-          type="file"
-          accept="image/*"
-          onChange={(e) => fileUploadHandler(e)}
-        />
+        <input style={{ display: "none" }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
         {constCard?.map((cards, index) => (
           <CardImage key={index} src={cards} onClick={() => select(cards)} />
         ))}
