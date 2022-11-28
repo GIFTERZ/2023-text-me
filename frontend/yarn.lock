@@ -5029,7 +5029,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:latest":
+eslint-config-next@latest:
   version: 13.0.5
   resolution: "eslint-config-next@npm:13.0.5"
   dependencies:
@@ -6005,7 +6005,7 @@ __metadata:
     next: latest
     react: latest
     react-dom: latest
-    react-hook-form: ^7.39.6
+    react-hook-form: ^7.39.7
     styled-component: ^2.8.0
     typescript: 4.9.3
     zustand: ^4.1.4
@@ -9202,7 +9202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:latest":
+next@latest:
   version: 13.0.5
   resolution: "next@npm:13.0.5"
   dependencies:
@@ -10449,7 +10449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:latest":
+react-dom@latest:
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -10461,12 +10461,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.39.6":
-  version: 7.39.6
-  resolution: "react-hook-form@npm:7.39.6"
+"react-hook-form@npm:^7.39.7":
+  version: 7.39.7
+  resolution: "react-hook-form@npm:7.39.7"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: fa8327129a73d54ee6d17bd08a1601269bf340b62d782ff3170a3759f0903f0d8ad5409c6799b7c25909b893383f062ad3735e0b76caa82b02b20ac873d91131
+  checksum: b748e19ef768f8a42aeb9069234f3a7303038b9e16c143f48001edccc4ea92be6ca642c48d6efdbdf936ea4eed1b8da5ce8dd8529aeacca238d00e292e206126
   languageName: node
   linkType: hard
 
@@ -10477,7 +10477,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:latest":
+react@latest:
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
