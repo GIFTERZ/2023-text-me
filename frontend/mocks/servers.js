@@ -1,2 +1,3 @@
 import { setupServer } from "msw/node";
-export const server = setupServer();
+import { roomHandlers } from "./handlers/room";
+export const server = setupServer(...roomHandlers);
