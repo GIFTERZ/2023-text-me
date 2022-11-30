@@ -15,14 +15,14 @@ export default function Home() {
     formState: { errors },
   } = useForm<EmailForm>();
 
-  const { isLoading, postEmail, error } = useRoomEnter();
+  const { isLoading, enter, error } = useRoomEnter();
 
   const pushRoom = (id: number) => {
     router.push(`/${id}`);
   };
 
   const onValid = async (data: EmailForm) => {
-    postEmail(data, pushRoom);
+    enter(data, pushRoom);
 
     if (error) {
       // API 명세 후 핸들링 코드 추가
