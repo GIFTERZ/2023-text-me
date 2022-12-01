@@ -1,31 +1,21 @@
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
-import { useLetters } from "../stores/useLetters";
+import React from "react";
+import LettersContainer from "../components/room/LettersContainer";
 
 function Room() {
   const { get } = useSearchParams();
   const userId = Number(get("uid"));
-  const { isLoading, error, letters, getLetters } = useLetters();
-
-  useEffect(() => {
-    getLetters(userId);
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>에러가 발생했습니다.</div>;
-  }
 
   return (
     <div>
-      {letters.map((letter) => (
-        <div key={letter.id}>
-          <img src={letter.cardImg} style={{ width: "100px" }} />
-        </div>
-      ))}
+      <div>
+        <button type="button">공유</button>
+        <button type="button">저장</button>
+        {/* To do: 비로그인 구분 */}
+        <Link href="/">메인</Link>
+      </div>
+      <LettersContainer userId={userId} />
     </div>
   );
 }

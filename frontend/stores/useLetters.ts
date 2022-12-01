@@ -18,7 +18,6 @@ const useLetters = create<Letters>((set) => ({
     await axios
       .get("/letters", { params: { userId } })
       .then((res) => {
-        console.log(res);
         set({ letters: res.data });
       })
       .catch((error) => {
