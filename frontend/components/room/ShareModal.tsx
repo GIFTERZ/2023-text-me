@@ -5,7 +5,7 @@ interface Props {
 }
 
 function ShareModal({ close }: Props) {
-  const onCopyClick = () => {
+  const copyLink = () => {
     const url = location.href;
     navigator.clipboard.writeText(url).then(() => {
       alert("링크를 복사했습니다.");
@@ -18,7 +18,7 @@ function ShareModal({ close }: Props) {
         닫기
       </button>
       <h2>공유하기</h2>
-      <button onClick={onCopyClick} type="button">
+      <button onClick={copyLink} type="button">
         복사
       </button>
     </div>

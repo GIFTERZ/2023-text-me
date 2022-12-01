@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import LettersContainer from "../components/room/LettersContainer";
 import ShareContainer from "../components/room/ShareContainer";
-import SaveContainer from "../components/SaveContainer";
+import SaveContainer from "../components/room/SaveContainer";
 
 function Room() {
   const { get } = useSearchParams();
