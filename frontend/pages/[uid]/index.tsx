@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
-import LettersContainer from "../components/room/LettersContainer";
-import ShareContainer from "../components/room/ShareContainer";
-import SaveContainer from "../components/room/SaveContainer";
+import LettersContainer from "../../components/room/LettersContainer";
+import ShareContainer from "../../components/room/ShareContainer";
+import SaveContainer from "../../components/room/SaveContainer";
 
 function Room() {
   const { get } = useSearchParams();
