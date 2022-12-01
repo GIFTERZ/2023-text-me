@@ -21,7 +21,7 @@ function LettersContainer({ userId }: Props) {
   }
 
   return (
-    <div>
+    <div id="letters">
       {letters.map((letter) => (
         <div key={letter.id}>
           <img src={letter.cardImg} style={{ width: "100px" }} />
