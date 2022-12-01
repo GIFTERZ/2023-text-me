@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import LettersContainer from "../components/room/LettersContainer";
+import ShareContainer from "../components/room/ShareContainer";
 
 function Room() {
   const { get } = useSearchParams();
@@ -10,7 +11,7 @@ function Room() {
   return (
     <div>
       <div>
-        <button type="button">공유</button>
+        <ShareContainer />
         <button type="button">저장</button>
         {/* To do: 비로그인 구분 */}
         <Link href="/">메인</Link>
