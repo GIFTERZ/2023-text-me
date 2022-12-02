@@ -2,10 +2,11 @@ import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
 import Link from 'next/link';
-
+import { useCardPicture } from '../../stores/useCardPicture';
 const colors = ['red', 'orange', 'white', 'gray'];
 
 export default function index() {
+  const { pictureURL, setPictureURL } = useCardPicture();
   const router = useRouter();
   const [selectedPicture, setSelectedPicture] = useState<File | null>();
   const [previewImage, setPreviewImage] = useState<string>('');
@@ -19,6 +20,7 @@ export default function index() {
     setSelectedPicture(target.files[0]);
     setPreviewImage(URL.createObjectURL(target.files[0]));
     console.log('URL:' + URL.createObjectURL(target.files[0]));
+    setPictureURL(URL.createObjectURL(target.files[0]));
     console.log(selectedPicture);
     console.log(target.files[0]);
 
@@ -50,7 +52,6 @@ export default function index() {
           ))}
           {previewImage && <img src={previewImage} style={{ width: 100, height: 100 }}></img>}
           <div onClick={sendFile}>버튼으로 전송하기</div>
-          <Link href={`/preview-card-picture?file=${previewImage}`}>전송하기</Link>
         </form>
       </div>
     </>
