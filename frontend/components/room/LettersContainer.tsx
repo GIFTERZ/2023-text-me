@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLetters } from "../../stores/useLetters";
+import { useLetterView } from "../../stores/useLetterView";
 
 interface Props {
   userId: number;
@@ -7,6 +8,7 @@ interface Props {
 
 function LettersContainer({ userId }: Props) {
   const { isLoading, error, letters, getLetters } = useLetters();
+  const { open } = useLetterView();
 
   useEffect(() => {
     getLetters(userId);
@@ -23,7 +25,7 @@ function LettersContainer({ userId }: Props) {
   return (
     <div id="letters">
       {letters.map((letter) => (
-        <div key={letter.id}>
+        <div key={letter.id} onClick={() => open(letter.id)}>
           <img src={letter.cardImg} style={{ width: "100px" }} />
         </div>
       ))}

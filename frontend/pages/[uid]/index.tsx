@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import LettersContainer from "../../components/room/LettersContainer";
 import ShareContainer from "../../components/room/ShareContainer";
 import SaveContainer from "../../components/room/SaveContainer";
+import LetterViewContainer from "../../components/room/LetterViewContainer";
 
 function Room() {
   const { get } = useSearchParams();
@@ -20,6 +21,7 @@ function Room() {
       </div>
       <LettersContainer userId={userId} />
       <Link href={`${pathname}/write`}>Text Username</Link>
+      <LetterViewContainer />
     </div>
   );
 }

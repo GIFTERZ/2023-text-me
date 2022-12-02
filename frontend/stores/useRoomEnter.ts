@@ -23,8 +23,10 @@ const useRoomEnter = create<RoomEnter>((set) => ({
       })
       .catch((error) => {
         set({ error });
+      })
+      .finally(() => {
+        set({ isLoading: false });
       });
-    set({ isLoading: false });
   },
 }));
 
