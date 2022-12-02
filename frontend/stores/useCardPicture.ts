@@ -1,13 +1,13 @@
 import create from 'zustand';
 
-interface cardPicture {
-  pictureURL: String;
-  setPictureURL: (select: String) => void;
+interface CardPicture {
+  pictureUrl: string | null;
+  setPictureUrl: (select: string) => void;
 }
 
-export const useCardPicture = create<cardPicture>(set => ({
-  pictureURL: '',
-  setPictureURL: select => {
-    set(state => ({ ...state, pictureURL: select }));
+export const useCardPicture = create<CardPicture>(set => ({
+  pictureUrl: null,
+  setPictureUrl: select => {
+    set({ pictureUrl: select });
   },
 }));

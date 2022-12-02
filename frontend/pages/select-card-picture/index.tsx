@@ -2,10 +2,9 @@ import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
 import { useCardPicture } from '../../stores/useCardPicture';
-const colors = ['red', 'orange', 'white', 'gray'];
 
 export default function index() {
-  const { pictureURL, setPictureURL } = useCardPicture();
+  const { pictureUrl, setPictureUrl } = useCardPicture();
   const router = useRouter();
   const [selectedPicture, setSelectedPicture] = useState<File | null>();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -17,7 +16,7 @@ export default function index() {
     const target = e.currentTarget;
     setSelectedPicture(target.files[0]);
     console.log('URL:' + URL.createObjectURL(target.files[0]));
-    setPictureURL(URL.createObjectURL(target.files[0]));
+    setPictureUrl(URL.createObjectURL(target.files[0]));
   };
 
   const sendFile = () => {
@@ -34,10 +33,7 @@ export default function index() {
             +
           </div>
           <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
-          {colors.map(color => (
-            <div key={color} style={{ width: 100, height: 100, backgroundColor: `${color}` }}></div>
-          ))}
-          {pictureURL && <img src={pictureURL.toString()} style={{ width: 100, height: 100 }}></img>}
+          {pictureUrl && <img src={pictureUrl.toString()} style={{ width: 100, height: 100 }}></img>}
           <div onClick={sendFile}>버튼으로 전송하기</div>
         </form>
       </div>
