@@ -14,6 +14,7 @@
     "@types/react-dom": "18.0.9",
     "@types/styled-components": "^5.1.26",
     "axios": "^1.2.0",
+    "date-fns": "^2.29.3",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
     "html-to-image": "^1.10.9",
