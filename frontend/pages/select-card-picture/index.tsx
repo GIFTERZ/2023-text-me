@@ -33,7 +33,7 @@ export default function index() {
             +
           </div>
           <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
-          {pictureUrl && <img src={pictureUrl.toString()} style={{ width: 100, height: 100 }}></img>}
+          {pictureUrl && <img src={pictureUrl} style={{ width: 100, height: 100 }}></img>}
           <div onClick={sendFile}>버튼으로 전송하기</div>
         </form>
       </div>
