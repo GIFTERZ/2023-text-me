@@ -6230,6 +6230,7 @@ __metadata:
     axios: ^1.2.0
     eslint: 8.28.0
     eslint-config-next: 13.0.5
+    html-to-image: ^1.10.9
     msw: ^0.49.1
     next: 13.0.5
     react: 18.2.0
@@ -6875,6 +6876,13 @@ __metadata:
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: d2df2da3ad40ca9ee3a39c5cc6475ef67c8f83c234475f24d8e9ce0dc80a2c82df8e1d6fa78ddd1e9022a586ea1bd247a615e80a5cd9273d90111ddda7d9e974
+  languageName: node
+  linkType: hard
+
+"html-to-image@npm:^1.10.9":
+  version: 1.10.9
+  resolution: "html-to-image@npm:1.10.9"
+  checksum: e46163d0daeb94d063238e60962c28992b7d42c8b14ca498af02916b771fed99f0002cd8c3824161d45fd880a0968af5792ffd31aa9217d6efc7a158e0bd9817
   languageName: node
   linkType: hard
 

@@ -32,13 +32,7 @@ export default function index() {
   };
 
   const sendFile = () => {
-    router.push(
-      {
-        pathname: '/preview-card-picture',
-        query: { previewImage: previewImage },
-      },
-      '/card-preview',
-    );
+    router.push(`/preview-card-picture?file=${previewImage}`);
   };
 
   return (
@@ -54,6 +48,7 @@ export default function index() {
           {colors.map(color => (
             <div key={color} style={{ width: 100, height: 100, backgroundColor: `${color}` }}></div>
           ))}
+          {previewImage && <img src={previewImage} style={{ width: 100, height: 100 }}></img>}
           <div onClick={sendFile}>버튼으로 전송하기</div>
           <Link href={`/preview-card-picture?file=${previewImage}`}>전송하기</Link>
         </form>

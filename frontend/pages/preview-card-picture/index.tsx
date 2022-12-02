@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Router from 'next/router';
 
-export default function index(props: string) {
-  console.log(props);
+export default function index(props: { router: any }) {
+  const { router } = props;
 
   return (
     <>

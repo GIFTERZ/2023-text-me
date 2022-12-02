@@ -21,7 +21,7 @@ export default function Home() {
     router.push(`/${id}`);
   };
 
-  const onValid = async (data: EmailForm) => {
+  const validateForm = async (data: EmailForm) => {
     enter(data, pushRoom);
 
     if (error) {
@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onValid)}>
+      <form onSubmit={handleSubmit(validateForm)}>
         <label>이메일로 다른 사람 방 입장하기</label>
         <input
           {...register("email", {
