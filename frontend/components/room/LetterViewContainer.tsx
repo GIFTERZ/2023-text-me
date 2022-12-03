@@ -1,66 +1,15 @@
 import React, { useEffect } from "react";
-import { useLetters } from "../../stores/useLetters";
+import styled from "styled-components";
 import { useLetterView } from "../../stores/useLetterView";
 import LetterView from "./LetterView";
-
-type Move = "PREV" | "NEXT";
+import LetterViewMove from "./LetterViewMove";
 
 function LetterViewContainer() {
-  const { isOpened, id, getLetter, open, close } = useLetterView();
-  const { letters } = useLetters();
+  const { isOpened, id, getLetter, close } = useLetterView();
 
   useEffect(() => {
     getLetter();
   }, [id]);
-
-  const getCurrentIndex = () => {
-    return letters.findIndex((letter) => letter.id === id);
-  };
-
-  const isFirst = () => {
-    const currentIndex = getCurrentIndex();
-
-    if (currentIndex === 0) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const isLast = () => {
-    const currentIndex = getCurrentIndex();
-
-    if (currentIndex === letters.length - 1) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const getLetterId = (index: number) => {
-    return letters[index].id;
-  };
-
-  const moveLetter = (move: Move) => {
-    const currentIndex = getCurrentIndex();
-
-    if (move === "PREV") {
-      return getLetterId(currentIndex - 1);
-    } else {
-      return getLetterId(currentIndex + 1);
-    }
-  };
-
-  const openMove = (move: Move) => {
-    if (move === "PREV" && isFirst()) {
-      return;
-    }
-    if (move === "NEXT" && isLast()) {
-      return;
-    }
-
-    return open(moveLetter(move));
-  };
 
   if (!isOpened) {
     return <></>;
@@ -68,26 +17,22 @@ function LetterViewContainer() {
 
   return (
     <div>
-      <button
-        onClick={() => openMove("PREV")}
-        disabled={isFirst()}
-        type="button"
-      >
-        이전
-      </button>
-      <LetterView />
-      <button
-        onClick={() => openMove("NEXT")}
-        disabled={isLast()}
-        type="button"
-      >
-        다음
-      </button>
-      <button onClick={close} type="button">
-        닫기
-      </button>
+      <Overlay onClick={close} />
+      <LetterViewMove>
+        <LetterView />
+      </LetterViewMove>
     </div>
   );
 }
 
 export default LetterViewContainer;
+
+const Overlay = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(111, 111, 111, 0.8);
+`;
