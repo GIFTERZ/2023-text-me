@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import { useLetterView } from "../../stores/useLetterView";
 import ReactCardFlip from "react-card-flip";
+import { useRoomInfo } from "../../stores/useRoomInfo";
 
 function LetterView() {
-  const { letter, isLoading, error } = useLetterView();
+  const {
+    letter,
+    isLoading: isLetterLoading,
+    error: letterError,
+  } = useLetterView();
+
+  const {
+    roomInfo,
+    isLoading: isRoomLoading,
+    error: roomError,
+  } = useRoomInfo();
+
   const [isFlipped, setIsFlipped] = useState(false);
 
   const flip = () => {
     setIsFlipped((prev) => !prev);
   };
 
-  if (isLoading) {
+  if (isLetterLoading || isRoomLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (letterError || roomError) {
     return <div>편지 불러오기에 실패했습니다.</div>;
   }
 
@@ -40,6 +52,7 @@ function LetterView() {
           }}
         />
       </div>
+
       <div
         onClick={flip}
         style={{
@@ -48,6 +61,7 @@ function LetterView() {
           background: "aliceblue",
         }}
       >
+        To. {roomInfo?.ownerName}
         {letter?.content} From. {letter?.writer}
       </div>
     </ReactCardFlip>
