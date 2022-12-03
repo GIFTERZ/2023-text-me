@@ -49,8 +49,9 @@ export default function Home() {
           입장
         </button>
       </form>
-      <Link href={`/signup`}>내 방 만들기</Link>
-      <Link href={`/signin`}>로그인</Link>
+      <Link href={"/signup"}>내 방 만들기</Link>
+      <Link href={"/signin"}>로그인</Link>
+      <Link href={"/mypage"}>내 방으로 가기</Link>
     </div>
   );
 }
