@@ -1,8 +1,9 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRoomEnter } from "../stores/useRoomEnter";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useMembers } from "../stores/useMembers";
+import { useEffect } from "react";
 type EmailForm = {
   email: string;
 };
@@ -16,6 +17,11 @@ export default function Home() {
   } = useForm<EmailForm>();
 
   const { isLoading, enter, error } = useRoomEnter();
+  const { member, getMember } = useMembers();
+
+  useEffect(() => {
+    getMember();
+  }, []);
 
   const pushRoom = (id: number) => {
     router.push(`/${id}`);
@@ -51,7 +57,7 @@ export default function Home() {
       </form>
       <Link href={"/signup"}>내 방 만들기</Link>
       <Link href={"/signin"}>로그인</Link>
-      <Link href={"/mypage"}>내 방으로 가기</Link>
+      <Link href={`/${member?.id}`}>내 방으로 가기</Link>
     </div>
   );
 }
