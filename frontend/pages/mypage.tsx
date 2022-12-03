@@ -1,16 +1,20 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import NicknameContainer from "../components/mypage/NicknameContainer";
 import { useMembers } from "../stores/useMembers";
 
 function Mypage() {
-  const { isGetLoading, getError, member } = useMembers();
+  const { isLoading, error, member, getMember } = useMembers();
 
-  if (isGetLoading) {
+  useEffect(() => {
+    getMember();
+  }, []);
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (getError) {
+  if (error) {
     return <div>에러가 발생했습니다.</div>;
   }
 

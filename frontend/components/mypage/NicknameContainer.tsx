@@ -10,12 +10,11 @@ function NicknameContainer() {
   const [editing, setEditing] = useState(false);
 
   const {
-    isGetLoading,
-    getError,
+    isLoading,
+    error,
     isPatchLoading,
     patchError,
     member,
-    getMember,
     patchNickname,
   } = useMembers();
 
@@ -24,10 +23,6 @@ function NicknameContainer() {
     handleSubmit,
     formState: { errors },
   } = useForm<MemberForm>();
-
-  useEffect(() => {
-    getMember();
-  }, []);
 
   const toggleEditing = () => {
     setEditing((prev) => !prev);
@@ -44,11 +39,11 @@ function NicknameContainer() {
     toggleEditing();
   };
 
-  if (isGetLoading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (getError) {
+  if (error) {
     return <div>에러가 발생했습니다.</div>;
   }
 
