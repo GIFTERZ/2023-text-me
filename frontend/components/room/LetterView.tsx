@@ -25,6 +25,19 @@ function LetterView() {
     setIsFlipped((prev) => !prev);
   };
 
+  const lineBreak = (content: string) => {
+    return (
+      <>
+        {content?.split("\n").map((value) => (
+          <>
+            {value}
+            <br />
+          </>
+        ))}
+      </>
+    );
+  };
+
   if (isLetterLoading || isRoomLoading) {
     return (
       <DeferredComponent>
@@ -50,7 +63,7 @@ function LetterView() {
         </Card>
         <CardBack imgUrl={letter?.cardImg} onClick={flip}>
           <ToText>To. {roomInfo?.ownerName}</ToText>
-          <Content>{letter?.content}</Content>
+          <Content>{lineBreak(letter?.content)}</Content>
           <FromText>From. {letter?.writer}</FromText>
         </CardBack>
       </ReactCardFlip>
