@@ -1,6 +1,6 @@
-package domain.member.entity;
+package domain.security.entity;
 
-import domain.member.exception.InvalidPasswordException;
+import domain.user.exception.InvalidPasswordException;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

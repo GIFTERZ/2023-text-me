@@ -1,0 +1,6 @@
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_KEY}
+      expirationMs: ${JWT_EXPIRY}
+      refreshexpirationMs: ${REFRESH_EXPIRY}

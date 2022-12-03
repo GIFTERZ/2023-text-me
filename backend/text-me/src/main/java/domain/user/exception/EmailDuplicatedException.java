@@ -1,4 +1,4 @@
-package domain.member.exception;
+package domain.user.exception;
 
 import error.ErrorCode;
 import error.exception.InvalidValueException;
