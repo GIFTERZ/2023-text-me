@@ -3,6 +3,8 @@ import { useLetterView } from "../../stores/useLetterView";
 import ReactCardFlip from "react-card-flip";
 import { useRoomInfo } from "../../stores/useRoomInfo";
 import styled from "styled-components";
+import { Spinner } from "../../styles/indicators/Loader";
+import DeferredComponent from "../common/DeferredComponent";
 
 function LetterView() {
   const {
@@ -24,7 +26,11 @@ function LetterView() {
   };
 
   if (isLetterLoading || isRoomLoading) {
-    return <div>Loading...</div>;
+    return (
+      <DeferredComponent>
+        <Spinner />
+      </DeferredComponent>
+    );
   }
 
   if (letterError || roomError) {
@@ -42,7 +48,6 @@ function LetterView() {
         <Card>
           <img src={letter?.cardImg} onClick={flip} />
         </Card>
-
         <CardBack imgUrl={letter?.cardImg} onClick={flip}>
           <ToText>To. {roomInfo?.ownerName}</ToText>
           <Content>{letter?.content}</Content>
