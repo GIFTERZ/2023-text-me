@@ -1,6 +1,9 @@
 import React, { ReactNode } from "react";
+import styled from "styled-components";
 import { useLetters } from "../../stores/useLetters";
 import { useLetterView } from "../../stores/useLetterView";
+import MoveNextIcon from "./icons/MoveNextIcon";
+import MovePrevIcon from "./icons/MovePrevIcon";
 
 interface Props {
   children: ReactNode;
@@ -62,24 +65,50 @@ function LetterViewMove(props: Props) {
   };
 
   return (
-    <>
-      <button
+    <Container>
+      <Button
         onClick={() => openMove("PREV")}
         disabled={isFirst()}
+        disabledStyle={isFirst()}
         type="button"
       >
-        이전
-      </button>
+        <MovePrevIcon />
+      </Button>
       {props.children}
-      <button
+      <Button
         onClick={() => openMove("NEXT")}
         disabled={isLast()}
+        disabledStyle={isLast()}
         type="button"
       >
-        다음
-      </button>
-    </>
+        <MoveNextIcon />
+      </Button>
+    </Container>
   );
 }
 
 export default LetterViewMove;
+
+const Container = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  padding: 0 3px;
+`;
+
+const Button = styled.button<{ disabledStyle: boolean }>`
+  background: none;
+  border: none;
+  z-index: 10;
+  visibility: ${(p) => (p.disabledStyle ? "hidden" : "visible")};
+  svg {
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 1));
+  }
+`;
