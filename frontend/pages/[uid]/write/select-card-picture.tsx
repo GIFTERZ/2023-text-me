@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
-import { useCardPicture } from '../../../../stores/useCardPicture';
+import { useCardPicture } from '../../../stores/useCardPicture';
 
 export default function index() {
   const { pictureUrl, setPictureUrl } = useCardPicture();
