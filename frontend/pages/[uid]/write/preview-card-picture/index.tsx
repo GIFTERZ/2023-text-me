@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
-import { useCardPicture } from '../../stores/useCardPicture';
+import { useCardPicture } from '../../../../stores/useCardPicture';
 import { useRouter } from 'next/navigation';
-import PictureDatePicker from '../../components/write/PictureDatePicker';
+import PictureDatePicker from '../../../../components/write/PictureDatePicker';
 
 export default function index() {
   const router = useRouter();
