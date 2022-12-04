@@ -106,7 +106,7 @@
 @font-face {
   font-family: "Cafe24Ssurround";
   src: url("Cafe24Ssurround.ttf") format("truetype");
-  font-weight: normal;
+  font-weight: 500;
 }
 
 @font-face {

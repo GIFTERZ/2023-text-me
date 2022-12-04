@@ -6,7 +6,7 @@ type Member = {
   id: number;
 };
 
-interface RoomEnter {
+interface Members {
   isLoading: boolean;
   error: AxiosError | null;
   isPatchLoading: boolean;
@@ -16,7 +16,7 @@ interface RoomEnter {
   patchNickname: (data: Member) => void;
 }
 
-const useMembers = create<RoomEnter>((set) => ({
+const useMembers = create<Members>((set) => ({
   isLoading: false,
   error: null,
   isPatchLoading: false,
