@@ -28,6 +28,7 @@ const Modal = styled.div`
 
   background: white;
   border-radius: 10px;
+  color: #222222;
 
   z-index: 30;
 `;

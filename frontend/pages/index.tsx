@@ -61,7 +61,11 @@ const ButtonsContainer = styled.div`
 
   width: 100%;
 
-  ${LeftButton}, ${RightButton} {
+  ${LeftButton} {
+    width: 100%;
+  }
+
+  ${RightButton} {
     width: 100%;
   }
 `;

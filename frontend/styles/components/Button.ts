@@ -44,6 +44,10 @@ const WhiteButton = styled.button`
     height: 24px;
   }
 
+  &:focus {
+    outline: none;
+  }
+
   @media ${({ theme }) => theme.device.small} {
     width: 40px;
     height: 40px;
