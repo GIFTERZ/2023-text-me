@@ -65,13 +65,8 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.generateJwtToken(user);
-        createAccessToken(loginRequest);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
         return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken, refreshToken.getId());
-    }
-
-    private void createAccessToken(LoginRequest loginRequest) {
-        String accessToken = jwtUtils.generateTokenFromSubject(loginRequest.getEmail());
     }
 
 }
