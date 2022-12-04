@@ -41,12 +41,12 @@ function Room() {
         </Header>
         <LettersContainer userId={userId} />
         <Link href={`${pathname}/write`}>
-          <CTAButton>
+          <CTAButton className="dont-save">
             TEXT <br />
             {roomInfo?.ownerName}
           </CTAButton>
         </Link>
-        {!isUser && <PlusIcon onClick={enterRegister} />}
+        {!isUser && <PlusIcon onClick={enterRegister}  />}
         <LetterViewContainer />
       </Frame>
     </Background>

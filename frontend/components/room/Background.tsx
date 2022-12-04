@@ -6,12 +6,15 @@ interface Props {
 }
 
 function Background(props: Props) {
-  return <Container>{props.children}</Container>;
+  return <Container id="letters">{props.children}</Container>;
 }
 
 export default Background;
 
 const Container = styled.div`
+  position: absolute;
+  top: 0;
+
   width: 100vw;
   height: 100vh;
 

@@ -8,7 +8,7 @@ import ShareContainer from "./ShareContainer";
 
 function ButtonsContainer() {
   return (
-    <Container>
+    <Container className="dont-save">
       {/* To do: 비로그인 구분 */}
       <Link href="/">
         <WhiteButton type="button">
@@ -26,6 +26,7 @@ export default ButtonsContainer;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 10px;
 
   z-index: 10;

@@ -7,7 +7,7 @@ interface Props {
 
 function PlusIcon({ onClick }: Props) {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} className="dont-save">
       <svg
         width="52"
         height="52"
@@ -91,4 +91,5 @@ const Container = styled.span`
   right: 0;
   bottom: 8%;
   transform: translate(-50%, -50%);
+  z-index: 5;
 `;

@@ -24,7 +24,7 @@ function LettersContainer({ userId }: Props) {
   }
 
   return (
-    <Container id="letters">
+    <Container>
       <Row>
         {letters.slice(0, Math.ceil(letters.length / 2)).map((letter) => (
           <Card key={letter.id} onClick={() => open(letter.id)}>
