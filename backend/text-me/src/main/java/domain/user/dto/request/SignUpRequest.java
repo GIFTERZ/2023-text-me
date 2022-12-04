@@ -1,4 +1,4 @@
-package domain.member.dto.request;
+package domain.user.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

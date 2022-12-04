@@ -1,25 +1,46 @@
-package domain.member.entity;
+package domain.user.entity;
 
-import domain.member.exception.InvalidPasswordException;
+import domain.entity.BaseEntity;
+import domain.user.exception.InvalidPasswordException;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.*;
 import java.util.regex.Pattern;
 
+@Entity
 @Getter
-@EqualsAndHashCode
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Password {
+@AllArgsConstructor
+public class User extends BaseEntity {
+
+    @Id
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Lob
+    @Column(nullable = false, unique = true)
     private String password;
 
-    public Password(String password) {
-        validate(password);
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
         this.password = password;
     }
 
-    private static void validate(String password) {
+
+    private static void validatePassword(String password) {
         String REGEX = "^[a-z0-9]{10,20}$";
         checkSize(password);
         checkArgument(Pattern.matches(REGEX, password));
