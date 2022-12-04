@@ -8,6 +8,7 @@ import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
 import Background from "../../components/room/Background";
 import styled from "styled-components";
+import ButtonsContainer from "../../components/room/ButtonsContainer";
 
 function Room() {
   const { get } = useSearchParams();
@@ -23,13 +24,10 @@ function Room() {
   return (
     <Background>
       <Frame>
-        <Title>{roomInfo.ownerName}'s room</Title>
-        <div>
-          <ShareContainer />
-          <SaveContainer />
-          {/* To do: 비로그인 구분 */}
-          <Link href="/">메인</Link>
-        </div>
+        <Header>
+          <Title>{roomInfo.ownerName}'s room</Title>
+          <ButtonsContainer />
+        </Header>
         <LettersContainer userId={userId} />
         <Link href={`${pathname}/write`}>Text Username</Link>
         <LetterViewContainer />
@@ -51,6 +49,8 @@ const Title = styled.h1`
   padding: 13px;
 
   width: fit-content;
+  height: 48px;
+
   margin: 0;
 
   background: #ffffff;
@@ -63,4 +63,9 @@ const Title = styled.h1`
   color: #0eca92;
 
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

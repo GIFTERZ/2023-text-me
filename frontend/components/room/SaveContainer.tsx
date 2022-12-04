@@ -1,5 +1,7 @@
 import React from "react";
 import { toJpeg } from "html-to-image";
+import { WhiteButton } from "../../styles/components/Button";
+import SaveIcon from "./icons/SaveIcon";
 
 function SaveContainer() {
   const save = (url: string, filename: string) => {
@@ -22,11 +24,9 @@ function SaveContainer() {
   };
 
   return (
-    <div>
-      <button onClick={captureLetters} type="button">
-        저장
-      </button>
-    </div>
+    <WhiteButton onClick={captureLetters} type="button">
+      <SaveIcon />
+    </WhiteButton>
   );
 }
 
