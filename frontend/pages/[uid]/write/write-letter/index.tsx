@@ -1,8 +1,10 @@
-import React, { useId } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useLetterInfo } from '../../../../stores/useLetterInfo';
+import { useRouter } from 'next/router';
 
 export default function index() {
+  const router = useRouter();
   const { letterContents, letterSender, setLetterContents, setLetterSender } = useLetterInfo();
   return (
     <LetterContainer>
@@ -17,7 +19,7 @@ export default function index() {
           <input type={'text'} value={letterSender} onChange={e => setLetterSender(e.target.value)} />
         </FromDiv>
       </form>
-      <button>보내기</button>
+      <button onClick={() => router.push('/:uid/write/send-complete')}>보내기</button>
     </LetterContainer>
   );
 }

@@ -17,6 +17,7 @@ export default function index() {
       <button
         onClick={() => {
           // 편지 작성 화면 이동
+          router.push('/:uid/write/write-letter');
         }}
       >
         편지쓰기
