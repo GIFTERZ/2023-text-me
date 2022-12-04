@@ -6,6 +6,7 @@ import ShareContainer from "../../components/room/ShareContainer";
 import SaveContainer from "../../components/room/SaveContainer";
 import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
+import Background from "../../components/room/Background";
 
 function Room() {
   const { get } = useSearchParams();
@@ -19,7 +20,7 @@ function Room() {
   }, []);
 
   return (
-    <div>
+    <Background>
       <div>
         <ShareContainer />
         <SaveContainer />
@@ -29,7 +30,7 @@ function Room() {
       <LettersContainer userId={userId} />
       <Link href={`${pathname}/write`}>Text Username</Link>
       <LetterViewContainer />
-    </div>
+    </Background>
   );
 }
 
