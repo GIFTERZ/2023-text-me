@@ -1,42 +1,39 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useLetters } from "../../stores/useLetters";
-import { useLetterView } from "../../stores/useLetterView";
+import { Spinner } from "../../styles/indicators/Loader";
+import DeferredComponent from "../common/DeferredComponent";
+import Letter from "./Letter";
 
 interface Props {
   userId: number;
 }
 
 function LettersContainer({ userId }: Props) {
-  const { isLoading, error, letters, getLetters } = useLetters();
-  const { open } = useLetterView();
-
+  const { error, letters, getLetters } = useLetters();
   useEffect(() => {
     getLetters(userId);
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
-    return <div>에러가 발생했습니다.</div>;
+    return (
+      <ErrorMessage>
+        편지를 불러오는 중<br />
+        에러가 발생했습니다.
+      </ErrorMessage>
+    );
   }
 
   return (
     <Container id="lettersContainer">
       <Row>
-        {letters.slice(0, Math.ceil(letters.length / 2)).map((letter) => (
-          <Card key={letter.id} onClick={() => open(letter.id)}>
-            <CardImg src={letter.cardImg} />
-          </Card>
+        {letters?.slice(0, Math.ceil(letters.length / 2)).map((letter) => (
+          <Letter letter={letter} />
         ))}
       </Row>
       <Row>
-        {letters.slice(Math.ceil(letters.length / 2)).map((letter) => (
-          <Card key={letter.id} onClick={() => open(letter.id)}>
-            <CardImg src={letter.cardImg} />
-          </Card>
+        {letters?.slice(Math.ceil(letters.length / 2)).map((letter) => (
+          <Letter letter={letter} />
         ))}
       </Row>
     </Container>
@@ -50,6 +47,10 @@ const Row = styled.div`
 
   display: flex;
   gap: 25px;
+
+  @media ${({ theme }) => theme.device.small} {
+    gap: 15px;
+  }
 `;
 
 const Container = styled.div`
@@ -75,23 +76,20 @@ const Container = styled.div`
   ${Row}:last-child {
     margin: 0 50px;
   }
+
+  @media ${({ theme }) => theme.device.large} {
+    width: 480px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
-const Card = styled.div`
-  width: 97px;
-  height: 120px;
-  padding: 6px 6px 30px 6px;
+const ErrorMessage = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
-  background: white;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25),
-    inset 2px 2px 2px rgba(184, 188, 189, 0.4);
-  border-radius: 5px;
-`;
-
-const CardImg = styled.img`
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-  border-radius: 5px;
+  text-align: center;
+  color: black;
 `;
