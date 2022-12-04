@@ -32,7 +32,7 @@ public class ErrorResponse {
         this.errors = errors;
     }
 
-    public static ErrorResponse of(final ErrorCode errorCode) {
+    public static ErrorResponse from(final ErrorCode errorCode) {
         return new ErrorResponse(errorCode);
     }
 

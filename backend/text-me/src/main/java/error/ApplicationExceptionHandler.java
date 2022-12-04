@@ -27,21 +27,21 @@ public class ApplicationExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleApplicationException(final ApplicationException err) {
         log.error("handleEntityNotFoundException", err);
         final ErrorCode errorCode = err.getErrorCode();
-        final ErrorResponse response = ErrorResponse.of(errorCode);
+        final ErrorResponse response = ErrorResponse.from(errorCode);
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getHttpStatus()));
     }
 
     @ExceptionHandler
     protected ResponseEntity<ErrorResponse> handleAuthenticationException(final AuthenticationException err) {
         log.error("handleAuthenticationException", err);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_LOGIN_INFO);
+        final ErrorResponse response = ErrorResponse.from(ErrorCode.INVALID_LOGIN_INFO);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getHttpStatus()));
     }
 
     @ExceptionHandler
     protected ResponseEntity<ErrorResponse> handleCommonException(final Exception err) {
         log.error("CommonException", err);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
+        final ErrorResponse response = ErrorResponse.from(ErrorCode.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
