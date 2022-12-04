@@ -42,7 +42,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getPassword().getPassword(),
+                user.getPassword(),
                 authorities);
     }
 

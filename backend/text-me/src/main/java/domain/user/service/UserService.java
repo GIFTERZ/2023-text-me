@@ -6,7 +6,6 @@ import domain.user.dto.request.LoginRequest;
 import domain.user.dto.request.SignUpRequest;
 import domain.user.dto.response.LoginResponse;
 import domain.user.dto.response.UserResponse;
-import domain.security.entity.Password;
 import domain.security.entity.RefreshToken;
 import domain.user.entity.User;
 import domain.user.exception.EmailDuplicatedException;
@@ -44,9 +43,9 @@ public class UserService {
             throw new EmailDuplicatedException(user.getEmail());
         }
 
-        Password userPassword = user.getPassword();
-        String encodedPassword = bCryptPasswordEncoder.encode(userPassword.getPassword());
-        userPassword.setPassword(encodedPassword);
+        String password = user.getPassword();
+        String encodedPassword = bCryptPasswordEncoder.encode(password);
+        user.setPassword(encodedPassword);
 
         userRepository.save(user);
         return new UserResponse(user.getName(), user.getEmail());

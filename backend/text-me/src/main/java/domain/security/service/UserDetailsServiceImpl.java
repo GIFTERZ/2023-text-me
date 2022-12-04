@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         authorities.add(new SimpleGrantedAuthority("USER"));
         return new User(
                 member.getEmail(),
-                member.getPassword().getPassword(),
+                member.getPassword(),
                 authorities);
     }
 
