@@ -43,6 +43,16 @@ const WhiteButton = styled.button`
     width: 24px;
     height: 24px;
   }
+
+  @media ${({ theme }) => theme.device.small} {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 export { LeftButton, RightButton, WhiteButton };

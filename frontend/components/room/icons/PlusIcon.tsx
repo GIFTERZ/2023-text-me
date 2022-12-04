@@ -92,4 +92,18 @@ const Container = styled.span`
   bottom: 8%;
   transform: translate(-50%, -50%);
   z-index: 5;
+
+  @media ${({ theme }) => theme.device.large} {
+    position: relative;
+    left: 600px;
+    top: 450px;
+  }
+
+  @media ${({ theme }) => theme.device.small} {
+    right: 3%;
+    bottom: 7%;
+    svg {
+      width: 40px;
+    }
+  }
 `;

@@ -46,7 +46,7 @@ function Room() {
             {roomInfo?.ownerName}
           </CTAButton>
         </Link>
-        {!isUser && <PlusIcon onClick={enterRegister}  />}
+        {!isUser && <PlusIcon onClick={enterRegister} />}
         <LetterViewContainer />
       </Frame>
     </Background>
@@ -80,6 +80,12 @@ const Title = styled.h1`
   color: #0eca92;
 
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
+
+  @media ${({ theme }) => theme.device.small} {
+    font-size: 14px;
+    padding: 13px;
+    height: 40px;
+  }
 `;
 
 const Header = styled.div`
@@ -94,4 +100,9 @@ const CTAButton = styled(RightButton)`
   transform: translate(-50%, -50%);
 
   padding: 13px 24px;
+
+  @media ${({ theme }) => theme.device.small} {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
 `;
