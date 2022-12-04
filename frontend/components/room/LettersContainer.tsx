@@ -24,7 +24,7 @@ function LettersContainer({ userId }: Props) {
   }
 
   return (
-    <Container>
+    <Container id="lettersContainer">
       <Row>
         {letters.slice(0, Math.ceil(letters.length / 2)).map((letter) => (
           <Card key={letter.id} onClick={() => open(letter.id)}>
@@ -63,11 +63,13 @@ const Container = styled.div`
   gap: 55px;
 
   overflow-x: scroll;
+
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
+    display: none;
     width: 0px;
     height: 0px;
-    color: none;
+    color: transparent;
   }
 
   ${Row}:last-child {

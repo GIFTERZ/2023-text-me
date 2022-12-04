@@ -19,6 +19,9 @@ function SaveContainer() {
   const captureLetters = () => {
     setLoading(true);
 
+    const lettersContainer = document.getElementById("lettersContainer");
+    lettersContainer.style.overflowX = "hidden";
+
     const letters = document.getElementById("letters") as HTMLElement;
     const filter = (node: HTMLElement) => {
       const exclusionClasses = ["dont-save"];
@@ -38,6 +41,7 @@ function SaveContainer() {
       .finally(() => {
         setLoading(false);
         setStatusText(LOADING_TEXT);
+        lettersContainer.style.overflowX = "scroll";
       });
   };
 
