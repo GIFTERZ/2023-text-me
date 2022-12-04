@@ -1,35 +1,52 @@
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import LettersContainer from "../../components/room/LettersContainer";
-import ShareContainer from "../../components/room/ShareContainer";
-import SaveContainer from "../../components/room/SaveContainer";
 import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
 import Background from "../../components/room/Background";
 import styled from "styled-components";
 import ButtonsContainer from "../../components/room/ButtonsContainer";
+import { RightButton } from "../../styles/components/Button";
+import PlusIcon from "../../components/room/icons/PlusIcon";
 
 function Room() {
   const { get } = useSearchParams();
   const pathname = usePathname();
+  const router = useRouter();
+
   const userId = Number(get("uid"));
 
   const { roomInfo, getRoomInfo } = useRoomInfo();
+  const [isUser] = useState(false);
 
   useEffect(() => {
     getRoomInfo(userId);
   }, []);
 
+  const enterRegister = () => {
+    const confirm = window.confirm("내 방을 만드시겠습니까?");
+
+    if (confirm) {
+      router.push("/signup");
+    }
+  };
+
   return (
     <Background>
       <Frame>
         <Header>
-          <Title>{roomInfo.ownerName}'s room</Title>
+          <Title>{roomInfo?.ownerName}'s room</Title>
           <ButtonsContainer />
         </Header>
         <LettersContainer userId={userId} />
-        <Link href={`${pathname}/write`}>Text Username</Link>
+        <Link href={`${pathname}/write`}>
+          <CTAButton>
+            TEXT <br />
+            {roomInfo?.ownerName}
+          </CTAButton>
+        </Link>
+        {!isUser && <PlusIcon onClick={enterRegister} />}
         <LetterViewContainer />
       </Frame>
     </Background>
@@ -68,4 +85,13 @@ const Title = styled.h1`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const CTAButton = styled(RightButton)`
+  position: fixed;
+  left: 50%;
+  bottom: 8%;
+  transform: translate(-50%, -50%);
+
+  padding: 13px 24px;
 `;
