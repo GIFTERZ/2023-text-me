@@ -5,12 +5,10 @@ import domain.letter.dto.request.LetterRequest;
 import domain.letter.dto.response.LetterResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/letters")
@@ -21,5 +19,11 @@ public class LetterController {
     public ResponseEntity<LetterResponse> sendLetter(@RequestBody @Valid final LetterRequest request) {
         LetterResponse letterResponse = letterService.makeLetter(request);
         return ResponseEntity.ok().body(letterResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LetterResponse>> getLetters(@RequestParam("id") final Long id) {
+        List<LetterResponse> letterResponses = letterService.getLettersByUserId(id);
+        return ResponseEntity.ok().body(letterResponses);
     }
 }

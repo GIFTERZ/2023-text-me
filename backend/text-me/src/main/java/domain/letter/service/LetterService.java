@@ -9,10 +9,15 @@ import domain.user.repository.UserRepository;
 import domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,6 +34,20 @@ public class LetterService {
             Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
             letterRepository.save(letter);
             return new LetterResponse(letter.getId(), user.getName(), request.getSenderName(), request.getContents(), request.getImageUrl());
+        }
+        throw new UserNotFoundException();
+    }
+
+    public List<LetterResponse> getLettersByUserId(Long id) {
+        Optional<User> userExist = userRepository.findById(id);
+        if (userExist.isPresent()) {
+            User user = userExist.get();
+            PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
+            Slice<Letter> letterList = letterRepository.findAllByUserId(user.getId(), pageRequest);
+            return letterList.stream()
+                    .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
+                            letter.getContents(), letter.getImageUrl()))
+                    .collect(Collectors.toList());
         }
         throw new UserNotFoundException();
     }
