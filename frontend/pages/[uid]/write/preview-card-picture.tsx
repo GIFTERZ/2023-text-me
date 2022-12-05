@@ -19,8 +19,8 @@ export default function index() {
   return (
     <Frame style={{ padding: 50 }}>
       <Header>
-        <LeftButton onClick={() => router.back()}>이전</LeftButton>
-        <Title>카드 확인하기</Title>
+        <LeftButton onClick={() => router.back()}>&lt;</LeftButton>
+        <Title>카드 선택하기</Title>
         <RightButton type="submit" onClick={handleSubmit(pushWriteScreen)}>
           선택
         </RightButton>
