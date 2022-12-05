@@ -5,6 +5,7 @@ import styled from "styled-components";
 import RoomEnterForm from "../components/main/RoomEnterForm";
 import { LeftButton, RightButton } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
+import { Title } from "../styles/components/Title";
 
 export default function Home() {
   const [isUser] = useState(false);
@@ -38,19 +39,6 @@ export default function Home() {
     </Frame>
   );
 }
-
-const Title = styled.h1`
-  margin-bottom: 40px;
-
-  font-family: "Cafe24Ssurround";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-
-  color: #222222;
-`;
 
 const ButtonsContainer = styled.div`
   display: flex;
