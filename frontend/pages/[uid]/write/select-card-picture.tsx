@@ -1,15 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
 import { useCardPicture } from '../../../stores/useCardPicture';
 import { LeftButton } from '../../../styles/components/Button';
 import { Frame } from '../../../styles/components/Frame';
 import styled from 'styled-components';
-import CameraIcon from 'static/images/icon-camera.png';
-import { url } from 'inspector';
 
 export default function index() {
-  const { pictureUrl, setPictureUrl } = useCardPicture();
+  const { pictureUrl, setPictureUrl, constCard, getConstCard } = useCardPicture();
+
+  useEffect(() => {
+    getConstCard();
+  }, []);
+
   const router = useRouter();
   const [selectedPicture, setSelectedPicture] = useState<File | null>();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -40,11 +43,9 @@ export default function index() {
           )}
           <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
         </form>
-        <CardImage src={pictureUrl} />
-        <CardImage />
-        <CardImage />
-        <CardImage />
-        <CardImage />
+        {constCard.map(cards => (
+          <CardImage key={cards.id} src={cards.cardUrl} onClick={() => setPictureUrl(cards.cardUrl)} />
+        ))}
       </PictureContainer>
       <LeftButton style={{ width: '100%' }} onClick={sendFile}>
         선택하기
@@ -63,7 +64,7 @@ const Title = styled.h1`
 `;
 
 const PictureContainer = styled.div`
-  height: 80vh;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -77,7 +78,6 @@ const InputDiv = styled.div`
   width: 100%;
   border-radius: 10px;
   text-align: center;
-  background: url(static/images/icon-camera.png);
   background-color: #d9d9d9;
 `;
 
