@@ -1,6 +1,7 @@
 package domain.letter.entity;
 
 import domain.entity.BaseEntity;
+import domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,9 @@ public class Letter extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private User user;
     @Column(nullable = false)
     private String senderName;
     @Lob
