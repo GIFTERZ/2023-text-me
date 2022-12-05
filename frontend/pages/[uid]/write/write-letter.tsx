@@ -6,6 +6,8 @@ import { Frame } from '../../../styles/components/Frame';
 import { useForm } from 'react-hook-form';
 import { useRoomInfo } from '../../../stores/useRoomInfo';
 import { usePathname, useSearchParams } from 'next/navigation';
+// import '../../../styles/cardBackground.css';
+import { useCardPicture } from '../../../stores/useCardPicture';
 
 export default function index() {
   const { register, handleSubmit } = useForm();
@@ -20,6 +22,7 @@ export default function index() {
   const pathname = usePathname();
   const userId = Number(get('uid'));
 
+  const { pictureUrl } = useCardPicture();
   const { roomInfo, getRoomInfo } = useRoomInfo();
   useEffect(() => {
     getRoomInfo(userId);
@@ -27,26 +30,28 @@ export default function index() {
 
   return (
     <Frame>
-      <h1 style={{ textAlign: 'center' }}>편지 쓰기</h1>
-      <ToDiv>{roomInfo.ownerName && <p>To. {roomInfo.ownerName}</p>}</ToDiv>
+      <Title>편지 쓰기</Title>
+      {/* <ToDiv>{roomInfo.ownerName && <p>To. {roomInfo.ownerName}</p>}</ToDiv> */}
       <form onSubmit={handleSubmit(sendData)}>
-        <TextArea
-          id="contents"
-          {...register('contents', {
-            maxLength: 300,
-          })}
-        />
-        <FromDiv>
-          From.
-          <input
-            id="sender"
-            type="text"
-            {...register('sender', {
-              required: '작성자를 입력해주세요.',
-              maxLength: 10,
+        <div id="box" style={{ backgroundImage: `url(${pictureUrl})` }}>
+          <TextArea
+            id="contents"
+            {...register('contents', {
+              maxLength: 300,
             })}
           />
-        </FromDiv>
+          <FromDiv>
+            From.
+            <input
+              id="sender"
+              type="text"
+              {...register('sender', {
+                required: '작성자를 입력해주세요.',
+                maxLength: 10,
+              })}
+            />
+          </FromDiv>
+        </div>
         <button type="submit">보내기</button>
       </form>
     </Frame>
@@ -66,6 +71,7 @@ const TextArea = styled.textarea`
   width: 100%;
   height: 500px;
   align-items: center;
+  background-color: transparent;
 `;
 
 const ToDiv = styled.div`
@@ -75,4 +81,13 @@ const ToDiv = styled.div`
 
 const FromDiv = styled.div`
   margin-top: 10px;
+`;
+
+const Title = styled.h1`
+  font-family: 'Cafe24Ssurround';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 24px;
+  text-align: center;
 `;

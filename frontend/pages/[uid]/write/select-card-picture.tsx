@@ -5,6 +5,8 @@ import { useCardPicture } from '../../../stores/useCardPicture';
 import { LeftButton } from '../../../styles/components/Button';
 import { Frame } from '../../../styles/components/Frame';
 import styled from 'styled-components';
+import CameraIcon from 'static/images/icon-camera.png';
+import { url } from 'inspector';
 
 export default function index() {
   const { pictureUrl, setPictureUrl } = useCardPicture();
@@ -34,9 +36,7 @@ export default function index() {
           {pictureUrl ? (
             <CardImage id="image" onClick={handleClick} src={pictureUrl} />
           ) : (
-            <InputDiv id="image" onClick={handleClick}>
-              +
-            </InputDiv>
+            <InputDiv id="image" onClick={handleClick}></InputDiv>
           )}
           <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
         </form>
@@ -63,7 +63,7 @@ const Title = styled.h1`
 `;
 
 const PictureContainer = styled.div`
-  height: 100vh;
+  height: 80vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -77,9 +77,12 @@ const InputDiv = styled.div`
   width: 100%;
   border-radius: 10px;
   text-align: center;
+  background: url(static/images/icon-camera.png);
+  background-color: #d9d9d9;
 `;
 
 const CardImage = styled.img`
   height: 100%;
   width: 100%;
+  border-radius: 10px;
 `;

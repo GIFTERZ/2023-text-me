@@ -21,7 +21,9 @@ export default function index() {
       <Header>
         <LeftButton onClick={() => router.back()}>이전</LeftButton>
         <Title>카드 확인하기</Title>
-        <RightButton onClick={pushWriteScreen}>선택</RightButton>
+        <RightButton type="submit" onClick={handleSubmit(pushWriteScreen)}>
+          선택
+        </RightButton>
       </Header>
       <PreviewDiv>
         {pictureUrl && <CardImage src={pictureUrl} />}
@@ -29,7 +31,6 @@ export default function index() {
         <CommentInput
           type="text"
           placeholder="사진에 대한 한마디"
-          value={pictureComment}
           {...register('comment', {
             maxLength: 28,
           })}
