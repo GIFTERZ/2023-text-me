@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useLetterInfo } from '../../../stores/useLetterInfo';
 import { useRouter } from 'next/router';
 import { Frame } from '../../../styles/components/Frame';
 import { useForm } from 'react-hook-form';
 import { useRoomInfo } from '../../../stores/useRoomInfo';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function index() {
   const { register, handleSubmit } = useForm();
@@ -14,20 +15,37 @@ export default function index() {
     console.log(data);
     router.push('/:uid/write/send-complete');
   };
-  const { roomInfo } = useRoomInfo();
+
+  const { get } = useSearchParams();
+  const pathname = usePathname();
+  const userId = Number(get('uid'));
+
+  const { roomInfo, getRoomInfo } = useRoomInfo();
+  useEffect(() => {
+    getRoomInfo(userId);
+  }, []);
+
   return (
     <Frame>
       <h1 style={{ textAlign: 'center' }}>편지 쓰기</h1>
-      <ToDiv>
-        {/* {roomInfo.ownerName && <p>To. {roomInfo.ownerName}</p>} 
-        오류나서 일단 주석 처리 해놨습니다
-        */}
-      </ToDiv>
+      <ToDiv>{roomInfo.ownerName && <p>To. {roomInfo.ownerName}</p>}</ToDiv>
       <form onSubmit={handleSubmit(sendData)}>
-        <TextArea id="contents" {...register('contents')} />
+        <TextArea
+          id="contents"
+          {...register('contents', {
+            maxLength: 300,
+          })}
+        />
         <FromDiv>
           From.
-          <input id="sender" type="text" {...register('sender')} />
+          <input
+            id="sender"
+            type="text"
+            {...register('sender', {
+              required: '작성자를 입력해주세요.',
+              maxLength: 10,
+            })}
+          />
         </FromDiv>
         <button type="submit">보내기</button>
       </form>

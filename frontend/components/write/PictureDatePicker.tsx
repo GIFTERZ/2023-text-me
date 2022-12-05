@@ -3,6 +3,8 @@ import { useCardPicture } from '../../stores/useCardPicture';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
+import { Input } from '../../styles/components/Form';
+import styled from 'styled-components';
 
 export default function PictureDatePicker() {
   const dateToString = (date: Date) => {
@@ -24,6 +26,16 @@ export default function PictureDatePicker() {
       fixedHeight
       selected={pictureDate}
       onChange={(date: Date) => setPictureDate(date)}
+      customInput={<CustomInput />}
+      placeholderText="날짜 선택"
     />
   );
 }
+
+const CustomInput = styled(Input)`
+  color: black;
+  font-family: 'Cafe24Ssurround';
+  margin-top: 20px;
+  display: inline-block;
+  left: 0 !important;
+`;

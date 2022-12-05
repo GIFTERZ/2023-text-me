@@ -57,7 +57,7 @@ const Title = styled.h1`
   font-family: 'Cafe24Ssurround';
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 30px;
   line-height: 24px;
   text-align: center;
 `;
