@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
 import { useCardPicture } from '../../../stores/useCardPicture';
+import { LeftButton } from '../../../styles/components/Button';
+import { Frame } from '../../../styles/components/Frame';
+import styled from 'styled-components';
 
 export default function index() {
   const { pictureUrl, setPictureUrl } = useCardPicture();
@@ -24,19 +27,59 @@ export default function index() {
   };
 
   return (
-    <>
-      <h1>편지에 쓸 사진을 골라주세요</h1>
-      <div>
+    <Frame>
+      <Title>카드 선택하기</Title>
+      <PictureContainer>
         <form>
-          <label htmlFor="file">갤러리에서 선택하기</label>
-          <div onClick={handleClick} style={{ width: 100, height: 100, backgroundColor: 'blue' }}>
-            +
-          </div>
+          {pictureUrl ? (
+            <CardImage id="image" onClick={handleClick} src={pictureUrl} />
+          ) : (
+            <InputDiv id="image" onClick={handleClick}>
+              +
+            </InputDiv>
+          )}
           <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
-          {pictureUrl && <img src={pictureUrl} style={{ width: 100, height: 100 }}></img>}
-          <div onClick={sendFile}>버튼으로 전송하기</div>
         </form>
-      </div>
-    </>
+        <CardImage src={pictureUrl} />
+        <CardImage />
+        <CardImage />
+        <CardImage />
+        <CardImage />
+      </PictureContainer>
+      <LeftButton style={{ width: '100%' }} onClick={sendFile}>
+        선택하기
+      </LeftButton>
+    </Frame>
   );
 }
+
+const Title = styled.h1`
+  font-family: 'Cafe24Ssurround';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+`;
+
+const PictureContainer = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+`;
+
+const InputDiv = styled.div`
+  border: 1px solid white;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  text-align: center;
+`;
+
+const CardImage = styled.img`
+  height: 100%;
+  width: 100%;
+`;
