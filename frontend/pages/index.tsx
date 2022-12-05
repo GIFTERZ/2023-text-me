@@ -21,17 +21,17 @@ export default function Home() {
       <RoomEnterForm />
       <ButtonsContainer>
         {isUser ? (
-          <Link href={`/${member?.id}`}>
-            <LeftButton type="button">내 방으로 가기</LeftButton>
-          </Link>
+          <LeftButton type="button">
+            <Link href={`/${member?.id}`}>내 방으로 가기</Link>
+          </LeftButton>
         ) : (
           <>
-            <Link href={"/signup"}>
-              <LeftButton type="button">내 방 만들기</LeftButton>
-            </Link>
-            <Link href={"/signin"}>
-              <RightButton type="button">로그인</RightButton>
-            </Link>
+            <LeftButton type="button">
+              <Link href={"/signup"}>내 방 만들기</Link>
+            </LeftButton>
+            <RightButton type="button">
+              <Link href={"/signin"}>로그인</Link>
+            </RightButton>
           </>
         )}
       </ButtonsContainer>
@@ -54,14 +54,17 @@ const Title = styled.h1`
 
 const ButtonsContainer = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 12px;
 
   margin-top: 158px;
 
   width: 100%;
 
-  ${LeftButton}, ${RightButton} {
+  ${LeftButton} {
+    width: 100%;
+  }
+
+  ${RightButton} {
     width: 100%;
   }
 `;

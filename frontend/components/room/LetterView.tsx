@@ -94,6 +94,10 @@ const Card = styled.div`
     object-fit: cover;
     border-radius: 20px;
   }
+
+  @media ${({ theme }) => theme.device.small} {
+    width: 240px;
+  }
 `;
 
 const CardBack = styled(Card)<{ imgUrl: string }>`
@@ -121,6 +125,10 @@ const ToText = styled.h2`
   line-height: 24px;
 
   color: #222222;
+
+  @media ${({ theme }) => theme.device.small} {
+    font-size: 18px;
+  }
 `;
 
 const Content = styled.p`
@@ -153,4 +161,8 @@ const FromText = styled.h2`
   line-height: 24px;
 
   color: #222222;
+
+  @media ${({ theme }) => theme.device.small} {
+    font-size: 18px;
+  }
 `;

@@ -25,6 +25,8 @@ const Input = styled.input`
   border-radius: 10px 10px 10px 0px;
   border: none;
 
+  color: #9e9e9e;
+
   &:focus {
     outline: none;
   }

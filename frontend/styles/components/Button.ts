@@ -31,4 +31,32 @@ const RightButton = styled(Button)`
   border-radius: 10px 10px 0px 10px;
 `;
 
-export { LeftButton, RightButton };
+const WhiteButton = styled.button`
+  width: 48px;
+  height: 48px;
+
+  background: #ffffff;
+  border-radius: 10px 10px 0px 10px;
+  border: none;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @media ${({ theme }) => theme.device.small} {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`;
+
+export { LeftButton, RightButton, WhiteButton };
