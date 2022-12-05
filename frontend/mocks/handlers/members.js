@@ -9,6 +9,9 @@ const membersHandlers = [
     const newMember = req.body;
     return res(ctx.status(200), ctx.json(newMember));
   }),
+  rest.post("/members", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ id: 1 }));
+  }),
 ];
 
 export { membersHandlers };
