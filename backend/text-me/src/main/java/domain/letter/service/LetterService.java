@@ -3,11 +3,11 @@ package domain.letter.service;
 import domain.letter.dto.request.LetterRequest;
 import domain.letter.dto.response.LetterResponse;
 import domain.letter.entity.Letter;
+import domain.letter.exception.LetterNotFoundException;
 import domain.letter.repository.LetterRepository;
+import domain.user.entity.User;
 import domain.user.exception.UserNotFoundException;
 import domain.user.repository.UserRepository;
-import domain.user.entity.User;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class LetterService {
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
+
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
         Optional<User> userExist = userRepository.findById(request.getReceiverId());
@@ -50,5 +51,20 @@ public class LetterService {
                     .collect(Collectors.toList());
         }
         throw new UserNotFoundException();
+    }
+
+    public LetterResponse findLetter(String email, Long id) {
+        Optional<User> userExist = userRepository.findByEmail(email);
+        if (userExist.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        User user = userExist.get();
+        Optional<Letter> letterExist = letterRepository.findById(id);
+        if (letterExist.isEmpty()) {
+            throw new LetterNotFoundException();
+        }
+        Letter letter = letterExist.get();
+        return new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
+                letter.getContents(), letter.getImageUrl());
     }
 }
