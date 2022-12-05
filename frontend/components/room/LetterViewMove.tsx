@@ -101,6 +101,7 @@ const Container = styled.div`
   width: 100%;
 
   padding: 0 3px;
+  z-index: 30;
 `;
 
 const Button = styled.button<{ disabledStyle: boolean }>`

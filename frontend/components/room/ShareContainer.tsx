@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { WhiteButton } from "../../styles/components/Button";
+import ShareIcon from "./icons/ShareIcon";
 import ShareModal from "./ShareModal";
 
 function ShareContainer() {
@@ -23,9 +25,9 @@ function ShareContainer() {
   return (
     <>
       {shareModal && <ShareModal close={() => setShareModal(false)} />}
-      <button onClick={onShareClick} type="button">
-        공유
-      </button>
+      <WhiteButton onClick={onShareClick} type="button">
+        <ShareIcon />
+      </WhiteButton>
     </>
   );
 }
