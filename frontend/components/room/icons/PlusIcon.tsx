@@ -24,8 +24,8 @@ function PlusIcon({ onClick }: Props) {
           x2="24"
           y2="32"
           stroke="white"
-          stroke-width="6"
-          stroke-linecap="round"
+          strokeWidth="6"
+          strokeLinecap="round"
         />
         <line
           x1="17"
@@ -33,8 +33,8 @@ function PlusIcon({ onClick }: Props) {
           x2="31"
           y2="24"
           stroke="white"
-          stroke-width="6"
-          stroke-linecap="round"
+          strokeWidth="6"
+          strokeLinecap="round"
         />
         <defs>
           <filter
@@ -44,9 +44,9 @@ function PlusIcon({ onClick }: Props) {
             width="52"
             height="52"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"
