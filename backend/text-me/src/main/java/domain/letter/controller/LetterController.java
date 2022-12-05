@@ -22,8 +22,8 @@ public class LetterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LetterResponse>> getLetters(@RequestParam("id") final Long id) {
-        List<LetterResponse> letterResponses = letterService.getLettersByUserId(id);
+    public ResponseEntity<List<LetterResponse>> findLetters(@RequestParam("id") final Long id) {
+        List<LetterResponse> letterResponses = letterService.findLettersByUserId(id);
         return ResponseEntity.ok().body(letterResponses);
     }
 }

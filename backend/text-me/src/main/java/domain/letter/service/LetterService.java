@@ -38,7 +38,7 @@ public class LetterService {
         throw new UserNotFoundException();
     }
 
-    public List<LetterResponse> getLettersByUserId(Long id) {
+    public List<LetterResponse> findLettersByUserId(Long id) {
         Optional<User> userExist = userRepository.findById(id);
         if (userExist.isPresent()) {
             User user = userExist.get();
