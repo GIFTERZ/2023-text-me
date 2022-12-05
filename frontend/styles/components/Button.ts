@@ -18,6 +18,7 @@ const Button = styled.button`
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
 
   &:focus {
+    outline: none;
     background: #8cebb8;
     color: #0eca92;
   }
