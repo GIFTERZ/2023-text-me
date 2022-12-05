@@ -8,8 +8,8 @@ interface LetterInfo {
 }
 
 export const useLetterInfo = create<LetterInfo>(set => ({
-  letterContents: '',
-  letterSender: '',
+  letterContents: null,
+  letterSender: null,
   setLetterContents: select => {
     set({ letterContents: select });
   },
