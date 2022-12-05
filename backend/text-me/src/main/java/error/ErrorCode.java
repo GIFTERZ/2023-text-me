@@ -32,6 +32,9 @@ public enum ErrorCode {
     USER_EMPTY(400, "M011", "해당 멤버가 없습니다."),
     LOGIN_AGAIN(400, "M012", "로그인을 다시 시도해 주세요"),
 
+    // Letter
+    LETTER_EMPTY(400, "L001", "해당 편지가 없습니다."),
+
     // Status
     STATUS_EMPTY(400, "S001", "상태를 입력해주세요.");
 
