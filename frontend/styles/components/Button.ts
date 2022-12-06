@@ -18,6 +18,7 @@ const Button = styled.button`
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
 
   &:focus {
+    outline: none;
     background: #8cebb8;
     color: #0eca92;
   }
@@ -59,4 +60,21 @@ const WhiteButton = styled.button`
   }
 `;
 
-export { LeftButton, RightButton, WhiteButton };
+const WhiteLeftButton = styled(WhiteButton)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px 10px 10px 0px;
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+export { LeftButton, RightButton, WhiteButton, WhiteLeftButton };

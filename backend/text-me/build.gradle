@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.google.cloud.tools.jib' version '3.2.0'
 }
 
 group = 'gifterz'
@@ -33,4 +34,17 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = "eclipse-temurin:11-jre"
+	}
+	to {
+		image = "text-me-docker"
+		tags = ["latest"]
+	}
+	container {
+		jvmFlags = ["-Xms128m", "-Xmx128m"]
+	}
 }

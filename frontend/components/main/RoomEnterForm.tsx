@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRoomEnter } from "../../stores/useRoomEnter";
 import { LeftButton } from "../../styles/components/Button";
-import { Input, InputContainer, Label } from "../../styles/components/Form";
+import {
+  Input,
+  InputContainer,
+  FormTitle,
+  Description,
+} from "../../styles/components/Form";
 
 type EmailForm = {
   email: string;
@@ -34,7 +39,7 @@ function RoomEnterForm() {
   return (
     <Form onSubmit={handleSubmit(validateForm)}>
       <div>
-        <Label>이메일로 다른 사람 방 입장하기</Label>
+        <FormTitle>이메일로 다른 사람 방 입장하기</FormTitle>
         <Description>
           Text me! 는 연말에 서로 마음을 나눌 수 있는 편지쓰기 사이트에요.
           이메일을 입력해서 다른사람의 방에 입장해보세요. 💌
@@ -68,15 +73,7 @@ const Form = styled.form`
   flex-direction: column;
   gap: 20px;
 
-  ${Label} {
+  ${FormTitle} {
     margin-bottom: 8px;
   }
-`;
-
-const Description = styled.p`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-
-  color: #222222;
 `;
