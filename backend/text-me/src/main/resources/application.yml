@@ -27,3 +27,13 @@ security:
       secretKey: ${JWT_KEY}
       expirationMs: ${JWT_EXPIRY}
       refreshExpirationMs: ${REFRESH_EXPIRY}
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order: desc
