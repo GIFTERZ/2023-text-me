@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import Link from 'next/link';
+import { useMembers } from '../stores/useMembers';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import RoomEnterForm from '../components/main/RoomEnterForm';
+import { LeftButton, RightButton } from '../styles/components/Button';
+import { Frame } from '../styles/components/Frame';
+=======
 import Link from "next/link";
 import { useMembers } from "../stores/useMembers";
 import { useEffect, useState } from "react";
@@ -6,6 +15,7 @@ import RoomEnterForm from "../components/main/RoomEnterForm";
 import { LeftButton, RightButton } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
 import { Title } from "../styles/components/Title";
+>>>>>>> master
 
 export default function Home() {
   const [isUser] = useState(false);
@@ -28,10 +38,10 @@ export default function Home() {
         ) : (
           <>
             <LeftButton type="button">
-              <Link href={"/signup"}>내 방 만들기</Link>
+              <Link href={'/signup'}>내 방 만들기</Link>
             </LeftButton>
             <RightButton type="button">
-              <Link href={"/signin"}>로그인</Link>
+              <Link href={'/signin'}>로그인</Link>
             </RightButton>
           </>
         )}
@@ -40,6 +50,22 @@ export default function Home() {
   );
 }
 
+<<<<<<< HEAD
+const Title = styled.h1`
+  margin-bottom: 40px;
+
+  font-family: 'Cafe24Ssurround';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+
+  color: #222222;
+`;
+
+=======
+>>>>>>> master
 const ButtonsContainer = styled.div`
   display: flex;
   gap: 12px;
