@@ -4,10 +4,9 @@ on:
   push:
     branches:
       - production
-  workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,22 +17,17 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+          distribution: 'temurin'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-        shell: bash
-
-      - name: Build with Gradle
-        run: ./gradlew clean build
-        shell: bash
-
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time
+      - name: SSH setting
+        uses: appleboy/ssh-action@master
         with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
-
-      - name: Show Current Time
-        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
-        shell: bash
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          envs: GITHUB_SHA
+          scrips: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:tagname
+            docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:tagname
+            docker stop server
+            docker run -d --rm --name server -p 80:8080 text-me-docker

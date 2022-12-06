@@ -11,7 +11,7 @@ function LetterComponent({ letter }: Props) {
   const { open } = useLetterView();
 
   return (
-    <Card key={letter.id} onClick={() => open(letter.id)}>
+    <Card onClick={() => open(letter.id)}>
       <CardImg src={letter.cardImg} />
     </Card>
   );
