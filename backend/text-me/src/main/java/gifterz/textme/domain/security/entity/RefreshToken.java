@@ -19,14 +19,16 @@ public class RefreshToken extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String token;
+    private String accessToken;
+    @Column(nullable = false, unique = true)
+    private String refreshToken;
 
     @Column(nullable = false)
     private Instant expiryDate;
 
-    public RefreshToken(String token, Instant expiryDate) {
-        this.token = token;
+    public RefreshToken(String accessToken, String refreshToken, Instant expiryDate) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.expiryDate = expiryDate;
     }
-
 }

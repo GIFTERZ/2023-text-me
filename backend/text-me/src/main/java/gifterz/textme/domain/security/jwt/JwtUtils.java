@@ -53,4 +53,8 @@ public class JwtUtils {
         return false;
     }
 
+    public String extractEmail(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret)
+                .parseClaimsJws(token).getBody().getSubject();
+    }
 }

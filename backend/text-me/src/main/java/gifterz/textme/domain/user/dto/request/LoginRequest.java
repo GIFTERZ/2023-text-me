@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 public class LoginRequest {
 
     @NotBlank(message = "이메일을 입력해주세요.")
-    @Email(message = "이메일 형식이 잘못되었습니다.")
+    @Email
     private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요")

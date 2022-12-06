@@ -67,7 +67,7 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.generateJwtToken(user);
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken();
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
         return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken, refreshToken.getId());
     }
 

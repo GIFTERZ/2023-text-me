@@ -18,7 +18,7 @@ public class SignUpRequest {
     private String name;
 
     @NotBlank(message = "이메일을 입력해주세요.")
-    @Email(message = "이메일 형식이 잘못되었습니다.", regexp = "^[a-zA-Z0-9+-\\\\_.]+@[a-zA-Z0-9-]+\\\\.[a-zA-Z0-9-.]+$")
+    @Email
     private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요")

@@ -26,22 +26,22 @@ public class RefreshTokenService {
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
 
-    public Optional<RefreshToken> findByToken(String token) {
-        return refreshTokenRepository.findByToken(token);
+    public Optional<RefreshToken> findByAccessToken(String token) {
+        return refreshTokenRepository.findByAccessToken(token);
     }
 
-    public RefreshToken createRefreshToken() {
+    public RefreshToken createRefreshToken(String token) {
         RefreshToken refreshToken =
-                new RefreshToken(UUID.randomUUID().toString(), Instant.now().plusMillis(refreshTokenDurationMs));
+                new RefreshToken(token, UUID.randomUUID().toString(), Instant.now().plusMillis(refreshTokenDurationMs));
 
-        refreshToken = refreshTokenRepository.save(refreshToken);
+        refreshTokenRepository.save(refreshToken);
         return refreshToken;
     }
 
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(token);
-            throw new TokenRefreshException(token.getToken(),
+            throw new TokenRefreshException(token.getRefreshToken(),
                     "리프레시토큰이 만료되었습니다.");
         }
 
@@ -54,15 +54,14 @@ public class RefreshTokenService {
             throw new UserNotFoundException();
         }
         User user = userExist.get();
-        Optional<RefreshToken> refreshTokenExist = findByToken(token);
+        Optional<RefreshToken> refreshTokenExist = findByAccessToken(token);
         if (refreshTokenExist.isEmpty()) {
-            RefreshToken refreshToken = refreshTokenExist.get();
-            throw new TokenRefreshException(refreshToken.getToken(),
+            throw new TokenRefreshException(token,
                     "refreshToken이 DB에 존재하지 않습니다.");
         }
         RefreshToken refreshToken = verifyExpiration(refreshTokenExist.get());
         String newToken = jwtUtils.generateJwtToken(user);
-        return new TokenRefreshResponse(newToken, refreshToken.getToken());
+        return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken());
 
     }
 }
