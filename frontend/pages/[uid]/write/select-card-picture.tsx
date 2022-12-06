@@ -55,10 +55,9 @@ export default function index() {
 }
 
 const Title = styled.h1`
-  font-family: 'Cafe24Ssurround';
   font-style: normal;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 24px;
   text-align: center;
 `;

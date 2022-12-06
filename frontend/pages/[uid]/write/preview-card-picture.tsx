@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation';
 import PictureDatePicker from '../../../components/write/PictureDatePicker';
 import { Frame } from '../../../styles/components/Frame';
 import styled from 'styled-components';
-import { LeftButton, RightButton } from '../../../styles/components/Button';
+import { LeftButton, RightButton, WhiteButton } from '../../../styles/components/Button';
 import { Input } from '../../../styles/components/Form';
 import { useForm } from 'react-hook-form';
+import { MdArrowBackIosNew } from 'react-icons/md';
 
 export default function index() {
   const router = useRouter();
@@ -17,13 +18,15 @@ export default function index() {
     router.push('/:uid/write/write-letter');
   };
   return (
-    <Frame style={{ padding: 50 }}>
+    <Frame style={{ padding: 20 }}>
       <Header>
-        <LeftButton onClick={() => router.back()}>이전</LeftButton>
-        <Title>카드 확인하기</Title>
-        <RightButton type="submit" onClick={handleSubmit(pushWriteScreen)}>
+        <WhiteLeftButton style={{ backgroundColor: 'white' }} onClick={() => router.back()}>
+          <MdArrowBackIosNew size={24} />
+        </WhiteLeftButton>
+        <Title>카드 선택하기</Title>
+        <WhiteRightButton style={{ backgroundColor: 'white' }} type="submit" onClick={handleSubmit(pushWriteScreen)}>
           선택
-        </RightButton>
+        </WhiteRightButton>
       </Header>
       <PreviewDiv>
         {pictureUrl && <CardImage src={pictureUrl} />}
@@ -36,15 +39,15 @@ export default function index() {
           })}
         />
       </PreviewDiv>
+      <button onClick={() => router.push('/:uid/write/select-card-picture')}></button>
     </Frame>
   );
 }
 
 const Title = styled.h1`
-  font-family: 'Cafe24Ssurround';
   font-style: normal;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 24px;
   text-align: center;
 `;
@@ -52,9 +55,10 @@ const Title = styled.h1`
 const PreviewDiv = styled.div`
   margin-top: 3rem;
   width: 100%;
-  padding: 50px;
+  padding: 30px;
   border: 1px solid white;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;
 
 const Header = styled.div`
@@ -65,11 +69,31 @@ const Header = styled.div`
 const CardImage = styled.img`
   height: 100%;
   width: 100%;
+  border-radius: 5px;
 `;
 
 const CommentInput = styled(Input)`
   margin-top: 20px;
   width: 100%;
   color: black;
-  font-family: 'Cafe24Ssurround';
+  font-family: 'UhBeemysen', 'Cafe24Ssurround';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+`;
+
+const WhiteLeftButton = styled(LeftButton)`
+  background-color: white;
+  color: #0eca92;
+`;
+const WhiteRightButton = styled(RightButton)`
+  background-color: white;
+  color: #0eca92;
+  font-size: 14px;
+  width: 40px;
+  height: 40px;
+  font-weight: 600;
+  line-height: 16.8px;
+  text-align: center;
 `;
