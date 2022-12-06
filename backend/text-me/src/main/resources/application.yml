@@ -5,7 +5,7 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    drive-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -16,9 +16,14 @@ spring:
         format_sql: true
         show_sql: true
     open-in-view: false
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
 security:
   jwt:
     token:
-      secret-key: ${JWT_KEY}
+      secretKey: ${JWT_KEY}
       expirationMs: ${JWT_EXPIRY}
       refreshExpirationMs: ${REFRESH_EXPIRY}
