@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { useMembers } from "../stores/useMembers";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import RoomEnterForm from "../components/main/RoomEnterForm";
-import { LeftButton, RightButton } from "../styles/components/Button";
-import { Frame } from "../styles/components/Frame";
-import { Title } from "../styles/components/Title";
+import Link from 'next/link';
+import { useMembers } from '../stores/useMembers';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import RoomEnterForm from '../components/main/RoomEnterForm';
+import { LeftButton, RightButton } from '../styles/components/Button';
+import { Frame } from '../styles/components/Frame';
+import { Title } from '../styles/components/Title';
 
 export default function Home() {
   const [isUser] = useState(false);
@@ -28,10 +28,10 @@ export default function Home() {
         ) : (
           <>
             <LeftButton type="button">
-              <Link href={"/signup"}>내 방 만들기</Link>
+              <Link href={'/signup'}>내 방 만들기</Link>
             </LeftButton>
             <RightButton type="button">
-              <Link href={"/signin"}>로그인</Link>
+              <Link href={'/signin'}>로그인</Link>
             </RightButton>
           </>
         )}
