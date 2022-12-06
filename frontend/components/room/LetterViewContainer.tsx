@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { useLetterView } from "../../stores/useLetterView";
+import { Overlay } from "../../styles/components/Modal";
 import LetterView from "./LetterView";
 import LetterViewMove from "./LetterViewMove";
 
@@ -26,13 +26,3 @@ function LetterViewContainer() {
 }
 
 export default LetterViewContainer;
-
-const Overlay = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background: rgba(111, 111, 111, 0.8);
-`;
