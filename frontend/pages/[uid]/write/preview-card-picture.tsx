@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import PictureDatePicker from '../../../components/write/PictureDatePicker';
 import { Frame } from '../../../styles/components/Frame';
 import styled from 'styled-components';
-import { LeftButton, RightButton, WhiteButton } from '../../../styles/components/Button';
+import { LeftButton, RightButton, WhiteLeftButton } from '../../../styles/components/Button';
 import { Input } from '../../../styles/components/Form';
 import { useForm } from 'react-hook-form';
-import { MdArrowBackIosNew } from 'react-icons/md';
+import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
 
 export default function index() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function index() {
     <Frame style={{ padding: 20 }}>
       <Header>
         <WhiteLeftButton style={{ backgroundColor: 'white' }} onClick={() => router.back()}>
-          <MdArrowBackIosNew size={24} />
+          <ArrowBackIcon />
         </WhiteLeftButton>
         <Title>카드 선택하기</Title>
         <WhiteRightButton style={{ backgroundColor: 'white' }} type="submit" onClick={handleSubmit(pushWriteScreen)}>
@@ -83,17 +83,11 @@ const CommentInput = styled(Input)`
   line-height: 30px;
 `;
 
-const WhiteLeftButton = styled(LeftButton)`
-  background-color: white;
+const WhiteRightButton = styled(WhiteLeftButton)`
+  border-radius: 10px 10px 0px 10px;
   color: #0eca92;
-`;
-const WhiteRightButton = styled(RightButton)`
-  background-color: white;
-  color: #0eca92;
-  font-size: 14px;
-  width: 40px;
-  height: 40px;
+  font-style: normal;
   font-weight: 600;
-  line-height: 16.8px;
-  text-align: center;
+  font-size: 14px;
+  line-height: 17px;
 `;
