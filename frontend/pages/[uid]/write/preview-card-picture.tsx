@@ -21,7 +21,7 @@ export default function index() {
     <Frame style={{ padding: 20 }}>
       <Header>
         <WhiteLeftButton style={{ backgroundColor: 'white' }} onClick={() => router.back()}>
-          <MdArrowBackIosNew size={30} />
+          <MdArrowBackIosNew size={24} />
         </WhiteLeftButton>
         <Title>카드 선택하기</Title>
         <WhiteRightButton style={{ backgroundColor: 'white' }} type="submit" onClick={handleSubmit(pushWriteScreen)}>
@@ -39,15 +39,15 @@ export default function index() {
           })}
         />
       </PreviewDiv>
+      <button onClick={() => router.push('/:uid/write/select-card-picture')}></button>
     </Frame>
   );
 }
 
 const Title = styled.h1`
-  font-family: 'Cafe24Ssurround';
   font-style: normal;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 24px;
   text-align: center;
 `;
@@ -69,14 +69,18 @@ const Header = styled.div`
 const CardImage = styled.img`
   height: 100%;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 
 const CommentInput = styled(Input)`
   margin-top: 20px;
   width: 100%;
   color: black;
-  font-family: 'Cafe24Ssurround';
+  font-family: 'UhBeemysen', 'Cafe24Ssurround';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
 `;
 
 const WhiteLeftButton = styled(LeftButton)`
@@ -86,4 +90,10 @@ const WhiteLeftButton = styled(LeftButton)`
 const WhiteRightButton = styled(RightButton)`
   background-color: white;
   color: #0eca92;
+  font-size: 14px;
+  width: 40px;
+  height: 40px;
+  font-weight: 600;
+  line-height: 16.8px;
+  text-align: center;
 `;

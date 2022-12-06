@@ -34,7 +34,11 @@ export default function PictureDatePicker() {
 
 const CustomInput = styled(Input)`
   color: black;
-  font-family: 'Cafe24Ssurround';
+  font-family: 'UhBeemysen';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
   margin-top: 20px;
   display: inline-block;
   left: 0 !important;
