@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useLetters } from "../../stores/useLetters";
-import { Spinner } from "../../styles/indicators/Loader";
-import DeferredComponent from "../common/DeferredComponent";
 import Letter from "./Letter";
 
 interface Props {
@@ -27,13 +25,13 @@ function LettersContainer({ userId }: Props) {
   return (
     <Container id="lettersContainer">
       <Row>
-        {letters?.slice(0, Math.ceil(letters.length / 2)).map((letter) => (
-          <Letter letter={letter} />
+        {letters?.slice(0, Math.ceil(letters.length / 2))?.map((letter) => (
+          <Letter key={letter.id} letter={letter} />
         ))}
       </Row>
       <Row>
-        {letters?.slice(Math.ceil(letters.length / 2)).map((letter) => (
-          <Letter letter={letter} />
+        {letters?.slice(Math.ceil(letters.length / 2))?.map((letter) => (
+          <Letter key={letter.id} letter={letter} />
         ))}
       </Row>
     </Container>
