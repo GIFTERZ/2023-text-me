@@ -11,10 +11,7 @@ import gifterz.textme.domain.user.dto.response.UserResponse;
 import gifterz.textme.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -44,5 +41,11 @@ public class UserController {
         String token = request.getRefreshToken();
         TokenRefreshResponse tokenRefreshResponse = refreshTokenService.refreshJwtToken(email, token);
         return ResponseEntity.ok().body(tokenRefreshResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<UserResponse> getUserInfo(@JwtAuth String email) {
+        UserResponse userResponse = userService.findUserInfo(email);
+        return ResponseEntity.ok().body(userResponse);
     }
 }

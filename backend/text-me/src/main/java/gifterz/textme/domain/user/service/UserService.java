@@ -71,4 +71,12 @@ public class UserService {
         return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken, refreshToken.getId());
     }
 
+    public UserResponse findUserInfo(String email) {
+        Optional<User> userExists = userRepository.findByEmail(email);
+        if (userExists.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        User user = userExists.get();
+        return new UserResponse(user.getName(), user.getEmail());
+    }
 }
