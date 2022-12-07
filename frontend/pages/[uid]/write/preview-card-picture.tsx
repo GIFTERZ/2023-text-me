@@ -1,6 +1,6 @@
 import React from "react";
 import { useCardPicture } from "../../../stores/useCardPicture";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Frame } from "../../../styles/components/Frame";
 import styled from "styled-components";
 import { WhiteLeftButton } from "../../../styles/components/Button";
@@ -56,6 +56,10 @@ const PreviewDiv = styled.div`
 
   box-shadow: 1px 1px 8px 3px rgba(0, 0, 0, 0.25), inset 2px 2px 2px #ffffff;
   border-radius: 5px;
+
+  @media ${({ theme }) => theme.device.large} {
+    width: 358px;
+  }
 `;
 
 const Header = styled.div`
