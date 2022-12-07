@@ -1,22 +1,27 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { Frame } from '../../../styles/components/Frame';
-import { LeftButton, RightButton } from '../../../styles/components/Button';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { Frame } from "../../../styles/components/Frame";
+import { LeftButton, RightButton } from "../../../styles/components/Button";
+import { useRoomInfo } from "../../../stores/useRoomInfo";
+import Link from "next/link";
 
 export default function index() {
+  const [isUser] = useState(true);
+
   const { pictureUrl } = useCardPicture();
-  const nickname_long = '가나다라마바사아자차카';
-  const nickname_short = '승현이';
+  const { roomInfo } = useRoomInfo();
+
   const textLimitChangeLine = (nickname: string) => {
     if (nickname.length < 7) {
       return <p>{nickname}님께 편지를 보냈어요</p>;
     } else {
       return (
-        <>
-          <p>{nickname}님께</p>
-          <p>편지를 보냈어요</p>
-        </>
+        <p>
+          {nickname}님께
+          <br />
+          편지를 보냈어요
+        </p>
       );
     }
   };
@@ -24,17 +29,31 @@ export default function index() {
   return (
     <Frame>
       <Container>
-        <Title>{textLimitChangeLine(nickname_short)}</Title>
+        <Title>{textLimitChangeLine(roomInfo.ownerName)}</Title>
         {pictureUrl && <CardImage src={pictureUrl} />}
-        <LeftButton>내방 만들기</LeftButton>
-        <RightButton>확인하기</RightButton>
+        <div>
+          {!isUser && (
+            <LeftButton>
+              <Link href="/singup">내 방 만들기</Link>
+            </LeftButton>
+          )}
+          <RightButton>
+            <Link href={`/${roomInfo?.userId}`}>확인하기</Link>
+          </RightButton>
+        </div>
       </Container>
     </Frame>
   );
 }
 
 const Container = styled.div`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+
+  margin-top: 20px;
+
   ${LeftButton} {
     width: 180px;
     height: 40px;
@@ -58,6 +77,8 @@ const Container = styled.div`
 `;
 
 const Title = styled.p`
+  margin: 0;
+
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
@@ -69,5 +90,4 @@ const CardImage = styled.img`
   width: 140px;
   height: 175px;
   border-radius: 10px;
-  margin-bottom: 30px;
 `;
