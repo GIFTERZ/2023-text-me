@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { setCookie } from '../components/common/Cookie';
 import ArrowBackIcon from '../components/common/icons/ArrowBackIcon';
 import { LeftButton, WhiteLeftButton } from '../styles/components/Button';
 import { FormTitle, Input, InputContainer } from '../styles/components/Form';
 import { Frame } from '../styles/components/Frame';
 import { Title } from '../styles/components/Title';
 axios.defaults.withCredentials = true;
-const JWT_EXPIRE_TIME = 24 * 3600 * 1000;
 
 type SignInForm = {
   email: string;
@@ -27,15 +27,17 @@ function SignIn() {
 
   const signIn = async (data: SignInForm) => {
     await axios
-      .post('/login', data)
+      .post('/users/login', data)
       .then(res => {
-        const { accessToken } = res.data;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        // setTimeout(onSlientRefresh, JWT_EXPIRE_TIME - 60000);
+        const {
+          data: { token, refreshTokenId },
+        } = res;
+        setCookie('textMeAccessToken', token);
+        localStorage.setItem('textMeRefreshTokenId', refreshTokenId);
         router.push('/signin');
       })
-      .catch(() => {
-        alert('에러가 발생했습니다.');
+      .catch(error => {
+        alert(error);
       });
   };
 
