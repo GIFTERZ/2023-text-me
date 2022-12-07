@@ -28,12 +28,18 @@ public class OpenApiConfig {
     @Bean
     public GroupedOpenApi letterApi() {
         String[] paths = {"/letters/**"};
-        return GroupedOpenApi.builder().group("편지 API").pathsToMatch(paths).build();
+        return GroupedOpenApi.builder().group("편지 관련 API").pathsToMatch(paths).build();
     }
 
     @Bean
     public GroupedOpenApi s3Api() {
         String[] paths = {"/files/**"};
-        return GroupedOpenApi.builder().group("업로드 API").pathsToMatch(paths).build();
+        return GroupedOpenApi.builder().group("업로드 관련 API").pathsToMatch(paths).build();
+    }
+
+    @Bean
+    public GroupedOpenApi cardApi() {
+        String[] paths = {"/cards/**"};
+        return GroupedOpenApi.builder().group("카드 관련 API").pathsToMatch(paths).build();
     }
 }
