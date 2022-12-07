@@ -46,7 +46,7 @@ jib {
 		image = "eclipse-temurin:11-jre"
 	}
 	to {
-		image = "text-me-docker"
+		image = "text-me-docker-repo"
 		tags = ["latest"]
 	}
 	container {
