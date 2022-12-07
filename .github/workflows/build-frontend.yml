@@ -9,7 +9,7 @@ on:
       - "frontend/**"
   workflow_dispatch:
 
-default:
+defaults:
   run:
     working-directory: frontend
 
@@ -19,8 +19,23 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 
+      - name: Use Node.js
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+          cache-dependency-path: "./frontend/package-lock.json"
+
+      - name: Install
+        run: yarn install
+
+      - name: Build
+        run: yarn run build
+
+      - name: pm2
+        run: pm2 reload next-js
+        env:
+          CI: true
