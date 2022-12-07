@@ -48,4 +48,10 @@ public class UserController {
         UserResponse userResponse = userService.findUserInfo(email);
         return ResponseEntity.ok().body(userResponse);
     }
+
+    @PatchMapping
+    public ResponseEntity<UserResponse> updateUserName(@JwtAuth String email, @RequestParam final String name) {
+        UserResponse userResponse = userService.updateUserName(email, name);
+        return ResponseEntity.ok().body(userResponse);
+    }
 }
