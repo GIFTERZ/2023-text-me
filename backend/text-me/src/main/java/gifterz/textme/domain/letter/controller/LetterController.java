@@ -1,8 +1,8 @@
 package gifterz.textme.domain.letter.controller;
 
-import gifterz.textme.domain.letter.service.LetterService;
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
+import gifterz.textme.domain.letter.service.LetterService;
 import gifterz.textme.domain.security.jwt.JwtAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LetterController {
     private final LetterService letterService;
+
     @PostMapping
     public ResponseEntity<LetterResponse> sendLetter(@RequestBody @Valid final LetterRequest request) {
         LetterResponse letterResponse = letterService.makeLetter(request);

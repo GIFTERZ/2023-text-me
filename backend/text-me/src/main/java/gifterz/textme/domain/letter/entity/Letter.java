@@ -29,11 +29,11 @@ public class Letter extends BaseEntity {
     @Lob
     private String imageUrl;
 
-    public static Letter of (User user, String senderName, String contents, String imageUrl) {
-        return new Letter(user, senderName,contents, imageUrl);
+    public static Letter of(User user, String senderName, String contents, String imageUrl) {
+        return new Letter(user, senderName, contents, imageUrl);
     }
 
-    public Letter (User user, String senderName, String contents, String imageUrl) {
+    public Letter(User user, String senderName, String contents, String imageUrl) {
         this.user = user;
         this.senderName = senderName;
         this.contents = contents;
