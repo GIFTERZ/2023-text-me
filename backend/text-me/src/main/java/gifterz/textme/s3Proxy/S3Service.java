@@ -36,7 +36,7 @@ public class S3Service {
         return findFile(s3FileName);
     }
 
-    private String findFile(String fileName) {
+    public String findFile(String fileName) {
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 }

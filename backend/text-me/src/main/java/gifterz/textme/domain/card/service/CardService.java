@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +25,15 @@ public class CardService {
         Card card = Card.from(uploadUrl);
         cardRepository.save(card);
         return card.getImageUrl();
+    }
+
+    public List<String> findCards() {
+        List<String> imageUrls = cardRepository.findAll()
+                .stream()
+                .map(Card::getImageUrl)
+                .collect(Collectors.toList());
+        return imageUrls.stream()
+                .map(s3Service::findFile)
+                .collect(Collectors.toList());
     }
 }
