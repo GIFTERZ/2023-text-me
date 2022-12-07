@@ -11,8 +11,8 @@ const checkExpire = (refreshToken: string) => {
 };
 
 const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
-  const refreshToken = localStorage.getItem('refreshTokenId');
-  let accessToken = getCookie('accessToken');
+  const refreshToken = localStorage.getItem('textMeRefreshTokenId');
+  let accessToken = getCookie('textMeAccessToken');
 
   if (checkExpire(refreshToken)) {
     await axios
@@ -26,8 +26,8 @@ const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> 
       })
       .then(res => {
         accessToken = res.data.accessToken;
-        setCookie('accessToken', accessToken);
-        localStorage.setItem('refreshTokenId', res.data.refreshToken);
+        setCookie('textMeAccessToken', accessToken);
+        localStorage.setItem('textMeRefreshTokenId', res.data.refreshToken);
       });
   }
 
@@ -36,7 +36,7 @@ const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> 
 };
 
 const refreshError = () => {
-  localStorage.removeItem('refreshTokenId');
+  localStorage.removeItem('textMeRefreshTokenId');
 };
 
 export { refresh, refreshError };

@@ -32,13 +32,13 @@ function SignIn() {
         const {
           data: { token, refreshTokenId, email },
         } = res;
-        setCookie('accessToken', token);
-        localStorage.setItem('refreshTokenId', refreshTokenId);
+        setCookie('textMeAccessToken', token);
+        localStorage.setItem('textMeRefreshTokenId', refreshTokenId);
         localStorage.setItem('email', email);
         router.push('/signin');
       })
-      .catch(() => {
-        alert('에러가 발생했습니다.');
+      .catch(error => {
+        alert(error);
       });
   };
 
