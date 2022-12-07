@@ -1,13 +1,13 @@
 package gifterz.textme.domain.user.service;
 
 import gifterz.textme.domain.security.WebSecurityConfig;
+import gifterz.textme.domain.security.entity.RefreshToken;
 import gifterz.textme.domain.security.jwt.JwtUtils;
 import gifterz.textme.domain.security.service.RefreshTokenService;
 import gifterz.textme.domain.user.dto.request.LoginRequest;
 import gifterz.textme.domain.user.dto.request.SignUpRequest;
 import gifterz.textme.domain.user.dto.response.LoginResponse;
 import gifterz.textme.domain.user.dto.response.UserResponse;
-import gifterz.textme.domain.security.entity.RefreshToken;
 import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.EmailDuplicatedException;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
