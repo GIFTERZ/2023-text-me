@@ -30,4 +30,10 @@ public class OpenApiConfig {
         String[] paths = {"/letters/**"};
         return GroupedOpenApi.builder().group("편지 API").pathsToMatch(paths).build();
     }
+
+    @Bean
+    public GroupedOpenApi s3Api() {
+        String[] paths = {"/files/**"};
+        return GroupedOpenApi.builder().group("업로드 API").pathsToMatch(paths).build();
+    }
 }

@@ -36,8 +36,10 @@ public enum ErrorCode {
     LETTER_EMPTY(400, "L001", "해당 편지가 없습니다."),
 
     // Status
-    STATUS_EMPTY(400, "S001", "상태를 입력해주세요.");
+    STATUS_EMPTY(400, "S001", "상태를 입력해주세요."),
 
+    // File
+    INVALID_FILE_CONTENT(400, "F001", "적절하지 않은 파일 형식입니다.");
 
     private final int httpStatus;
     private final String code;
