@@ -30,11 +30,10 @@ function SignIn() {
       .post('/users/login', data)
       .then(res => {
         const {
-          data: { token, refreshTokenId, email },
+          data: { token, refreshTokenId },
         } = res;
         setCookie('textMeAccessToken', token);
         localStorage.setItem('textMeRefreshTokenId', refreshTokenId);
-        localStorage.setItem('email', email);
         router.push('/signin');
       })
       .catch(error => {

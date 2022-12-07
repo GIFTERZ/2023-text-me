@@ -15,14 +15,13 @@ const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> 
   let accessToken = getCookie('textMeAccessToken');
 
   if (checkExpire(refreshToken)) {
+    const body = {
+      refreshToken: refreshToken,
+    };
+
     await axios
       .get('/users/token/refresh', {
-        params: {
-          emails: localStorage.getItem('email'),
-          request: {
-            refreshToken: refreshToken,
-          },
-        },
+        params: { ...body },
       })
       .then(res => {
         accessToken = res.data.accessToken;
