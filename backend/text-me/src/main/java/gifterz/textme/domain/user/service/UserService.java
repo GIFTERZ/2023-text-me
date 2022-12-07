@@ -71,4 +71,9 @@ public class UserService {
         return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken, refreshToken.getId());
     }
 
+    public UserResponse findUserInfo(String email) {
+        Optional<User> userExists = userRepository.findByEmail(email);
+        User user = userExists.orElseThrow(UserNotFoundException::new);
+        return new UserResponse(user.getName(), user.getEmail());
+    }
 }
