@@ -47,7 +47,6 @@ jib {
 	}
 	to {
 		image = "sanha1998/text-me-docker-repo"
-		tags = ["latest"]
 	}
 	container {
 		jvmFlags = ["-Xms128m", "-Xmx128m"]
