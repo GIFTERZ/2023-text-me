@@ -1,11 +1,20 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getCookie, setCookie } from '../components/common/Cookie';
+const ACCESS_EXPIRY_TIME = 36000000;
+
+const checkExpire = (refreshToken: string) => {
+  if (ACCESS_EXPIRY_TIME - new Date().getTime() < 0 && refreshToken) {
+    return true;
+  }
+
+  return false;
+};
 
 const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
   const refreshToken = localStorage.getItem('refreshTokenId');
   let accessToken = getCookie('accessToken');
 
-  if (36000000 - new Date().getTime() < 0 && refreshToken) {
+  if (checkExpire(refreshToken)) {
     await axios
       .get('/users/token/refresh', {
         params: {
