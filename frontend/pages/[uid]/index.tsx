@@ -40,7 +40,7 @@ function Room() {
           <ButtonsContainer />
         </Header>
         <LettersContainer userId={userId} />
-        <Link href={`${pathname}/write`}>
+        <Link href={`${pathname}/write/select-card-picture`}>
           <CTAButton className="dont-save">
             TEXT <br />
             {roomInfo?.ownerName}
