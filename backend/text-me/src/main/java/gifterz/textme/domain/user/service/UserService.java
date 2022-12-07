@@ -73,10 +73,7 @@ public class UserService {
 
     public UserResponse findUserInfo(String email) {
         Optional<User> userExists = userRepository.findByEmail(email);
-        if (userExists.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-        User user = userExists.get();
+        User user = userExists.orElseThrow(UserNotFoundException::new);
         return new UserResponse(user.getName(), user.getEmail());
     }
 }
