@@ -40,6 +40,8 @@ jobs:
       - name: Build with jib
         run: |
           ./gradlew jib \
+          -Djib.to.auth.username=${CI_REGISTRY_USER} \
+          -Djib.to.auth.password=${CI_REGISTRY_PASSWORD} \
           -Djib.to.image="text-me-docker"
 
       - name: Docker push
