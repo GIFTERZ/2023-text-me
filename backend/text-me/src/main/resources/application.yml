@@ -37,3 +37,15 @@ springdoc:
     path: /swagger-ui.html
     display-request-duration: true
     groups-order: desc
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}       # AWS IAM AccessKey 적기
+      secretKey: ${AWS_SECRET_ACCESS_KEY}   # AWS IAM SecretKey 적기
+    s3:
+      bucket: textme-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto=false
