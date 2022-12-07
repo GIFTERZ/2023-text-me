@@ -34,7 +34,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: |
+          cd ./backend/text-me
+          chmod +x gradlew
         shell: bash
 
       - name: Build with jib
