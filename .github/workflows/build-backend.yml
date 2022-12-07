@@ -9,7 +9,7 @@ on:
       - "backend/**"
   workflow_dispatch:
 
-default:
+defaults:
   run:
     working-directory: backend
 
