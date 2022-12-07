@@ -13,7 +13,7 @@ export default function index() {
   const { roomInfo } = useRoomInfo();
 
   const textLimitChangeLine = (nickname: string) => {
-    if (nickname.length < 7) {
+    if (nickname?.length < 7) {
       return <p>{nickname}님께 편지를 보냈어요</p>;
     } else {
       return (
@@ -29,7 +29,7 @@ export default function index() {
   return (
     <Frame>
       <Container>
-        <Title>{textLimitChangeLine(roomInfo.ownerName)}</Title>
+        <Title>{textLimitChangeLine(roomInfo?.ownerName)}</Title>
         {pictureUrl && <CardImage src={pictureUrl} />}
         <div>
           {!isUser && (
