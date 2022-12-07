@@ -81,7 +81,7 @@ public class UserService {
     public UserResponse updateUserName(String email, String name) {
         Optional<User> userExists = userRepository.findByEmail(email);
         User user = userExists.orElseThrow(UserNotFoundException::new);
-        userRepository.updateUserName(user.getId(), name);
-        return new UserResponse(name, user.getEmail());
+        user.updateUserName(name);
+        return new UserResponse(user.getName(), user.getEmail());
     }
 }
