@@ -1,45 +1,31 @@
-import React, { useState } from 'react';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { useRouter } from 'next/navigation';
-import PictureDatePicker from '../../../components/write/PictureDatePicker';
-import { Frame } from '../../../styles/components/Frame';
-import styled from 'styled-components';
-import { LeftButton, RightButton, WhiteLeftButton } from '../../../styles/components/Button';
-import { Input } from '../../../styles/components/Form';
-import { useForm } from 'react-hook-form';
-import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
+import React from "react";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Frame } from "../../../styles/components/Frame";
+import styled from "styled-components";
+import { WhiteLeftButton } from "../../../styles/components/Button";
+import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 
 export default function index() {
   const router = useRouter();
-  const { pictureUrl, pictureDate, setPictureDate, pictureComment, setPictureComment } = useCardPicture();
-  const { register, handleSubmit } = useForm();
+  const userId = useSearchParams().get("uid");
+  const { pictureUrl } = useCardPicture();
 
   const pushWriteScreen = () => {
-    router.push('/:uid/write/write-letter');
+    router.push(`/${userId}/write/write-letter`);
   };
   return (
     <Frame style={{ padding: 20 }}>
       <Header>
-        <WhiteLeftButton style={{ backgroundColor: 'white' }} onClick={() => router.back()}>
+        <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />
         </WhiteLeftButton>
-        <Title>카드 선택하기</Title>
-        <WhiteRightButton style={{ backgroundColor: 'white' }} type="submit" onClick={handleSubmit(pushWriteScreen)}>
+        <Title>카드 미리보기</Title>
+        <WhiteRightButton type="button" onClick={pushWriteScreen}>
           선택
         </WhiteRightButton>
       </Header>
-      <PreviewDiv>
-        {pictureUrl && <CardImage src={pictureUrl} />}
-        <PictureDatePicker />
-        <CommentInput
-          type="text"
-          placeholder="사진에 대한 한마디"
-          {...register('comment', {
-            maxLength: 28,
-          })}
-        />
-      </PreviewDiv>
-      <button onClick={() => router.push('/:uid/write/select-card-picture')}></button>
+      <PreviewDiv>{pictureUrl && <CardImage src={pictureUrl} />}</PreviewDiv>
     </Frame>
   );
 }
@@ -53,12 +39,27 @@ const Title = styled.h1`
 `;
 
 const PreviewDiv = styled.div`
-  margin-top: 3rem;
-  width: 100%;
-  padding: 30px;
-  border: 1px solid white;
-  border-radius: 10px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 90%;
+  height: 450px;
+  padding: 22px 22px 111px 22px;
+
+  background: #f7fafc;
+
+  box-shadow: 1px 1px 8px 3px rgba(0, 0, 0, 0.25), inset 2px 2px 2px #ffffff;
+  border-radius: 5px;
+
+  @media ${({ theme }) => theme.device.large} {
+    width: 358px;
+  }
 `;
 
 const Header = styled.div`
@@ -67,20 +68,9 @@ const Header = styled.div`
 `;
 
 const CardImage = styled.img`
-  height: 100%;
   width: 100%;
+  height: 300px;
   border-radius: 5px;
-`;
-
-const CommentInput = styled(Input)`
-  margin-top: 20px;
-  width: 100%;
-  color: black;
-  font-family: 'UhBeemysen', 'Cafe24Ssurround';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 30px;
 `;
 
 const WhiteRightButton = styled(WhiteLeftButton)`

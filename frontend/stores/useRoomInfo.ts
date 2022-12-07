@@ -4,7 +4,7 @@ import create from "zustand";
 interface Room {
   isLoading: boolean;
   error: AxiosError | null;
-  roomInfo: { ownerName: string };
+  roomInfo: { ownerName: string; userId: number };
   getRoomInfo: (userId: number) => void;
 }
 
