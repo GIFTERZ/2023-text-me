@@ -41,7 +41,7 @@ jobs:
 
       - name: Build with jib
         run: |
-          ./gradlew jib \
+          ./text-me/gradlew jib \
           -Djib.to.image="text-me-docker"
 
       - name: Docker push
