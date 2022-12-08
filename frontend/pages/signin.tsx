@@ -35,7 +35,7 @@ function SignIn() {
         } = res;
         setCookie("textMeAccessToken", token);
         localStorage.setItem("textMeRefreshTokenId", refreshTokenId);
-        router.push("/signin");
+        router.push(`/${res.data.id}`);
       })
       .catch(() => {
         alert("에러가 발생했습니다.");
