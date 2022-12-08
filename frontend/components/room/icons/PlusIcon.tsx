@@ -94,9 +94,6 @@ const Container = styled.span`
   z-index: 5;
 
   @media ${({ theme }) => theme.device.large} {
-    position: relative;
-    left: 600px;
-    top: 450px;
   }
 
   @media ${({ theme }) => theme.device.small} {

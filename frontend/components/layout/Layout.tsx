@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 
@@ -6,6 +7,10 @@ interface Props {
 }
 
 function Layout(props: Props) {
+  const router = useRouter();
+  if (router.pathname === "/[uid]") {
+    return <>{props.children}</>;
+  }
   return <Container>{props.children}</Container>;
 }
 
