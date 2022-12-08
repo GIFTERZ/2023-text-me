@@ -42,10 +42,12 @@ jobs:
           ./gradlew jib \
           -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} \
           -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }} \
-          -Djib.to.image="${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo"
+          -Djib.to.image="${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
 
       - name: Docker push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo
+        run: |
+        docker tag text-me-docker-repo ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2
