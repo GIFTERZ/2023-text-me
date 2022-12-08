@@ -90,4 +90,10 @@ public class UserService {
         User user = userExists.orElseThrow(UserNotFoundException::new);
         return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
+
+    public UserResponse findUserInfoByUserId(Long id) {
+        Optional<User> userExists = userRepository.findById(id);
+        User user = userExists.orElseThrow(UserNotFoundException::new);
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+    }
 }
