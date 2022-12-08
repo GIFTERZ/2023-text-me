@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useCardPicture } from "../../../stores/useCardPicture";
-import { Frame } from "../../../styles/components/Frame";
-import { LeftButton, RightButton } from "../../../styles/components/Button";
-import { useRoomInfo } from "../../../stores/useRoomInfo";
-import Link from "next/link";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useCardPicture } from '../../../stores/useCardPicture';
+import { Frame } from '../../../styles/components/Frame';
+import { LeftButton, RightButton } from '../../../styles/components/Button';
+import { useRoomInfo } from '../../../stores/useRoomInfo';
+import Link from 'next/link';
 
 export default function index() {
   const [isUser] = useState(true);
@@ -29,7 +29,7 @@ export default function index() {
   return (
     <Frame>
       <Container>
-        <Title>{textLimitChangeLine(roomInfo?.ownerName)}</Title>
+        <Title>{textLimitChangeLine(roomInfo?.userName)}</Title>
         {pictureUrl && <CardImage src={pictureUrl} />}
         <div>
           {!isUser && (
@@ -38,7 +38,7 @@ export default function index() {
             </LeftButton>
           )}
           <RightButton>
-            <Link href={`/${roomInfo?.userId}`}>확인하기</Link>
+            <Link href={`/${roomInfo?.id}`}>확인하기</Link>
           </RightButton>
         </div>
       </Container>

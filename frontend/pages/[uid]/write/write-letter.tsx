@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { useSendLetter } from "../../../stores/useSendLetter";
-import { useRouter } from "next/router";
-import { Frame } from "../../../styles/components/Frame";
-import { FieldErrors, useForm } from "react-hook-form";
-import { useRoomInfo } from "../../../stores/useRoomInfo";
-import { useSearchParams } from "next/navigation";
-import { RightButton } from "../../../styles/components/Button";
-import { useCardPicture } from "../../../stores/useCardPicture";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { useSendLetter } from '../../../stores/useSendLetter';
+import { useRouter } from 'next/router';
+import { Frame } from '../../../styles/components/Frame';
+import { FieldErrors, useForm } from 'react-hook-form';
+import { useRoomInfo } from '../../../stores/useRoomInfo';
+import { useSearchParams } from 'next/navigation';
+import { RightButton } from '../../../styles/components/Button';
+import { useCardPicture } from '../../../stores/useCardPicture';
 
 type LetterForm = {
   contents: string;
@@ -16,7 +16,7 @@ type LetterForm = {
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get("uid");
+  const userId = useSearchParams().get('uid');
   const { register, handleSubmit } = useForm<LetterForm>();
 
   const { pictureUrl } = useCardPicture();
@@ -34,14 +34,15 @@ export default function index() {
 
   const sendData = (data: LetterForm) => {
     const body = {
-      content: data.contents,
-      writer: data.sender,
-      cardImg: pictureUrl,
+      receiverId: Number(userId),
+      contents: data.contents,
+      senderName: data.sender,
+      imageUrl: pictureUrl,
     };
     sendLetter(body, pushCompletedPage);
 
     if (error) {
-      alert("편지를 보내는 중 에러가 발생했습니다.");
+      alert('편지를 보내는 중 에러가 발생했습니다.');
     }
   };
 
@@ -61,14 +62,14 @@ export default function index() {
       <Title>편지 쓰기</Title>
       <Form onSubmit={handleSubmit(sendData, validateData)}>
         <LetterContainer imgurl={pictureUrl} id="box">
-          <ToDiv>To. {roomInfo?.ownerName}</ToDiv>
+          <ToDiv>To. {roomInfo?.userName}</ToDiv>
           <TextArea
             maxLength={300}
-            {...register("contents", {
-              required: "편지를 입력해주세요.",
+            {...register('contents', {
+              required: '편지를 입력해주세요.',
               maxLength: {
                 value: 300,
-                message: "편지는 300자 이내여야 합니다.",
+                message: '편지는 300자 이내여야 합니다.',
               },
             })}
             placeholder="편지를 입력해주세요."
@@ -79,11 +80,11 @@ export default function index() {
               type="text"
               placeholder="보내는 사람을 입력해주세요."
               maxLength={10}
-              {...register("sender", {
-                required: "보내는 사람을 입력해주세요.",
+              {...register('sender', {
+                required: '보내는 사람을 입력해주세요.',
                 maxLength: {
                   value: 10,
-                  message: "보내는 사람 이름을 10자 이내로 입력해주세요.",
+                  message: '보내는 사람 이름을 10자 이내로 입력해주세요.',
                 },
               })}
             />
@@ -104,8 +105,8 @@ const LetterContainer = styled.div<{ imgurl: string }>`
   position: relative;
 
   ::before {
-    content: "";
-    background: url(${(props) => props.imgurl});
+    content: '';
+    background: url(${props => props.imgurl});
     background-size: cover;
     border-radius: 10px;
     opacity: 0.2;

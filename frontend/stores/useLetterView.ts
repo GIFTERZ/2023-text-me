@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
-import create from "zustand";
-import { Letter } from "../types";
+import { AxiosError } from 'axios';
+import create from 'zustand';
+import { Letter } from '../types';
+import api from '../auth/api';
 
 interface LetterView {
   id: number | null;
@@ -22,12 +23,12 @@ const useLetterView = create<LetterView>((set, get) => ({
   getLetter: async () => {
     const letterId = get().id;
     set({ isLoading: true });
-    await axios
+    await api
       .get(`/letters/${letterId}`)
-      .then((res) => {
+      .then(res => {
         set({ letter: res.data });
       })
-      .catch((error) => {
+      .catch(error => {
         set({ error });
       })
       .finally(() => {

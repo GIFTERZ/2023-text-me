@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { useLetterView } from "../../stores/useLetterView";
-import { Letter } from "../../types";
+import React from 'react';
+import styled from 'styled-components';
+import { useLetterView } from '../../stores/useLetterView';
+import { Letter } from '../../types';
 
 interface Props {
   letter: Letter;
@@ -12,7 +12,7 @@ function LetterComponent({ letter }: Props) {
 
   return (
     <Card onClick={() => open(letter.id)}>
-      <CardImg src={letter.cardImg} />
+      <CardImg src={letter.imageUrl} />
     </Card>
   );
 }
@@ -25,8 +25,7 @@ const Card = styled.div`
   padding: 6px 6px 30px 6px;
 
   background: white;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25),
-    inset 2px 2px 2px rgba(184, 188, 189, 0.4);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 2px 2px rgba(184, 188, 189, 0.4);
   border-radius: 5px;
 
   @media ${({ theme }) => theme.device.small} {
