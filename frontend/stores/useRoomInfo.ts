@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import create from 'zustand';
-import visitor_api from '../auth/visitor_api';
+import visitorApi from '../auth/visitorApi';
 
 interface Room {
   isLoading: boolean;
@@ -15,7 +15,7 @@ const useRoomInfo = create<Room>(set => ({
   roomInfo: null,
   getRoomInfo: async (userId: number) => {
     set({ isLoading: true });
-    await visitor_api
+    await visitorApi
       .get(`/users/find/${userId}`)
       .then(res => {
         set({ roomInfo: res.data });
