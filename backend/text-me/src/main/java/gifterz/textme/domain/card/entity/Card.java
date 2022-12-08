@@ -1,6 +1,7 @@
 package gifterz.textme.domain.card.entity;
 
 import gifterz.textme.domain.entity.BaseEntity;
+import gifterz.textme.domain.entity.StatusType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Card extends BaseEntity {
     }
 
     private Card(String imageUrl) {
+        super(StatusType.ACTIVATE.getStatus());
         this.imageUrl = imageUrl;
     }
 }

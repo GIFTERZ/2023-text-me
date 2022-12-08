@@ -1,5 +1,6 @@
 import create from 'zustand';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
+import visitorApi from '../auth/visitorApi';
 
 type Card = {
   id: number;
@@ -25,7 +26,7 @@ export const useCardPicture = create<CardPicture>(set => ({
   },
   getConstCard: async () => {
     set({ isLoading: true });
-    await axios
+    await visitorApi
       .get('/cards')
       .then(res => {
         set({ constCard: res.data });

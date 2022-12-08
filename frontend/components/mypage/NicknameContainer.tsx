@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useMembers } from "../../stores/useMembers";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMembers } from '../../stores/useMembers';
 
 type MemberForm = {
-  nickname: string;
+  userName: string;
 };
 
 function NicknameContainer() {
   const [editing, setEditing] = useState(false);
 
-  const {
-    isLoading,
-    error,
-    isPatchLoading,
-    patchError,
-    member,
-    patchNickname,
-  } = useMembers();
+  const { isLoading, error, isPatchLoading, patchError, member, patchNickname } = useMembers();
 
   const {
     register,
@@ -25,14 +18,14 @@ function NicknameContainer() {
   } = useForm<MemberForm>();
 
   const toggleEditing = () => {
-    setEditing((prev) => !prev);
+    setEditing(prev => !prev);
   };
 
   const validateForm = (data: MemberForm) => {
-    patchNickname({ ...data, ...member });
+    patchNickname(data.userName);
 
     if (patchError) {
-      alert("에러가 발생했습니다.");
+      alert('에러가 발생했습니다.');
       return;
     }
 
@@ -52,13 +45,13 @@ function NicknameContainer() {
       <form onSubmit={handleSubmit(validateForm)}>
         <label>닉네임</label>
         <input
-          {...register("nickname", {
-            required: "닉네임을 입력해주세요.",
+          {...register('userName', {
+            required: '닉네임을 입력해주세요.',
           })}
-          defaultValue={member?.nickname}
+          defaultValue={member?.userName}
           disabled={!editing}
         />
-        {errors && <em>{errors.nickname?.message}</em>}
+        {errors && <em>{errors.userName?.message}</em>}
         {editing ? (
           <button type="submit" disabled={isPatchLoading}>
             등록

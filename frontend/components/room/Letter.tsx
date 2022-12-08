@@ -24,7 +24,7 @@ function LetterComponent({ letter, cardStyle }: Props) {
       left={cardStyle.left}
       rotate={cardStyle.rotate}
     >
-      <CardImg src={letter.cardImg} />
+      <CardImg src={letter.imageUrl} />
     </Card>
   );
 }

@@ -12,7 +12,6 @@ export default function index() {
 
   useEffect(() => {
     getConstCard();
-    console.log(constCard);
   }, []);
 
   const fileRef = useRef<HTMLInputElement>(null);

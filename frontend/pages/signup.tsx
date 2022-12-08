@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,6 +6,7 @@ import { LeftButton } from '../styles/components/Button';
 import { Input, FormTitle, Description, InputContainer } from '../styles/components/Form';
 import { Frame } from '../styles/components/Frame';
 import { Title } from '../styles/components/Title';
+import visitorApi from '../auth/visitorApi';
 
 type SignUpForm = {
   name: string;
@@ -27,8 +27,13 @@ function SignUp() {
   const passwordField = watch('password');
 
   const signUp = async (data: SignUpForm) => {
-    await axios
-      .post('/users/signup', data)
+    const body = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+    await visitorApi
+      .post('/users/signup', body)
       .then(res => {
         router.push('/signin');
       })

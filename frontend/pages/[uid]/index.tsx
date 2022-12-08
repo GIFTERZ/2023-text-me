@@ -21,24 +21,14 @@ function Room() {
   const { roomInfo, getRoomInfo } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
 
-  const [isUser] = useState(false);
-
   useEffect(() => {
     getRoomInfo(userId);
   }, []);
 
-  const enterRegister = () => {
-    const confirm = window.confirm("내 방을 만드시겠습니까?");
-
-    if (confirm) {
-      router.push("/signup");
-    }
-  };
-
   return (
     <Frame id="letters">
       <Header>
-        <Title>{roomInfo?.ownerName}'s room</Title>
+        <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
       </Header>
       <LettersContainer userId={userId} />
@@ -46,7 +36,7 @@ function Room() {
         <Link href={`${pathname}/write/select-card-picture`}>
           <CTAButton className="dont-save">
             TEXT <br />
-            {roomInfo?.ownerName}
+            {roomInfo?.userName}
           </CTAButton>
         </Link>
       )}

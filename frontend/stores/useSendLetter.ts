@@ -1,10 +1,13 @@
-import axios, { AxiosError } from "axios";
-import create from "zustand";
+import axios, { AxiosError } from 'axios';
+import internal from 'stream';
+import create from 'zustand';
+import visitorApi from '../auth/visitorApi';
 
 type LetterBody = {
-  content: string;
-  writer: string;
-  cardImg: string;
+  receiverId: number;
+  contents: string;
+  senderName: string;
+  imageUrl: string;
 };
 
 interface SendLetter {
@@ -13,17 +16,17 @@ interface SendLetter {
   sendLetter: (data: LetterBody, callback: () => void) => void;
 }
 
-const useSendLetter = create<SendLetter>((set) => ({
+const useSendLetter = create<SendLetter>(set => ({
   loading: false,
   error: null,
   sendLetter: async (data, callback) => {
     set({ loading: true });
-    await axios
-      .post("/letters", data)
-      .then((res) => {
+    await visitorApi
+      .post('/letters', data)
+      .then(res => {
         callback();
       })
-      .catch((error) => {
+      .catch(error => {
         set({ error });
       })
       .finally(() => {

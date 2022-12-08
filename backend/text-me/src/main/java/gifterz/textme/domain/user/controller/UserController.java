@@ -54,4 +54,16 @@ public class UserController {
         UserResponse userResponse = userService.updateUserName(email, name);
         return ResponseEntity.ok().body(userResponse);
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<UserResponse> findUserInfoByEmail(@RequestParam final String email) {
+        UserResponse userResponse = userService.findUserInfoByEmail(email);
+        return ResponseEntity.ok().body(userResponse);
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<UserResponse> findUserInfoByUserId(@PathVariable("id") final Long id) {
+        UserResponse userResponse = userService.findUserInfoByUserId(id);
+        return ResponseEntity.ok().body(userResponse);
+    }
 }

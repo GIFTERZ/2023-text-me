@@ -1,6 +1,7 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import create from 'zustand';
 import { Letter } from '../types';
+import api from '../auth/api';
 
 interface Letters {
   isLoading: boolean;
@@ -15,7 +16,7 @@ const useLetters = create<Letters>(set => ({
   letters: [],
   getLetters: async (userId: number) => {
     set({ isLoading: true });
-    await axios
+    await api
       .get(`/letters/members/${userId}`)
       .then(res => {
         set({ letters: res.data });
