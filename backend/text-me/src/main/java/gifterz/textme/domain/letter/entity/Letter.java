@@ -35,7 +35,7 @@ public class Letter extends BaseEntity {
     }
 
     private Letter(User user, String senderName, String contents, String imageUrl) {
-        super(String.valueOf(StatusType.ACTIVATE));
+        super(StatusType.ACTIVATE.getStatus());
         this.user = user;
         this.senderName = senderName;
         this.contents = contents;

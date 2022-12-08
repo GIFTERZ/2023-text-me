@@ -12,4 +12,12 @@ public enum StatusType {
         this.number = number;
         this.status = status;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public int getNumber() {
+        return number;
+    }
 }

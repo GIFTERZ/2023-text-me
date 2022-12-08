@@ -26,7 +26,7 @@ public class Card extends BaseEntity {
     }
 
     private Card(String imageUrl) {
-        super(String.valueOf(StatusType.ACTIVATE));
+        super(StatusType.ACTIVATE.getStatus());
         this.imageUrl = imageUrl;
     }
 }

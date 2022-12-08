@@ -35,7 +35,7 @@ public class User extends BaseEntity {
     private String password;
 
     public User(String name, String email, String password) {
-        super(String.valueOf(StatusType.ACTIVATE));
+        super(StatusType.ACTIVATE.getStatus());
         this.name = name;
         this.email = email;
         this.password = password;

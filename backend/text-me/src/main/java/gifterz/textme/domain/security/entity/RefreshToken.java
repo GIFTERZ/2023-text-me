@@ -28,7 +28,7 @@ public class RefreshToken extends BaseEntity {
     private Instant expiryDate;
 
     public RefreshToken(String accessToken, String refreshToken, Instant expiryDate) {
-        super(String.valueOf(StatusType.ACTIVATE));
+        super(StatusType.ACTIVATE.getStatus());
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.expiryDate = expiryDate;
