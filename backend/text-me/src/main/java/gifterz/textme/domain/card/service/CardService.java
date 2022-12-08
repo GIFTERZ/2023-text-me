@@ -28,12 +28,9 @@ public class CardService {
     }
 
     public List<String> findCards() {
-        List<String> imageUrls = cardRepository.findAll()
+        return cardRepository.findAll()
                 .stream()
                 .map(Card::getImageUrl)
-                .collect(Collectors.toList());
-        return imageUrls.stream()
-                .map(s3Service::findFile)
                 .collect(Collectors.toList());
     }
 }
