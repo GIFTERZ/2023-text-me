@@ -3,15 +3,27 @@ import styled from "styled-components";
 import { useLetterView } from "../../stores/useLetterView";
 import { Letter } from "../../types";
 
+type CardStyle = {
+  top: number;
+  left: number;
+  rotate: number;
+};
+
 interface Props {
   letter: Letter;
+  cardStyle: CardStyle;
 }
 
-function LetterComponent({ letter }: Props) {
+function LetterComponent({ letter, cardStyle }: Props) {
   const { open } = useLetterView();
 
   return (
-    <Card onClick={() => open(letter.id)}>
+    <Card
+      onClick={() => open(letter.id)}
+      top={cardStyle.top}
+      left={cardStyle.left}
+      rotate={cardStyle.rotate}
+    >
       <CardImg src={letter.cardImg} />
     </Card>
   );
@@ -19,7 +31,11 @@ function LetterComponent({ letter }: Props) {
 
 export default LetterComponent;
 
-const Card = styled.div`
+const Card = styled.div<CardStyle>`
+  position: absolute;
+  top: ${(p) => p.top}px;
+  left: ${(p) => p.left}px;
+  transform: rotate(${(p) => p.rotate}deg);
   width: 97px;
   height: 120px;
   padding: 6px 6px 30px 6px;
@@ -33,6 +49,9 @@ const Card = styled.div`
     width: 80px;
     height: 100px;
     padding: 5px 5px 20px 5px;
+  }
+  @media ${({ theme }) => theme.device.large} {
+    left: ${(p) => p.left / 1.2}px;
   }
 `;
 
