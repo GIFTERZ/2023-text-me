@@ -45,9 +45,14 @@ const Row = styled.div`
 
   display: flex;
   gap: 25px;
+  padding: 10px;
 
   @media ${({ theme }) => theme.device.small} {
     gap: 15px;
+  }
+
+  @media ${({ theme }) => theme.device.large} {
+    justify-content: center;
   }
 `;
 
@@ -62,8 +67,8 @@ const Container = styled.div`
   gap: 55px;
 
   overflow-x: scroll;
-
   -ms-overflow-style: none;
+
   &::-webkit-scrollbar {
     display: none;
     width: 0px;
@@ -76,7 +81,7 @@ const Container = styled.div`
   }
 
   @media ${({ theme }) => theme.device.large} {
-    width: 480px;
+    width: 90%;
     left: 50%;
     transform: translateX(-50%);
   }

@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import LettersContainer from "../../components/room/LettersContainer";
 import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
-import Background from "../../components/room/Background";
 import styled from "styled-components";
 import ButtonsContainer from "../../components/room/ButtonsContainer";
 import { RightButton } from "../../styles/components/Button";
 import PlusIcon from "../../components/room/icons/PlusIcon";
+import { useCaptureMode } from "../../stores/useCaptureMode";
+import SaveModal from "../../components/room/SaveModal";
 
 function Room() {
   const { get } = useSearchParams();
@@ -18,6 +19,8 @@ function Room() {
   const userId = Number(get("uid"));
 
   const { roomInfo, getRoomInfo } = useRoomInfo();
+  const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
+
   const [isUser] = useState(false);
 
   useEffect(() => {
@@ -33,33 +36,60 @@ function Room() {
   };
 
   return (
-    <Background>
-      <Frame>
-        <Header>
-          <Title>{roomInfo?.ownerName}'s room</Title>
-          <ButtonsContainer />
-        </Header>
-        <LettersContainer userId={userId} />
+    <Frame id="letters">
+      <Background src={"static/images/room-background.png"} />
+      <Header>
+        <Title>{roomInfo?.ownerName}'s room</Title>
+        {!isCaptureMode && <ButtonsContainer />}
+      </Header>
+      <LettersContainer userId={userId} />
+      {!isCaptureMode && (
         <Link href={`${pathname}/write/select-card-picture`}>
           <CTAButton className="dont-save">
             TEXT <br />
             {roomInfo?.ownerName}
           </CTAButton>
         </Link>
-        {!isUser && <PlusIcon onClick={enterRegister} />}
-        <LetterViewContainer />
-      </Frame>
-    </Background>
+      )}
+      <LetterViewContainer />
+      {modalOpen && (
+        <SaveModal
+          text={
+            "캡처 모드입니다. 종료하려면 아래로 스크롤하여 [캡처 모드 종료] 버튼을 눌러주세요."
+          }
+        />
+      )}
+      {isCaptureMode && (
+        <CaptureModeButton type="button" onClick={toggleCaptureMode}>
+          캡처 모드 종료
+        </CaptureModeButton>
+      )}
+    </Frame>
   );
 }
 
 export default Room;
 
 const Frame = styled.div`
-  padding: 32px 24px;
+  width: 100vw;
+  overflow-x: scroll;
+`;
+
+const Background = styled.img`
+  height: 100vh;
+  overflow-y: hidden;
+
+  @media ${({ theme }) => theme.device.large} {
+    width: 100vw;
+    object-fit: cover;
+  }
 `;
 
 const Title = styled.h1`
+  position: fixed;
+  top: 32px;
+  left: 24px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,7 +109,9 @@ const Title = styled.h1`
 
   color: #0eca92;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
     font-size: 14px;
@@ -101,8 +133,21 @@ const CTAButton = styled(RightButton)`
 
   padding: 13px 24px;
 
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
+
   @media ${({ theme }) => theme.device.small} {
     font-size: 12px;
     padding: 8px 16px;
   }
+`;
+
+const CaptureModeButton = styled(RightButton)`
+  position: sticky;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  margin: 10px auto;
 `;

@@ -24,6 +24,10 @@ function ButtonsContainer() {
 export default ButtonsContainer;
 
 const Container = styled.div`
+  position: fixed;
+  top: 32px;
+  right: 24px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;

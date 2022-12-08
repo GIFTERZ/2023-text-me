@@ -15,7 +15,9 @@ const Button = styled.button`
   background: #0eca92;
   border: none;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   &:focus {
     outline: none;
@@ -39,6 +41,10 @@ const WhiteButton = styled.button`
   background: #ffffff;
   border-radius: 10px 10px 0px 10px;
   border: none;
+
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   svg {
     width: 24px;
@@ -69,8 +75,6 @@ const WhiteLeftButton = styled(WhiteButton)`
   height: 40px;
 
   border-radius: 10px 10px 10px 0px;
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
-
   svg {
     width: 18px;
     height: 18px;
