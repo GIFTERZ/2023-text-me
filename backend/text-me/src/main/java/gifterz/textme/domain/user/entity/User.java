@@ -1,6 +1,7 @@
 package gifterz.textme.domain.user.entity;
 
 import gifterz.textme.domain.entity.BaseEntity;
+import gifterz.textme.domain.entity.StatusType;
 import gifterz.textme.domain.user.exception.InvalidPasswordException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class User extends BaseEntity {
     private String password;
 
     public User(String name, String email, String password) {
+        super(StatusType.ACTIVATE.getStatus());
         this.name = name;
         this.email = email;
         this.password = password;

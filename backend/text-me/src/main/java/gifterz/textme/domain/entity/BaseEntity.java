@@ -28,4 +28,8 @@ public abstract class BaseEntity implements Serializable {
 
     protected BaseEntity() {
     }
+
+    protected BaseEntity(String status) {
+        this.status = status;
+    }
 }
