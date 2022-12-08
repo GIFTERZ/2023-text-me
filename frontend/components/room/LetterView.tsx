@@ -49,7 +49,7 @@ function LetterView() {
           <img src={letter?.imageUrl} onClick={flip} />
         </Card>
         <CardBack imgUrl={letter?.imageUrl} onClick={flip}>
-          <ToText>To. {roomInfo?.ownerName}</ToText>
+          <ToText>To. {roomInfo?.userName}</ToText>
           <Content>{lineBreak(letter?.contents)}</Content>
           <FromText>From. {letter?.senderName}</FromText>
         </CardBack>

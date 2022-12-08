@@ -39,7 +39,6 @@ const useMembers = create<Members>(set => ({
       });
   },
   patchNickname: async data => {
-    // input 으로 string 보내줘야 ?
     set({ isPatchLoading: true });
     await api
       .patch('/users', data)

@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import internal from 'stream';
 import create from 'zustand';
+import visitor_api from '../auth/visitor_api';
 
 type LetterBody = {
   receiverId: number;
@@ -20,7 +21,7 @@ const useSendLetter = create<SendLetter>(set => ({
   error: null,
   sendLetter: async (data, callback) => {
     set({ loading: true });
-    await axios
+    await visitor_api
       .post('/letters', data)
       .then(res => {
         callback();

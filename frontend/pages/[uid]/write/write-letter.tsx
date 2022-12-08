@@ -62,7 +62,7 @@ export default function index() {
       <Title>편지 쓰기</Title>
       <Form onSubmit={handleSubmit(sendData, validateData)}>
         <LetterContainer imgurl={pictureUrl} id="box">
-          <ToDiv>To. {roomInfo?.ownerName}</ToDiv>
+          <ToDiv>To. {roomInfo?.userName}</ToDiv>
           <TextArea
             maxLength={300}
             {...register('contents', {

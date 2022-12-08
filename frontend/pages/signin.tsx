@@ -11,6 +11,7 @@ import { FormTitle, Input, InputContainer } from '../styles/components/Form';
 import { Frame } from '../styles/components/Frame';
 import { Title } from '../styles/components/Title';
 axios.defaults.withCredentials = true;
+import visitor_api from '../auth/visitor_api';
 
 type SignInForm = {
   email: string;
@@ -26,7 +27,7 @@ function SignIn() {
   } = useForm<SignInForm>();
 
   const signIn = async (data: SignInForm) => {
-    await axios
+    await visitor_api
       .post('/users/login', data)
       .then(res => {
         const {
