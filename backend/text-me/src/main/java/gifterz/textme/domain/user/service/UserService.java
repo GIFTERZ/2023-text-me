@@ -84,4 +84,10 @@ public class UserService {
         user.updateUserName(name);
         return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
+
+    public UserResponse findUserInfoByEmail(String email) {
+        Optional<User> userExists = userRepository.findByEmail(email);
+        User user = userExists.orElseThrow(UserNotFoundException::new);
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+    }
 }
