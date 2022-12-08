@@ -27,8 +27,13 @@ function SignUp() {
   const passwordField = watch('password');
 
   const signUp = async (data: SignUpForm) => {
+    const body = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
     await axios
-      .post('/users/signup', data)
+      .post('/users/signup', body)
       .then(res => {
         router.push('/signin');
       })

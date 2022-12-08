@@ -1,8 +1,9 @@
 interface Letter {
   id: number;
-  cardImg: string;
-  writer: string;
-  content: string;
+  receiverName: string;
+  senderName: string;
+  contents: string;
+  imageUrl: string;
 }
 
 export type { Letter };
