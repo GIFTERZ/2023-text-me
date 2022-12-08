@@ -1,43 +1,31 @@
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import LettersContainer from '../../components/room/LettersContainer';
-import LetterViewContainer from '../../components/room/LetterViewContainer';
-import { useRoomInfo } from '../../stores/useRoomInfo';
-import styled from 'styled-components';
-import ButtonsContainer from '../../components/room/ButtonsContainer';
-import { RightButton } from '../../styles/components/Button';
-import PlusIcon from '../../components/room/icons/PlusIcon';
-import { useCaptureMode } from '../../stores/useCaptureMode';
-import SaveModal from '../../components/room/SaveModal';
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import LettersContainer from "../../components/room/LettersContainer";
+import LetterViewContainer from "../../components/room/LetterViewContainer";
+import { useRoomInfo } from "../../stores/useRoomInfo";
+import styled from "styled-components";
+import ButtonsContainer from "../../components/room/ButtonsContainer";
+import { RightButton } from "../../styles/components/Button";
+import PlusIcon from "../../components/room/icons/PlusIcon";
+import { useCaptureMode } from "../../stores/useCaptureMode";
+import SaveModal from "../../components/room/SaveModal";
 
 function Room() {
   const { get } = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
 
-  const userId = Number(get('uid'));
+  const userId = Number(get("uid"));
 
   const { roomInfo, getRoomInfo } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
-
-  const [isUser] = useState(false);
 
   useEffect(() => {
     getRoomInfo(userId);
   }, []);
 
-  const enterRegister = () => {
-    const confirm = window.confirm('내 방을 만드시겠습니까?');
-
-    if (confirm) {
-      router.push('/signup');
-    }
-  };
-
   return (
     <Frame id="letters">
-      <Background src={'static/images/room-background.png'} />
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
@@ -52,7 +40,7 @@ function Room() {
         </Link>
       )}
       <LetterViewContainer />
-      {modalOpen && <SaveModal text={'캡처 모드입니다. 종료하려면 아래로 스크롤하여 [캡처 모드 종료] 버튼을 눌러주세요.'} />}
+      {modalOpen && <SaveModal />}
       {isCaptureMode && (
         <CaptureModeButton type="button" onClick={toggleCaptureMode}>
           캡처 모드 종료
@@ -67,15 +55,9 @@ export default Room;
 const Frame = styled.div`
   width: 100vw;
   overflow-x: scroll;
-`;
-
-const Background = styled.img`
-  height: 100vh;
-  overflow-y: hidden;
 
   @media ${({ theme }) => theme.device.large} {
-    width: 100vw;
-    object-fit: cover;
+    width: fit-content;
   }
 `;
 
@@ -103,7 +85,10 @@ const Title = styled.h1`
 
   color: #0eca92;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  z-index: 10;
+
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
@@ -126,7 +111,8 @@ const CTAButton = styled(RightButton)`
 
   padding: 13px 24px;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
@@ -136,10 +122,12 @@ const CTAButton = styled(RightButton)`
 `;
 
 const CaptureModeButton = styled(RightButton)`
-  position: sticky;
-  bottom: 0;
+  position: fixed;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
+  width: 100%;
+  height: 5vh;
   margin: 10px auto;
+  border-radius: 0;
 `;

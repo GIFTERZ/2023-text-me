@@ -1,22 +1,35 @@
 import React from "react";
+import styled from "styled-components";
 import { useCaptureMode } from "../../stores/useCaptureMode";
-import { Modal, Overlay } from "../../styles/components/Modal";
+import { Modal } from "../../styles/components/Modal";
 
-interface Props {
-  text: string;
-}
-
-function SaveModal({ text }: Props) {
+function SaveModal() {
   const { toggleModalOpen } = useCaptureMode();
   return (
-    <>
-      <Overlay />
-      <Modal>
-        {text}
-        <button onClick={toggleModalOpen}>확인</button>
-      </Modal>
-    </>
+    <Container>
+      캡처 모드입니다. 종료하려면 아래의 종료 버튼을 누르세요.
+      <Button type="button" onClick={toggleModalOpen}>
+        확인
+      </Button>
+    </Container>
   );
 }
 
 export default SaveModal;
+
+const Container = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0px 32px;
+
+  background: rgba(21, 21, 21, 0.75);
+  color: #ffffff;
+`;
+
+const Button = styled.button`
+  padding: 5px 10px;
+  background: #ffffff;
+  border: none;
+  border-radius: 5px;
+`;
