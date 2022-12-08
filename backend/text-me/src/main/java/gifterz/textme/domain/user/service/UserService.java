@@ -50,7 +50,7 @@ public class UserService {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-        return new UserResponse(user.getName(), user.getEmail());
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 
     @Transactional
@@ -74,7 +74,7 @@ public class UserService {
     public UserResponse findUserInfo(String email) {
         Optional<User> userExists = userRepository.findByEmail(email);
         User user = userExists.orElseThrow(UserNotFoundException::new);
-        return new UserResponse(user.getName(), user.getEmail());
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 
     @Transactional
@@ -82,6 +82,12 @@ public class UserService {
         Optional<User> userExists = userRepository.findByEmail(email);
         User user = userExists.orElseThrow(UserNotFoundException::new);
         user.updateUserName(name);
-        return new UserResponse(user.getName(), user.getEmail());
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+    }
+
+    public UserResponse findUserInfoByEmail(String email) {
+        Optional<User> userExists = userRepository.findByEmail(email);
+        User user = userExists.orElseThrow(UserNotFoundException::new);
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 }
