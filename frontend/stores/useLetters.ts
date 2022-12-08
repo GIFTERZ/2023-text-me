@@ -1,7 +1,7 @@
-import { AxiosError } from 'axios';
-import create from 'zustand';
-import { Letter } from '../types';
-import api from '../auth/api';
+import { AxiosError } from "axios";
+import create from "zustand";
+import { Letter } from "../types";
+import visitorApi from "../auth/visitorApi";
 
 interface Letters {
   isLoading: boolean;
@@ -10,18 +10,18 @@ interface Letters {
   getLetters: (userId: number) => void;
 }
 
-const useLetters = create<Letters>(set => ({
+const useLetters = create<Letters>((set) => ({
   isLoading: false,
   error: null,
   letters: [],
   getLetters: async (userId: number) => {
     set({ isLoading: true });
-    await api
+    await visitorApi
       .get(`/letters/members/${userId}`)
-      .then(res => {
+      .then((res) => {
         set({ letters: res.data });
       })
-      .catch(error => {
+      .catch((error) => {
         set({ error });
       })
       .finally(() => {

@@ -14,7 +14,6 @@ import SaveModal from "../../components/room/SaveModal";
 function Room() {
   const { get } = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
 
   const userId = Number(get("uid"));
 
@@ -56,6 +55,7 @@ export default Room;
 const Frame = styled.div`
   width: 100vw;
   overflow-x: scroll;
+
   @media ${({ theme }) => theme.device.large} {
     width: fit-content;
   }

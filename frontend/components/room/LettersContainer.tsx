@@ -13,8 +13,8 @@ interface Props {
 function LettersContainer({ userId }: Props) {
   const { isCaptureMode } = useCaptureMode();
   const { pagination, setLastPage } = useLetterPagination();
-
   const { error, letters, getLetters } = useLetters();
+
   useEffect(() => {
     getLetters(userId);
   }, []);
