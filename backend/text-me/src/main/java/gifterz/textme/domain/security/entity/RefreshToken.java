@@ -1,6 +1,7 @@
 package gifterz.textme.domain.security.entity;
 
 import gifterz.textme.domain.entity.BaseEntity;
+import gifterz.textme.domain.entity.StatusType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class RefreshToken extends BaseEntity {
     private Instant expiryDate;
 
     public RefreshToken(String accessToken, String refreshToken, Instant expiryDate) {
+        super(String.valueOf(StatusType.ACTIVATE));
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.expiryDate = expiryDate;

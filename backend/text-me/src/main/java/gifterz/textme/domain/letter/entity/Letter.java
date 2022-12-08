@@ -1,6 +1,7 @@
 package gifterz.textme.domain.letter.entity;
 
 import gifterz.textme.domain.entity.BaseEntity;
+import gifterz.textme.domain.entity.StatusType;
 import gifterz.textme.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,8 @@ public class Letter extends BaseEntity {
         return new Letter(user, senderName, contents, imageUrl);
     }
 
-    public Letter(User user, String senderName, String contents, String imageUrl) {
+    private Letter(User user, String senderName, String contents, String imageUrl) {
+        super(String.valueOf(StatusType.ACTIVATE));
         this.user = user;
         this.senderName = senderName;
         this.contents = contents;
