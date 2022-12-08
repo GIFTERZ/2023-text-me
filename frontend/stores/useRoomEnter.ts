@@ -1,5 +1,6 @@
-import axios, { AxiosError } from "axios";
-import create from "zustand";
+import axios, { AxiosError } from 'axios';
+import create from 'zustand';
+import api from '../auth/api';
 
 type DataType = {
   email: string;
@@ -11,17 +12,17 @@ interface RoomEnter {
   enter: (data: DataType, callback: (id: number) => void) => void;
 }
 
-const useRoomEnter = create<RoomEnter>((set) => ({
+const useRoomEnter = create<RoomEnter>(set => ({
   isLoading: false,
   error: null,
   enter: async (data, callback) => {
     set({ isLoading: true });
-    await axios
-      .post("/room", data)
-      .then((res) => {
-        callback(res.data.roomId);
+    await api
+      .post('/users/find', data)
+      .then(res => {
+        callback(res.data.id);
       })
-      .catch((error) => {
+      .catch(error => {
         set({ error });
       })
       .finally(() => {

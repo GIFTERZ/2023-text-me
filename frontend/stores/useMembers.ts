@@ -5,6 +5,7 @@ import api from '../auth/api';
 type Member = {
   userName: string;
   id: number;
+  email: string;
 };
 
 interface Members {
@@ -14,7 +15,7 @@ interface Members {
   patchError: AxiosError | null;
   member: Member;
   getMember: () => void;
-  patchNickname: (data: Member) => void;
+  patchNickname: (data: string) => void;
 }
 
 const useMembers = create<Members>(set => ({
@@ -38,6 +39,7 @@ const useMembers = create<Members>(set => ({
       });
   },
   patchNickname: async data => {
+    // input 으로 string 보내줘야 ?
     set({ isPatchLoading: true });
     await api
       .patch('/users', data)

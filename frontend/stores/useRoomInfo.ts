@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
-import create from "zustand";
+import axios, { AxiosError } from 'axios';
+import create from 'zustand';
 
 interface Room {
   isLoading: boolean;
@@ -8,18 +8,18 @@ interface Room {
   getRoomInfo: (userId: number) => void;
 }
 
-const useRoomInfo = create<Room>((set) => ({
+const useRoomInfo = create<Room>(set => ({
   isLoading: false,
   error: null,
   roomInfo: null,
   getRoomInfo: async (userId: number) => {
     set({ isLoading: true });
     await axios
-      .get("/room", { params: { userId } })
-      .then((res) => {
+      .get('/users/find', { params: { userId } })
+      .then(res => {
         set({ roomInfo: res.data });
       })
-      .catch((error) => {
+      .catch(error => {
         set({ error });
       })
       .finally(() => {

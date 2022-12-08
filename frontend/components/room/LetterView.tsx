@@ -1,34 +1,26 @@
-import React, { useState } from "react";
-import { useLetterView } from "../../stores/useLetterView";
-import ReactCardFlip from "react-card-flip";
-import { useRoomInfo } from "../../stores/useRoomInfo";
-import styled from "styled-components";
-import { Spinner } from "../../styles/indicators/Loader";
-import DeferredComponent from "../common/DeferredComponent";
+import React, { useState } from 'react';
+import { useLetterView } from '../../stores/useLetterView';
+import ReactCardFlip from 'react-card-flip';
+import { useRoomInfo } from '../../stores/useRoomInfo';
+import styled from 'styled-components';
+import { Spinner } from '../../styles/indicators/Loader';
+import DeferredComponent from '../common/DeferredComponent';
 
 function LetterView() {
-  const {
-    letter,
-    isLoading: isLetterLoading,
-    error: letterError,
-  } = useLetterView();
+  const { letter, isLoading: isLetterLoading, error: letterError } = useLetterView();
 
-  const {
-    roomInfo,
-    isLoading: isRoomLoading,
-    error: roomError,
-  } = useRoomInfo();
+  const { roomInfo, isLoading: isRoomLoading, error: roomError } = useRoomInfo();
 
   const [isFlipped, setIsFlipped] = useState(false);
 
   const flip = () => {
-    setIsFlipped((prev) => !prev);
+    setIsFlipped(prev => !prev);
   };
 
   const lineBreak = (content: string) => {
     return (
       <>
-        {content?.split("\n").map((value) => (
+        {content?.split('\n').map(value => (
           <>
             {value}
             <br />
@@ -52,19 +44,14 @@ function LetterView() {
 
   return (
     <Container>
-      <ReactCardFlip
-        isFlipped={isFlipped}
-        flipDirection="horizontal"
-        flipSpeedBackToFront={1}
-        flipSpeedFrontToBack={1}
-      >
+      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal" flipSpeedBackToFront={1} flipSpeedFrontToBack={1}>
         <Card>
-          <img src={letter?.cardImg} onClick={flip} />
+          <img src={letter?.imageUrl} onClick={flip} />
         </Card>
-        <CardBack imgUrl={letter?.cardImg} onClick={flip}>
+        <CardBack imgUrl={letter?.imageUrl} onClick={flip}>
           <ToText>To. {roomInfo?.ownerName}</ToText>
-          <Content>{lineBreak(letter?.content)}</Content>
-          <FromText>From. {letter?.writer}</FromText>
+          <Content>{lineBreak(letter?.contents)}</Content>
+          <FromText>From. {letter?.senderName}</FromText>
         </CardBack>
       </ReactCardFlip>
     </Container>
@@ -104,7 +91,7 @@ const CardBack = styled(Card)<{ imgUrl: string }>`
   display: grid;
   grid-template-rows: 80px 230px 80px;
 
-  background: ${(p) => `linear-gradient(
+  background: ${p => `linear-gradient(
     0deg,
     rgba(255, 255, 255, 0.8),
     rgba(255, 255, 255, 0.8)
