@@ -24,10 +24,12 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.PASSWORD }}
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
           scrips: |
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:tagname
-            docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:tagname
+            whoami
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+            docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/} ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
             docker stop server
-            docker run -d --rm --name server -p 80:8080 text-me-docker
+            docker run -d --rm --name server -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
