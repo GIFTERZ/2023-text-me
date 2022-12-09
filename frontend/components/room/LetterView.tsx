@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLetterView } from '../../stores/useLetterView';
 import ReactCardFlip from 'react-card-flip';
 import { useRoomInfo } from '../../stores/useRoomInfo';
 import styled from 'styled-components';
 import { Spinner } from '../../styles/indicators/Loader';
 import DeferredComponent from '../common/DeferredComponent';
+import { useLetters } from '../../stores/useLetters';
 
 function LetterView() {
-  const { letter, isLoading: isLetterLoading, error: letterError } = useLetterView();
+  const { letter, getLetter, isOpened, isLoading: isLetterLoading, error: letterError } = useLetterView();
+
+  useEffect(() => {
+    getLetter();
+  }, []);
 
   const { roomInfo, isLoading: isRoomLoading, error: roomError } = useRoomInfo();
 

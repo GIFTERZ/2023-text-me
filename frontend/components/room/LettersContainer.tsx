@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { useCaptureMode } from "../../stores/useCaptureMode";
-import { useLetterPagination } from "../../stores/useLetterPagination";
-import { useLetters } from "../../stores/useLetters";
-import Letter from "./Letter";
-import LettersMove from "./LettersMove";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { useCaptureMode } from '../../stores/useCaptureMode';
+import { useLetterPagination } from '../../stores/useLetterPagination';
+import { useLetters } from '../../stores/useLetters';
+import Letter from './Letter';
+import LettersMove from './LettersMove';
 
 interface Props {
   userId: number;
@@ -16,8 +16,10 @@ function LettersContainer({ userId }: Props) {
   const { error, letters, getLetters } = useLetters();
 
   useEffect(() => {
-    getLetters(userId);
-  }, []);
+    if (userId) {
+      getLetters(userId);
+    }
+  }, [userId]);
 
   useEffect(() => {
     setLastPage(Math.floor(letters.length / letterFrame.length));
@@ -35,10 +37,7 @@ function LettersContainer({ userId }: Props) {
   return (
     <Container id="lettersContainer">
       {letters.length > letterFrame.length && <LettersMove />}
-      <Background
-        src={"static/images/room-background.png"}
-        isCaptureMode={isCaptureMode}
-      />
+      <Background src={'static/images/room-background.png'} isCaptureMode={isCaptureMode} />
       {letterFrame
         ?.filter((_, index) => letters[index + letterFrame.length * pagination])
         .map((frame, index) => (
@@ -79,7 +78,7 @@ const letterFrame = [
 const Background = styled.img<{ isCaptureMode: boolean }>`
   position: absolute;
   top: 0;
-  height: ${(p) => (p.isCaptureMode ? "95vh" : "100vh")};
+  height: ${p => (p.isCaptureMode ? '95vh' : '100vh')};
   overflow-y: hidden;
 
   @media ${({ theme }) => theme.device.large} {

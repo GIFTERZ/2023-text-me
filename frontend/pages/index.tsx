@@ -6,11 +6,15 @@ import RoomEnterForm from '../components/main/RoomEnterForm';
 import { LeftButton, RightButton } from '../styles/components/Button';
 import { Frame } from '../styles/components/Frame';
 import { Title } from '../styles/components/Title';
+import { getCookie } from '../components/common/Cookie';
 
 export default function Home() {
-  const [isUser] = useState(false);
+  const { member, getMember, logoutMember } = useMembers();
 
-  const { member, getMember } = useMembers();
+  const logout = () => {
+    logoutMember();
+    console.log('id:' + member?.id);
+  };
 
   useEffect(() => {
     getMember();
@@ -21,10 +25,15 @@ export default function Home() {
       <Title>Text me!</Title>
       <RoomEnterForm />
       <ButtonsContainer>
-        {isUser ? (
-          <LeftButton type="button">
-            <Link href={`/${member?.id}`}>내 방으로 가기</Link>
-          </LeftButton>
+        {member?.id ? (
+          <>
+            <LeftButton type="button">
+              <Link href={`/${member?.id}`}>내 방으로 가기</Link>
+            </LeftButton>
+            <RightButton onClick={logout} type="button">
+              로그아웃
+            </RightButton>
+          </>
         ) : (
           <>
             <LeftButton type="button">
