@@ -27,7 +27,7 @@ function Room() {
   }, [userId]);
 
   return (
-    <Frame id="letters">
+    <>
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
@@ -35,7 +35,7 @@ function Room() {
       <LettersContainer userId={userId} />
       {!isCaptureMode && (
         <Link href={`${pathname}/write/select-card-picture`}>
-          <CTAButton className="dont-save">
+          <CTAButton>
             TEXT <br />
             {roomInfo?.userName}
           </CTAButton>
@@ -48,20 +48,11 @@ function Room() {
           캡처 모드 종료
         </CaptureModeButton>
       )}
-    </Frame>
+    </>
   );
 }
 
 export default Room;
-
-const Frame = styled.div`
-  width: 100vw;
-  overflow-x: scroll;
-
-  @media ${({ theme }) => theme.device.large} {
-    width: fit-content;
-  }
-`;
 
 const Title = styled.h1`
   position: fixed;
