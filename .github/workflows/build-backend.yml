@@ -16,6 +16,15 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID : ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
+      DB_URL : ${{ secrets.DB_URL }}
+      DB_USERNAME : ${{ secrets.DB_USERNAME }}
+      JWT_EXPIRY : ${{ secrets.JWT_EXPIRY }}
+      JWT_KEY : ${{ secrets.JWT_KEY }}
+      REFRESH_EXPIRY: ${{ secrets.REFRESH_EXPIRY }}
 
     steps:
       - name: Checkout
