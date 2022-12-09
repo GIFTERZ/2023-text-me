@@ -5,7 +5,7 @@ interface Props {
   letters: Letter[];
 }
 function Background({ letters }: Props) {
-  const TEMP_IMAGE = "static/images/room-background.png";
+  const DEFAULT_IMAGE = "static/images/room-default.png";
 
   const { open } = useLetterView();
 
@@ -45,7 +45,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern22)"
         />
         <image
-          href={letters[0] ? letters[0].imageUrl : TEMP_IMAGE}
+          href={letters[0] ? letters[0].imageUrl : DEFAULT_IMAGE}
           x="34.8726"
           y="220.72"
           width="83.3"
@@ -85,7 +85,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern24)"
         />
         <image
-          href={letters[1] ? letters[1].imageUrl : TEMP_IMAGE}
+          href={letters[1] ? letters[1].imageUrl : DEFAULT_IMAGE}
           x="133.35"
           y="266.688"
           width="83.3"
@@ -123,7 +123,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern26)"
         />
         <image
-          href={letters[2] ? letters[2].imageUrl : TEMP_IMAGE}
+          href={letters[2] ? letters[2].imageUrl : DEFAULT_IMAGE}
           x="262.052"
           y="253.314"
           width="83.3"
@@ -164,7 +164,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern1)"
         />
         <image
-          href={letters[3] ? letters[3].imageUrl : TEMP_IMAGE}
+          href={letters[3] ? letters[3].imageUrl : DEFAULT_IMAGE}
           x="52.9673"
           y="440.671"
           width="83.3"
@@ -205,7 +205,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern3)"
         />
         <image
-          href={letters[4] ? letters[4].imageUrl : TEMP_IMAGE}
+          href={letters[4] ? letters[4].imageUrl : DEFAULT_IMAGE}
           x="206.256"
           y="437.521"
           width="83.3"
@@ -246,7 +246,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern5)"
         />
         <image
-          href={letters[5] ? letters[5].imageUrl : TEMP_IMAGE}
+          href={letters[5] ? letters[5].imageUrl : DEFAULT_IMAGE}
           x="342.695"
           y="372.71"
           width="83.3"
@@ -287,7 +287,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern28)"
         />
         <image
-          href={letters[6] ? letters[6].imageUrl : TEMP_IMAGE}
+          href={letters[6] ? letters[6].imageUrl : DEFAULT_IMAGE}
           x="413.111"
           y="196.336"
           width="83.3"
@@ -328,7 +328,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern7)"
         />
         <image
-          href={letters[7] ? letters[7].imageUrl : TEMP_IMAGE}
+          href={letters[7] ? letters[7].imageUrl : DEFAULT_IMAGE}
           x="508.299"
           y="406.953"
           width="83.3"
@@ -370,7 +370,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern32)"
         />
         <image
-          href={letters[8] ? letters[8].imageUrl : TEMP_IMAGE}
+          href={letters[8] ? letters[8].imageUrl : DEFAULT_IMAGE}
           x="535.868"
           y="223.269"
           width="83.3"
@@ -411,7 +411,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern9)"
         />
         <image
-          href={letters[9] ? letters[9].imageUrl : TEMP_IMAGE}
+          href={letters[9] ? letters[9].imageUrl : DEFAULT_IMAGE}
           x="608.604"
           y="403.428"
           width="83.3"
@@ -453,7 +453,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern30)"
         />
         <image
-          href={letters[10] ? letters[10].imageUrl : TEMP_IMAGE}
+          href={letters[10] ? letters[10].imageUrl : DEFAULT_IMAGE}
           x="651.892"
           y="178.891"
           width="83.3"
@@ -494,7 +494,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern11)"
         />
         <image
-          href={letters[11] ? letters[11].imageUrl : TEMP_IMAGE}
+          href={letters[11] ? letters[11].imageUrl : DEFAULT_IMAGE}
           x="796.343"
           y="367.072"
           width="83.3"
@@ -535,7 +535,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern34)"
         />
         <image
-          href={letters[12] ? letters[12].imageUrl : TEMP_IMAGE}
+          href={letters[12] ? letters[12].imageUrl : DEFAULT_IMAGE}
           x="800.821"
           y="108.02"
           width="83.3"
@@ -576,7 +576,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern36)"
         />
         <image
-          href={letters[13] ? letters[13].imageUrl : TEMP_IMAGE}
+          href={letters[13] ? letters[13].imageUrl : DEFAULT_IMAGE}
           x="884.539"
           y="153.48"
           width="83.3"
@@ -617,7 +617,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern13)"
         />
         <image
-          href={letters[14] ? letters[14].imageUrl : TEMP_IMAGE}
+          href={letters[14] ? letters[14].imageUrl : DEFAULT_IMAGE}
           x="947.862"
           y="404.912"
           width="83.3"
@@ -658,7 +658,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern38)"
         />
         <image
-          href={letters[15] ? letters[15].imageUrl : TEMP_IMAGE}
+          href={letters[15] ? letters[15].imageUrl : DEFAULT_IMAGE}
           x="1040.38"
           y="145.53"
           width="83.3"
@@ -699,7 +699,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern15)"
         />
         <image
-          href={letters[16] ? letters[16].imageUrl : TEMP_IMAGE}
+          href={letters[16] ? letters[16].imageUrl : DEFAULT_IMAGE}
           x="1088.21"
           y="381.727"
           width="83.3"
@@ -740,7 +740,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern40)"
         />
         <image
-          href={letters[17] ? letters[17].imageUrl : TEMP_IMAGE}
+          href={letters[17] ? letters[17].imageUrl : DEFAULT_IMAGE}
           x="1156.39"
           y="93.7476"
           width="83.3"
@@ -781,7 +781,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern42)"
         />
         <image
-          href={letters[18] ? letters[18].imageUrl : TEMP_IMAGE}
+          href={letters[18] ? letters[18].imageUrl : DEFAULT_IMAGE}
           x="1260.51"
           y="215.578"
           width="83.3"
@@ -822,7 +822,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern17)"
         />
         <image
-          href={letters[19] ? letters[19].imageUrl : TEMP_IMAGE}
+          href={letters[19] ? letters[19].imageUrl : DEFAULT_IMAGE}
           x="1278.45"
           y="385.782"
           width="83.3"
@@ -863,7 +863,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern44)"
         />
         <image
-          href={letters[20] ? letters[20].imageUrl : TEMP_IMAGE}
+          href={letters[20] ? letters[20].imageUrl : DEFAULT_IMAGE}
           x="1352.05"
           y="243.357"
           width="83.3"
@@ -904,7 +904,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern19)"
         />
         <image
-          href={letters[21] ? letters[21].imageUrl : TEMP_IMAGE}
+          href={letters[21] ? letters[21].imageUrl : DEFAULT_IMAGE}
           x="1438.89"
           y="433.895"
           width="83.3"
@@ -953,7 +953,7 @@ function Background({ letters }: Props) {
           fill="url(#pattern46)"
         />
         <image
-          href={letters[22] ? letters[22].imageUrl : TEMP_IMAGE}
+          href={letters[22] ? letters[22].imageUrl : DEFAULT_IMAGE}
           x="1439.16"
           y="216.92"
           width="83.3"
