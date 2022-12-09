@@ -1,20 +1,29 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { WhiteButton } from "../../styles/components/Button";
+import HomeIcon from "./icons/HomeIcon";
 import MenuIcon from "./icons/MenuIcon";
 import SaveContainer from "./SaveContainer";
 import ShareContainer from "./ShareContainer";
 
 function ButtonsContainer() {
+  const [isUser] = useState(false);
   return (
     <Container className="dont-save">
-      {/* To do: 비로그인 구분 */}
-      <Link href="/">
-        <WhiteButton type="button">
-          <MenuIcon />
-        </WhiteButton>
-      </Link>
+      {isUser ? (
+        <Link href="/mypage">
+          <WhiteButton type="button">
+            <MenuIcon />
+          </WhiteButton>
+        </Link>
+      ) : (
+        <Link href="/">
+          <WhiteButton type="button">
+            <HomeIcon />
+          </WhiteButton>
+        </Link>
+      )}
       <SaveContainer />
       <ShareContainer />
     </Container>
