@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLetterView } from "../../stores/useLetterView";
 import { Letter } from "../../types";
 interface Props {
@@ -8,6 +8,12 @@ function Background({ letters }: Props) {
   const DEFAULT_IMAGE = "static/images/room-default.png";
 
   const { open } = useLetterView();
+
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerHeight * 1.85);
+  }, []);
 
   const openLetter = (e: any) => {
     const {
@@ -25,15 +31,22 @@ function Background({ letters }: Props) {
 
   return (
     <svg
-      width="1231.38"
-      height="666.21"
-      viewBox="8 3 1550 846"
+      width={width}
+      height="100%"
+      viewBox="10 0 1560 854"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       onClick={openLetter}
     >
-      <rect x="2" y="1" width="1560" height="854" fill="url(#pattern0)" />
+      <rect
+        id="back"
+        x="2"
+        y="1"
+        width="1560"
+        height="854"
+        fill="url(#pattern0)"
+      />
       <g filter="url(#filter10_dii_291_1244)" id="0">
         <rect
           x="28.7827"
