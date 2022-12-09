@@ -7,7 +7,6 @@ import { useRoomInfo } from '../../stores/useRoomInfo';
 import styled from 'styled-components';
 import ButtonsContainer from '../../components/room/ButtonsContainer';
 import { RightButton } from '../../styles/components/Button';
-import PlusIcon from '../../components/room/icons/PlusIcon';
 import { useCaptureMode } from '../../stores/useCaptureMode';
 import SaveModal from '../../components/room/SaveModal';
 

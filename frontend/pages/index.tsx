@@ -13,7 +13,6 @@ export default function Home() {
 
   const logout = () => {
     logoutMember();
-    console.log('id:' + member?.id);
   };
 
   useEffect(() => {

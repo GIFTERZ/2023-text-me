@@ -1,15 +1,26 @@
-import React from "react";
-import { useLetterView } from "../../stores/useLetterView";
-import { Letter } from "../../types";
+import React from 'react';
+import { useLetterView } from '../../stores/useLetterView';
+import { Letter } from '../../types';
+import { useSearchParams } from 'next/navigation';
+import { useMembers } from '../../stores/useMembers';
+
 interface Props {
   letters: Letter[];
 }
 function Background({ letters }: Props) {
-  const DEFAULT_IMAGE = "static/images/room-default.png";
-
+  const DEFAULT_IMAGE = 'static/images/room-default.png';
+  const { get } = useSearchParams();
+  const userId = Number(get('uid'));
   const { open } = useLetterView();
+  const { member, getMember } = useMembers();
 
-  const openLetter = (e: any) => {
+  const checkAuthOpen = (e: any) => {
+    getMember();
+    if (member === null || member?.id !== userId) {
+      alert('본인의 편지만 열람할 수 있습니다.');
+      return;
+    }
+
     const {
       target: {
         parentElement: { id },
@@ -20,7 +31,14 @@ function Background({ letters }: Props) {
       return;
     }
 
-    open(Number(id));
+    if (member.id === userId) {
+      if (letters[Number(id)]?.id) {
+        open(letters[Number(id)].id);
+      } else {
+        alert('아직 편지가 없어요!');
+        return;
+      }
+    }
   };
 
   return (
@@ -31,19 +49,11 @@ function Background({ letters }: Props) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      onClick={openLetter}
+      onClick={checkAuthOpen}
     >
       <rect x="2" y="1" width="1560" height="854" fill="url(#pattern0)" />
       <g filter="url(#filter10_dii_291_1244)" id="0">
-        <rect
-          x="28.7827"
-          y="212"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.78363 28.7827 212)"
-          fill="url(#pattern22)"
-        />
+        <rect x="28.7827" y="212" width="98" height="123" rx="2" transform="rotate(8.78363 28.7827 212)" fill="url(#pattern22)" />
         <image
           href={letters[0] ? letters[0].imageUrl : DEFAULT_IMAGE}
           x="34.8726"
@@ -62,28 +72,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(8.78363 28.7827 212)"
           fill="url(#pattern23)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="28.7827"
-          y="212"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.78363 28.7827 212)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="28.7827" y="212" width="98" height="123" rx="2" transform="rotate(8.78363 28.7827 212)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter11_dii_291_1244)" id="1">
-        <rect
-          x="126"
-          y="259"
-          width="98"
-          height="123"
-          rx="2"
-          fill="url(#pattern24)"
-        />
+        <rect x="126" y="259" width="98" height="123" rx="2" fill="url(#pattern24)" />
         <image
           href={letters[1] ? letters[1].imageUrl : DEFAULT_IMAGE}
           x="133.35"
@@ -93,35 +87,11 @@ function Background({ letters }: Props) {
           rx="1"
           preserveAspectRatio="xMidYMid slice"
         />
-        <rect
-          x="126"
-          y="259"
-          width="98"
-          height="123"
-          rx="2"
-          fill="url(#pattern25)"
-          fill-opacity="0.3"
-        />
-        <rect
-          x="126"
-          y="259"
-          width="98"
-          height="123"
-          rx="2"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="126" y="259" width="98" height="123" rx="2" fill="url(#pattern25)" fillOpacity="0.3" />
+        <rect x="126" y="259" width="98" height="123" rx="2" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter12_dii_291_1244)" id="2">
-        <rect
-          x="253"
-          y="247.73"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-14.6164 253 247.73)"
-          fill="url(#pattern26)"
-        />
+        <rect x="253" y="247.73" width="98" height="123" rx="2" transform="rotate(-14.6164 253 247.73)" fill="url(#pattern26)" />
         <image
           href={letters[2] ? letters[2].imageUrl : DEFAULT_IMAGE}
           x="262.052"
@@ -140,29 +110,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-14.6164 253 247.73)"
           fill="url(#pattern27)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="253"
-          y="247.73"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-14.6164 253 247.73)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="253" y="247.73" width="98" height="123" rx="2" transform="rotate(-14.6164 253 247.73)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter0_dii_291_1244)" id="3">
-        <rect
-          x="46.8076"
-          y="432"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.32443 46.8076 432)"
-          fill="url(#pattern1)"
-        />
+        <rect x="46.8076" y="432" width="98" height="123" rx="2" transform="rotate(8.32443 46.8076 432)" fill="url(#pattern1)" />
         <image
           href={letters[3] ? letters[3].imageUrl : DEFAULT_IMAGE}
           x="52.9673"
@@ -181,29 +134,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(8.32443 46.8076 432)"
           fill="url(#pattern2)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="46.8076"
-          y="432"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.32443 46.8076 432)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="46.8076" y="432" width="98" height="123" rx="2" transform="rotate(8.32443 46.8076 432)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter1_dii_291_1244)" id="4">
-        <rect
-          x="197"
-          y="432.281"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-16.7731 197 432.281)"
-          fill="url(#pattern3)"
-        />
+        <rect x="197" y="432.281" width="98" height="123" rx="2" transform="rotate(-16.7731 197 432.281)" fill="url(#pattern3)" />
         <image
           href={letters[4] ? letters[4].imageUrl : DEFAULT_IMAGE}
           x="206.256"
@@ -222,29 +158,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-16.7731 197 432.281)"
           fill="url(#pattern4)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="197"
-          y="432.281"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-16.7731 197 432.281)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="197" y="432.281" width="98" height="123" rx="2" transform="rotate(-16.7731 197 432.281)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter2_dii_291_1244)" id="5">
-        <rect
-          x="336.592"
-          y="364"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.69369 336.592 364)"
-          fill="url(#pattern5)"
-        />
+        <rect x="336.592" y="364" width="98" height="123" rx="2" transform="rotate(8.69369 336.592 364)" fill="url(#pattern5)" />
         <image
           href={letters[5] ? letters[5].imageUrl : DEFAULT_IMAGE}
           x="342.695"
@@ -263,29 +182,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(8.69369 336.592 364)"
           fill="url(#pattern6)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="336.592"
-          y="364"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.69369 336.592 364)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="336.592" y="364" width="98" height="123" rx="2" transform="rotate(8.69369 336.592 364)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter13_dii_291_1244)" id="6">
-        <rect
-          x="408.015"
-          y="187"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(15.0872 408.015 187)"
-          fill="url(#pattern28)"
-        />
+        <rect x="408.015" y="187" width="98" height="123" rx="2" transform="rotate(15.0872 408.015 187)" fill="url(#pattern28)" />
         <image
           href={letters[6] ? letters[6].imageUrl : DEFAULT_IMAGE}
           x="413.111"
@@ -304,29 +206,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(15.0872 408.015 187)"
           fill="url(#pattern29)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="408.015"
-          y="187"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(15.0872 408.015 187)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="408.015" y="187" width="98" height="123" rx="2" transform="rotate(15.0872 408.015 187)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter3_dii_291_1244)" id="7">
-        <rect
-          x="502.557"
-          y="398"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(11.0415 502.557 398)"
-          fill="url(#pattern7)"
-        />
+        <rect x="502.557" y="398" width="98" height="123" rx="2" transform="rotate(11.0415 502.557 398)" fill="url(#pattern7)" />
         <image
           href={letters[7] ? letters[7].imageUrl : DEFAULT_IMAGE}
           x="508.299"
@@ -345,30 +230,13 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(11.0415 502.557 398)"
           fill="url(#pattern8)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="502.557"
-          y="398"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(11.0415 502.557 398)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="502.557" y="398" width="98" height="123" rx="2" transform="rotate(11.0415 502.557 398)" fill="white" fillOpacity="0.1" />
       </g>
 
       <g filter="url(#filter15_dii_291_1244)" id="8">
-        <rect
-          x="529.179"
-          y="215"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(4.74706 529.179 215)"
-          fill="url(#pattern32)"
-        />
+        <rect x="529.179" y="215" width="98" height="123" rx="2" transform="rotate(4.74706 529.179 215)" fill="url(#pattern32)" />
         <image
           href={letters[8] ? letters[8].imageUrl : DEFAULT_IMAGE}
           x="535.868"
@@ -387,29 +255,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(4.74706 529.179 215)"
           fill="url(#pattern33)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="529.179"
-          y="215"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(4.74706 529.179 215)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="529.179" y="215" width="98" height="123" rx="2" transform="rotate(4.74706 529.179 215)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter4_dii_291_1244)" id="9">
-        <rect
-          x="599"
-          y="398.858"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-20.8357 599 398.858)"
-          fill="url(#pattern9)"
-        />
+        <rect x="599" y="398.858" width="98" height="123" rx="2" transform="rotate(-20.8357 599 398.858)" fill="url(#pattern9)" />
         <image
           href={letters[9] ? letters[9].imageUrl : DEFAULT_IMAGE}
           x="608.604"
@@ -428,30 +279,13 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-20.8357 599 398.858)"
           fill="url(#pattern10)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="599"
-          y="398.858"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-20.8357 599 398.858)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="599" y="398.858" width="98" height="123" rx="2" transform="rotate(-20.8357 599 398.858)" fill="white" fillOpacity="0.1" />
       </g>
 
       <g filter="url(#filter14_dii_291_1244)" id="10">
-        <rect
-          x="643"
-          y="173.055"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-13.0058 643 173.055)"
-          fill="url(#pattern30)"
-        />
+        <rect x="643" y="173.055" width="98" height="123" rx="2" transform="rotate(-13.0058 643 173.055)" fill="url(#pattern30)" />
         <image
           href={letters[10] ? letters[10].imageUrl : DEFAULT_IMAGE}
           x="651.892"
@@ -470,29 +304,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-13.0058 643 173.055)"
           fill="url(#pattern31)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="643"
-          y="173.055"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-13.0058 643 173.055)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="643" y="173.055" width="98" height="123" rx="2" transform="rotate(-13.0058 643 173.055)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter5_dii_291_1244)" id="11">
-        <rect
-          x="792.925"
-          y="357"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(24.9705 792.925 357)"
-          fill="url(#pattern11)"
-        />
+        <rect x="792.925" y="357" width="98" height="123" rx="2" transform="rotate(24.9705 792.925 357)" fill="url(#pattern11)" />
         <image
           href={letters[11] ? letters[11].imageUrl : DEFAULT_IMAGE}
           x="796.343"
@@ -511,29 +328,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(24.9705 792.925 357)"
           fill="url(#pattern12)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="792.925"
-          y="357"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(24.9705 792.925 357)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="792.925" y="357" width="98" height="123" rx="2" transform="rotate(24.9705 792.925 357)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter16_dii_291_1244)" id="12">
-        <rect
-          x="797.253"
-          y="98"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(24.1147 797.253 98)"
-          fill="url(#pattern34)"
-        />
+        <rect x="797.253" y="98" width="98" height="123" rx="2" transform="rotate(24.1147 797.253 98)" fill="url(#pattern34)" />
         <image
           href={letters[12] ? letters[12].imageUrl : DEFAULT_IMAGE}
           x="800.821"
@@ -552,29 +352,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(24.1147 797.253 98)"
           fill="url(#pattern35)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="797.253"
-          y="98"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(24.1147 797.253 98)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="797.253" y="98" width="98" height="123" rx="2" transform="rotate(24.1147 797.253 98)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter17_dii_291_1244)" id="13">
-        <rect
-          x="878.12"
-          y="145"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(6.59184 878.12 145)"
-          fill="url(#pattern36)"
-        />
+        <rect x="878.12" y="145" width="98" height="123" rx="2" transform="rotate(6.59184 878.12 145)" fill="url(#pattern36)" />
         <image
           href={letters[13] ? letters[13].imageUrl : DEFAULT_IMAGE}
           x="884.539"
@@ -593,29 +376,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(6.59184 878.12 145)"
           fill="url(#pattern37)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="878.12"
-          y="145"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(6.59184 878.12 145)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="878.12" y="145" width="98" height="123" rx="2" transform="rotate(6.59184 878.12 145)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter6_dii_291_1244)" id="14">
-        <rect
-          x="940"
-          y="397.749"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-3.94876 940 397.749)"
-          fill="url(#pattern13)"
-        />
+        <rect x="940" y="397.749" width="98" height="123" rx="2" transform="rotate(-3.94876 940 397.749)" fill="url(#pattern13)" />
         <image
           href={letters[14] ? letters[14].imageUrl : DEFAULT_IMAGE}
           x="947.862"
@@ -634,29 +400,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-3.94876 940 397.749)"
           fill="url(#pattern14)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="940"
-          y="397.749"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-3.94876 940 397.749)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="940" y="397.749" width="98" height="123" rx="2" transform="rotate(-3.94876 940 397.749)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter18_dii_291_1244)" id="15">
-        <rect
-          x="1031"
-          y="140.513"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-18.1413 1031 140.513)"
-          fill="url(#pattern38)"
-        />
+        <rect x="1031" y="140.513" width="98" height="123" rx="2" transform="rotate(-18.1413 1031 140.513)" fill="url(#pattern38)" />
         <image
           href={letters[15] ? letters[15].imageUrl : DEFAULT_IMAGE}
           x="1040.38"
@@ -675,7 +424,7 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-18.1413 1031 140.513)"
           fill="url(#pattern39)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
         <rect
           x="1031"
@@ -685,19 +434,11 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-18.1413 1031 140.513)"
           fill="white"
-          fill-opacity="0.1"
+          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter7_dii_291_1244)" id="16">
-        <rect
-          x="1079"
-          y="376.401"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-16.2364 1079 376.401)"
-          fill="url(#pattern15)"
-        />
+        <rect x="1079" y="376.401" width="98" height="123" rx="2" transform="rotate(-16.2364 1079 376.401)" fill="url(#pattern15)" />
         <image
           href={letters[16] ? letters[16].imageUrl : DEFAULT_IMAGE}
           x="1088.21"
@@ -716,7 +457,7 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-16.2364 1079 376.401)"
           fill="url(#pattern16)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
         <rect
           x="1079"
@@ -726,19 +467,11 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-16.2364 1079 376.401)"
           fill="white"
-          fill-opacity="0.1"
+          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter19_dii_291_1244)" id="17">
-        <rect
-          x="1150.34"
-          y="85"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(9.04681 1150.34 85)"
-          fill="url(#pattern40)"
-        />
+        <rect x="1150.34" y="85" width="98" height="123" rx="2" transform="rotate(9.04681 1150.34 85)" fill="url(#pattern40)" />
         <image
           href={letters[17] ? letters[17].imageUrl : DEFAULT_IMAGE}
           x="1156.39"
@@ -757,29 +490,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(9.04681 1150.34 85)"
           fill="url(#pattern41)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="1150.34"
-          y="85"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(9.04681 1150.34 85)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="1150.34" y="85" width="98" height="123" rx="2" transform="rotate(9.04681 1150.34 85)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter20_dii_291_1244)" id="18">
-        <rect
-          x="1255.88"
-          y="206"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(17.9384 1255.88 206)"
-          fill="url(#pattern42)"
-        />
+        <rect x="1255.88" y="206" width="98" height="123" rx="2" transform="rotate(17.9384 1255.88 206)" fill="url(#pattern42)" />
         <image
           href={letters[18] ? letters[18].imageUrl : DEFAULT_IMAGE}
           x="1260.51"
@@ -798,29 +514,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(17.9384 1255.88 206)"
           fill="url(#pattern43)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="1255.88"
-          y="206"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(17.9384 1255.88 206)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="1255.88" y="206" width="98" height="123" rx="2" transform="rotate(17.9384 1255.88 206)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter8_dii_291_1244)" id="19">
-        <rect
-          x="1274.27"
-          y="376"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(20.5965 1274.27 376)"
-          fill="url(#pattern17)"
-        />
+        <rect x="1274.27" y="376" width="98" height="123" rx="2" transform="rotate(20.5965 1274.27 376)" fill="url(#pattern17)" />
         <image
           href={letters[19] ? letters[19].imageUrl : DEFAULT_IMAGE}
           x="1278.45"
@@ -839,29 +538,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(20.5965 1274.27 376)"
           fill="url(#pattern18)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
-        <rect
-          x="1274.27"
-          y="376"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(20.5965 1274.27 376)"
-          fill="white"
-          fill-opacity="0.1"
-        />
+        <rect x="1274.27" y="376" width="98" height="123" rx="2" transform="rotate(20.5965 1274.27 376)" fill="white" fillOpacity="0.1" />
       </g>
       <g filter="url(#filter21_dii_291_1244)" id="20">
-        <rect
-          x="1344"
-          y="236.411"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-5.51054 1344 236.411)"
-          fill="url(#pattern44)"
-        />
+        <rect x="1344" y="236.411" width="98" height="123" rx="2" transform="rotate(-5.51054 1344 236.411)" fill="url(#pattern44)" />
         <image
           href={letters[20] ? letters[20].imageUrl : DEFAULT_IMAGE}
           x="1352.05"
@@ -880,7 +562,7 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-5.51054 1344 236.411)"
           fill="url(#pattern45)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
         <rect
           x="1344"
@@ -890,19 +572,11 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-5.51054 1344 236.411)"
           fill="white"
-          fill-opacity="0.1"
+          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter9_dii_291_1244)" id="21">
-        <rect
-          x="1430"
-          y="428.059"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-13.0082 1430 428.059)"
-          fill="url(#pattern19)"
-        />
+        <rect x="1430" y="428.059" width="98" height="123" rx="2" transform="rotate(-13.0082 1430 428.059)" fill="url(#pattern19)" />
         <image
           href={letters[21] ? letters[21].imageUrl : DEFAULT_IMAGE}
           x="1438.89"
@@ -921,7 +595,7 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-13.0082 1430 428.059)"
           fill="url(#pattern20)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
         <rect
           x="1430"
@@ -931,27 +605,12 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-13.0082 1430 428.059)"
           fill="white"
-          fill-opacity="0.1"
+          fillOpacity="0.1"
         />
       </g>
-      <rect
-        x="2"
-        y="1"
-        width="1560"
-        height="844"
-        fill="url(#pattern21)"
-        style={{ pointerEvents: "none" }}
-      />
+      <rect x="2" y="1" width="1560" height="844" fill="url(#pattern21)" style={{ pointerEvents: 'none' }} />
       <g filter="url(#filter22_dii_291_1244)" id="22">
-        <rect
-          x="1430"
-          y="211.507"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-15.6928 1430 211.507)"
-          fill="url(#pattern46)"
-        />
+        <rect x="1430" y="211.507" width="98" height="123" rx="2" transform="rotate(-15.6928 1430 211.507)" fill="url(#pattern46)" />
         <image
           href={letters[22] ? letters[22].imageUrl : DEFAULT_IMAGE}
           x="1439.16"
@@ -970,7 +629,7 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-15.6928 1430 211.507)"
           fill="url(#pattern47)"
-          fill-opacity="0.3"
+          fillOpacity="0.3"
         />
         <rect
           x="1430"
@@ -980,27 +639,13 @@ function Background({ letters }: Props) {
           rx="2"
           transform="rotate(-15.6928 1430 211.507)"
           fill="white"
-          fill-opacity="0.1"
+          fillOpacity="0.1"
         />
       </g>
-      <rect
-        x="2"
-        width="1560"
-        height="844"
-        fill="url(#pattern48)"
-        style={{ pointerEvents: "none" }}
-      />
+      <rect x="2" width="1560" height="844" fill="url(#pattern48)" style={{ pointerEvents: 'none' }} />
       <defs>
-        <pattern
-          id="pattern0"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image0_291_1244"
-            transform="scale(0.000244145 0.000451264)"
-          />
+        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image0_291_1244" transform="scale(0.000244145 0.000451264)" />
         </pattern>
         <filter
           id="filter0_dii_291_1244"
@@ -1009,97 +654,35 @@ function Background({ letters }: Props) {
           width="136.775"
           height="157.892"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern1"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern2"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern2" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter1_dii_291_1244"
@@ -1108,97 +691,35 @@ function Background({ letters }: Props) {
           width="151.326"
           height="168.048"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern3"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern3" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern4"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern4" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter2_dii_291_1244"
@@ -1207,97 +728,35 @@ function Background({ letters }: Props) {
           width="137.466"
           height="158.4"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern5"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern5" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern6"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern6" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter3_dii_291_1244"
@@ -1306,97 +765,35 @@ function Background({ letters }: Props) {
           width="141.743"
           height="161.492"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern7"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern7" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern8"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern8" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter4_dii_291_1244"
@@ -1405,97 +802,35 @@ function Background({ letters }: Props) {
           width="157.341"
           height="171.814"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern9"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern9" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern10"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern10" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter5_dii_291_1244"
@@ -1504,97 +839,35 @@ function Background({ letters }: Props) {
           width="162.764"
           height="174.874"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern11"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern11" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern12"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern12" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter6_dii_291_1244"
@@ -1603,97 +876,35 @@ function Background({ letters }: Props) {
           width="128.238"
           height="151.457"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern13"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern13" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern14"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern14" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter7_dii_291_1244"
@@ -1702,97 +913,35 @@ function Background({ letters }: Props) {
           width="150.482"
           height="167.495"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern15"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern15" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern16"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern16" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter8_dii_291_1244"
@@ -1801,97 +950,35 @@ function Background({ letters }: Props) {
           width="157.005"
           height="171.613"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern17"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern17" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern18"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern18" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter9_dii_291_1244"
@@ -1900,108 +987,38 @@ function Background({ letters }: Props) {
           width="145.171"
           height="163.902"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern19"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern19" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern20"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern20" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern21"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image3_291_1244"
-            transform="translate(-0.126923 -0.143365) scale(0.000938004 0.00170814)"
-          />
+        <pattern id="pattern21" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image3_291_1244" transform="translate(-0.126923 -0.143365) scale(0.000938004 0.00170814)" />
         </pattern>
         <filter
           id="filter10_dii_291_1244"
@@ -2010,97 +1027,35 @@ function Background({ letters }: Props) {
           width="137.633"
           height="158.522"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern22"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern22" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern23"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern23" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter11_dii_291_1244"
@@ -2109,97 +1064,35 @@ function Background({ letters }: Props) {
           width="120"
           height="145"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern24"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern24" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern25"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern25" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter12_dii_291_1244"
@@ -2208,97 +1101,35 @@ function Background({ letters }: Props) {
           width="147.867"
           height="165.749"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern26"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern26" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern27"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern27" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter13_dii_291_1244"
@@ -2307,97 +1138,35 @@ function Background({ letters }: Props) {
           width="148.638"
           height="166.269"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern28"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern28" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern29"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern29" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter14_dii_291_1244"
@@ -2406,97 +1175,35 @@ function Background({ letters }: Props) {
           width="145.167"
           height="163.899"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern30"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern30" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern31"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern31" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter15_dii_291_1244"
@@ -2505,97 +1212,35 @@ function Background({ letters }: Props) {
           width="129.843"
           height="152.688"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern32"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern32" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern33"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern33" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter16_dii_291_1244"
@@ -2604,97 +1249,35 @@ function Background({ letters }: Props) {
           width="161.701"
           height="174.305"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern34"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern34" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern35"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern35" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter17_dii_291_1244"
@@ -2703,97 +1286,35 @@ function Background({ letters }: Props) {
           width="133.472"
           height="155.437"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern36"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern36" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern37"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern37" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter18_dii_291_1244"
@@ -2802,97 +1323,35 @@ function Background({ letters }: Props) {
           width="153.426"
           height="169.399"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern38"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern38" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern39"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern39" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter19_dii_291_1244"
@@ -2901,97 +1360,35 @@ function Background({ letters }: Props) {
           width="138.122"
           height="158.88"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern40"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern40" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern41"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern41" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter20_dii_291_1244"
@@ -3000,97 +1397,35 @@ function Background({ letters }: Props) {
           width="153.119"
           height="169.204"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern42"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern42" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern43"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern43" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter21_dii_291_1244"
@@ -3099,97 +1434,35 @@ function Background({ letters }: Props) {
           width="131.359"
           height="153.843"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern44"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern44" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern45"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern45" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
         <filter
           id="filter22_dii_291_1244"
@@ -3198,115 +1471,40 @@ function Background({ letters }: Props) {
           width="149.616"
           height="166.922"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feMorphology
-            radius="3"
-            operator="dilate"
-            in="SourceAlpha"
-            result="effect1_dropShadow_291_1244"
-          />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_291_1244" />
           <feOffset dx="1" dy="1" />
           <feGaussianBlur stdDeviation="4" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_291_1244"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_291_1244"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.241962 0 0 0 0 0.306636 0 0 0 0 0.320833 0 0 0 0.4 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_291_1244" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_291_1244" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="2" dy="2" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_291_1244"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0" />
+          <feBlend mode="normal" in2="shape" result="effect2_innerShadow_291_1244" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
           <feOffset dx="-1" dy="-1" />
           <feGaussianBlur stdDeviation="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect2_innerShadow_291_1244"
-            result="effect3_innerShadow_291_1244"
-          />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.25 0" />
+          <feBlend mode="normal" in2="effect2_innerShadow_291_1244" result="effect3_innerShadow_291_1244" />
         </filter>
-        <pattern
-          id="pattern46"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image1_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern46" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image1_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern47"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image2_291_1244"
-            transform="translate(-0.00204082) scale(0.00313776 0.0025)"
-          />
+        <pattern id="pattern47" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image2_291_1244" transform="translate(-0.00204082) scale(0.00313776 0.0025)" />
         </pattern>
-        <pattern
-          id="pattern48"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
-          <use
-            xlinkHref="#image4_291_1244"
-            transform="translate(-0.0839744 -0.106659) scale(0.000721565 0.0013337)"
-          />
+        <pattern id="pattern48" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlinkHref="#image4_291_1244" transform="translate(-0.0839744 -0.106659) scale(0.000721565 0.0013337)" />
         </pattern>
-        <image
-          id="image0_291_1244"
-          width="4096"
-          height="2216"
-          xlinkHref="static/images/room-background.png"
-        />
+        <image id="image0_291_1244" width="4096" height="2216" xlinkHref="static/images/room-background.png" />
         <rect id="image1_291_1244" width="320" height="400" fill="#f4f4f4" />
         <image
           id="image3_291_1244"
