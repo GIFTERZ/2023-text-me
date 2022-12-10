@@ -3,7 +3,6 @@ import { useMembers } from '../../stores/useMembers';
 import React, { useEffect, useState } from 'react';
 import { useLetterView } from '../../stores/useLetterView';
 import { Letter } from '../../types';
-import AlertModal from './AlertModal';
 import { useAlertModal } from '../../stores/useAlertModal';
 interface Props {
   letters: Letter[];

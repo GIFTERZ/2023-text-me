@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useAlertModal } from '../../stores/useAlertModal';
 import { Modal } from '../../styles/components/Modal';
 const LETTER_NOT_OWN_MESSAGE = '본인의 편지만 열어볼 수 있어요!';
-const LETTER_NOT_ARRIVE_MESSAGE = '아직 편지가 도착하지 않았어요!';
 
 interface Props {
   text: string;

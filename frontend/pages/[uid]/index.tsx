@@ -22,7 +22,7 @@ function Room() {
 
   const { roomInfo, getRoomInfo } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
-  const { alertModalOpen, toggleAlertModalOpen, alertEmptyLetterModalOpen, toggleEmptyLetterModalOpen } = useAlertModal();
+  const { alertModalOpen, alertEmptyLetterModalOpen } = useAlertModal();
 
   useEffect(() => {
     if (userId) {
