@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,5 +17,5 @@ public class LoginResponse {
     private String userName;
     private String token;
     private Long refreshTokenId;
-
+    private LocalDateTime createdAt;
 }
