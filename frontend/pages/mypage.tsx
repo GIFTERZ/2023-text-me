@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import NicknameContainer from "../components/mypage/NicknameContainer";
 import { useMembers } from "../stores/useMembers";
 import styled from "styled-components";
+import ErrorContainer from "../components/common/ErrorContainer";
 
 function Mypage() {
   const { isLoading, error, member, getMember } = useMembers();
@@ -16,7 +17,7 @@ function Mypage() {
   }
 
   if (error) {
-    return <div>에러가 발생했습니다.</div>;
+    return <ErrorContainer text={"에러가 발생했습니다."} />;
   }
 
   return (
