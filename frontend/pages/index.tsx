@@ -15,8 +15,6 @@ import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
 import Logo from "../components/common/Logo";
 
 export default function Home() {
-  const router = useRouter();
-
   const { member, getMember, logoutMember } = useMembers();
 
   const logout = () => {
@@ -29,12 +27,8 @@ export default function Home() {
 
   return (
     <Frame>
-      <HeaderLayout>
-        <WhiteLeftButton onClick={() => router.back()}>
-          <ArrowBackIcon />
-        </WhiteLeftButton>
+      <HeaderLayout style={{ justifyContent: "center" }}>
         <Logo />
-        <LayoutSpan aria-hidden />
       </HeaderLayout>
       <RoomEnterForm />
       <ButtonsContainer>
