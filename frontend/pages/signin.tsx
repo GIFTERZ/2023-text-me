@@ -11,6 +11,7 @@ import { FormTitle, Input, InputContainer } from '../styles/components/Form';
 import { Frame } from '../styles/components/Frame';
 import { Title } from '../styles/components/Title';
 import visitorApi from '../auth/visitorApi';
+const ACCESS_EXPIRY_TIME = 36000000;
 
 type SignInForm = {
   email: string;
@@ -29,11 +30,13 @@ function SignIn() {
     await visitorApi
       .post('/users/login', data)
       .then(res => {
+        let createdTime = new Date().getTime();
         const {
           data: { token, refreshTokenId },
         } = res;
         setCookie('textMeAccessToken', token);
         localStorage.setItem('textMeRefreshTokenId', refreshTokenId);
+        localStorage.setItem('accessExpireyTime', (createdTime + ACCESS_EXPIRY_TIME).toString());
         router.push(`/${res.data.id}`);
       })
       .catch(() => {
