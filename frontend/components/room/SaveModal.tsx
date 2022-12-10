@@ -21,7 +21,9 @@ const Container = styled(Modal)`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 0px 32px;
+  padding: 10px 32px;
+  width: fit-content;
+  height: fit-content;
 
   background: rgba(21, 21, 21, 0.75);
   color: #ffffff;
