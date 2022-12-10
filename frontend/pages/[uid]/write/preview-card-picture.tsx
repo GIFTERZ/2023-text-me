@@ -71,6 +71,7 @@ const CardImage = styled.img`
   width: 100%;
   height: 300px;
   border-radius: 5px;
+  object-fit: cover;
 `;
 
 const WhiteRightButton = styled(WhiteLeftButton)`

@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { Frame } from '../../../styles/components/Frame';
-import { LeftButton, RightButton } from '../../../styles/components/Button';
-import { useRoomInfo } from '../../../stores/useRoomInfo';
-import Link from 'next/link';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { Frame } from "../../../styles/components/Frame";
+import { LeftButton, RightButton } from "../../../styles/components/Button";
+import { useRoomInfo } from "../../../stores/useRoomInfo";
+import Link from "next/link";
+import { useMembers } from "../../../stores/useMembers";
 
 export default function index() {
-  const [isUser] = useState(true);
-
   const { pictureUrl } = useCardPicture();
   const { roomInfo } = useRoomInfo();
+
+  const { member, getMember } = useMembers();
+
+  useEffect(() => {
+    getMember();
+  }, []);
 
   const textLimitChangeLine = (nickname: string) => {
     if (nickname?.length < 7) {
@@ -32,9 +37,9 @@ export default function index() {
         <Title>{textLimitChangeLine(roomInfo?.userName)}</Title>
         {pictureUrl && <CardImage src={pictureUrl} />}
         <div>
-          {!isUser && (
+          {!member && (
             <LeftButton>
-              <Link href="/singup">내 방 만들기</Link>
+              <Link href="/signup">내 방 만들기</Link>
             </LeftButton>
           )}
           <RightButton>

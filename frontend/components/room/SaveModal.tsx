@@ -18,12 +18,13 @@ function SaveModal() {
 export default SaveModal;
 
 const Container = styled(Modal)`
-  height: fit-content;
-
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 10px 32px;
+
+  width: 70%;
+  height: fit-content;
 
   background: rgba(21, 21, 21, 0.75);
   color: #ffffff;
