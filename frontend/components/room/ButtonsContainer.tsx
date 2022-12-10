@@ -1,6 +1,7 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useMembers } from "../../stores/useMembers";
 import { WhiteButton } from "../../styles/components/Button";
 import HomeIcon from "./icons/HomeIcon";
 import MenuIcon from "./icons/MenuIcon";
@@ -8,10 +9,15 @@ import SaveContainer from "./SaveContainer";
 import ShareContainer from "./ShareContainer";
 
 function ButtonsContainer() {
-  const [isUser] = useState(false);
+  const { member, getMember } = useMembers();
+
+  useEffect(() => {
+    getMember();
+  }, []);
+
   return (
     <Container className="dont-save">
-      {isUser ? (
+      {member ? (
         <Link href="/mypage">
           <WhiteButton type="button">
             <MenuIcon />
