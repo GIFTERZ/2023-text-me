@@ -68,7 +68,8 @@ public class UserService {
 
         String accessToken = jwtUtils.generateJwtToken(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
-        return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken, refreshToken.getId());
+        return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken,
+                refreshToken.getId(), refreshToken.getCreatedAt());
     }
 
     public UserResponse findUserInfo(String email) {

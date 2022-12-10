@@ -2,12 +2,12 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { setCookie } from "../components/common/Cookie";
 import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
 import { LeftButton, WhiteLeftButton } from "../styles/components/Button";
 import { FormTitle, Input, InputContainer } from "../styles/components/Form";
 import { Frame } from "../styles/components/Frame";
 import visitorApi from "../auth/visitorApi";
+import { setCookie } from "../components/common/Cookie";
 import {
   FormLayout,
   HeaderLayout,
@@ -22,6 +22,8 @@ type SignInForm = {
 };
 
 function SignIn() {
+  const ACCESS_EXPIRY_TIME = 36000000;
+
   const router = useRouter();
 
   const {
@@ -42,11 +44,16 @@ function SignIn() {
     await visitorApi
       .post("/users/login", data)
       .then((res) => {
+        let createdTime = new Date().getTime();
         const {
           data: { token, refreshTokenId, id },
         } = res;
         setCookie("textMeAccessToken", token);
         localStorage.setItem("textMeRefreshTokenId", refreshTokenId);
+        localStorage.setItem(
+          "textMeAccessExpiryTime",
+          (createdTime + ACCESS_EXPIRY_TIME).toString()
+        );
       })
       .catch((err) => {
         if (err.response.status === 400) {
