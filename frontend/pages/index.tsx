@@ -2,13 +2,23 @@ import Link from "next/link";
 import { useMembers } from "../stores/useMembers";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { LeftButton, RightButton } from "../styles/components/Button";
+import {
+  LeftButton,
+  RightButton,
+  WhiteLeftButton,
+} from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
 import { Title } from "../styles/components/Title";
 import RoomEnterForm from "../components/main/RoomEnterForm";
+import { HeaderLayout, LayoutSpan } from "../styles/components/Layout";
+import { useRouter } from "next/navigation";
+import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
+import Logo from "../components/common/Logo";
 
 export default function Home() {
   const [isUser] = useState(false);
+
+  const router = useRouter();
 
   const { member, getMember } = useMembers();
 
@@ -18,7 +28,13 @@ export default function Home() {
 
   return (
     <Frame>
-      <Title>Text me!</Title>
+      <HeaderLayout>
+        <WhiteLeftButton onClick={() => router.back()}>
+          <ArrowBackIcon />
+        </WhiteLeftButton>
+        <Logo />
+        <LayoutSpan aria-hidden />
+      </HeaderLayout>
       <RoomEnterForm />
       <ButtonsContainer>
         {isUser ? (

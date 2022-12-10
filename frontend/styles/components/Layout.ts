@@ -3,6 +3,7 @@ import styled from "styled-components";
 const HeaderLayout = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 12px;
 `;
 
 const LayoutSpan = styled.span`
