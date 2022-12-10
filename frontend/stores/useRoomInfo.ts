@@ -18,7 +18,7 @@ const useRoomInfo = create<Room>(set => ({
     await visitorApi
       .get(`/users/find/${userId}`)
       .then(res => {
-        set({ roomInfo: res.data });
+        set({ roomInfo: res.data, error: null });
       })
       .catch(error => {
         set({ error });

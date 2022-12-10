@@ -22,6 +22,7 @@ const Container = styled(Modal)`
   flex-direction: column;
   gap: 5px;
   padding: 10px 32px;
+
   width: fit-content;
   height: fit-content;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLetterView } from "../../stores/useLetterView";
 import ReactCardFlip from "react-card-flip";
 import { useRoomInfo } from "../../stores/useRoomInfo";
@@ -9,9 +9,15 @@ import DeferredComponent from "../common/DeferredComponent";
 function LetterView() {
   const {
     letter,
+    getLetter,
+    isOpened,
     isLoading: isLetterLoading,
     error: letterError,
   } = useLetterView();
+
+  useEffect(() => {
+    getLetter();
+  }, []);
 
   const {
     roomInfo,

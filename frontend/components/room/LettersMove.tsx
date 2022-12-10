@@ -35,49 +35,46 @@ function LettersMove() {
   };
 
   return (
-    <ButtonContainer>
-      <Button
+    <>
+      <LeftButton
         onClick={() => movePage("PREV")}
         disabled={isFirst()}
         disabledStyle={isFirst()}
         type="button"
       >
         <MovePrevIcon />
-      </Button>
-      <Button
+      </LeftButton>
+      <RightButton
         onClick={() => movePage("NEXT")}
         disabled={isLast()}
         disabledStyle={isLast()}
         type="button"
       >
         <MoveNextIcon />
-      </Button>
-    </ButtonContainer>
+      </RightButton>
+    </>
   );
 }
 
 export default LettersMove;
 
-const ButtonContainer = styled.div`
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  justify-content: space-between;
-
-  width: 100%;
-
-  padding: 0 3px;
-  z-index: 30;
-`;
 const Button = styled.button<{ disabledStyle: boolean }>`
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+
   background: none;
   border: none;
-  z-index: 10;
   visibility: ${(p) => (p.disabledStyle ? "hidden" : "visible")};
   svg {
     filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 1));
   }
+`;
+
+const LeftButton = styled(Button)`
+  left: 1%;
+`;
+
+const RightButton = styled(Button)`
+  right: 1%;
 `;

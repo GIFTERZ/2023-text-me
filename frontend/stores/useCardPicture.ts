@@ -2,15 +2,14 @@ import create from 'zustand';
 import { AxiosError } from 'axios';
 import visitorApi from '../auth/visitorApi';
 
-type Card = {
-  id: number;
-  cardUrl: string;
-};
+// type Card = {
+//   cardUrl: string;
+// };
 
 interface CardPicture {
   pictureUrl: string | null;
   setPictureUrl: (select: string) => void;
-  constCard: Card[];
+  constCard: string[];
   getConstCard: () => void;
   error: AxiosError | null;
   isLoading: boolean;
@@ -29,6 +28,7 @@ export const useCardPicture = create<CardPicture>(set => ({
     await visitorApi
       .get('/cards')
       .then(res => {
+        console.log(res);
         set({ constCard: res.data });
       })
       .catch(error => {

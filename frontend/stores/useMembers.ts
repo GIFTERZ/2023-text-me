@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import create from 'zustand';
 import api from '../auth/api';
+import { setCookie } from '../components/common/Cookie';
 
 type Member = {
   userName: string;
@@ -13,8 +14,9 @@ interface Members {
   error: AxiosError | null;
   isPatchLoading: boolean;
   patchError: AxiosError | null;
-  member: Member;
+  member: Member | null;
   getMember: () => void;
+  logoutMember: () => void;
   patchNickname: (data: string) => void;
 }
 
@@ -51,6 +53,11 @@ const useMembers = create<Members>(set => ({
       .finally(() => {
         set({ isPatchLoading: false });
       });
+  },
+
+  logoutMember: () => {
+    set({ member: null });
+    setCookie('textMeAccessToken', null);
   },
 }));
 

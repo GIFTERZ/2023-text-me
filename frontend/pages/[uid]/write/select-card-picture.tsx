@@ -37,8 +37,8 @@ export default function index() {
           <CameraIcon />
         </InputDiv>
         <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
-        {constCard?.map(cards => (
-          <CardImage key={cards.id} src={cards.cardUrl} onClick={() => select(cards.cardUrl)} />
+        {constCard?.map((cards, index) => (
+          <CardImage key={index} src={cards} onClick={() => select(cards)} />
         ))}
       </PictureContainer>
     </SelectFrame>

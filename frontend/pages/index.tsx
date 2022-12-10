@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useMembers } from "../stores/useMembers";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import {
   LeftButton,
@@ -8,7 +8,6 @@ import {
   WhiteLeftButton,
 } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
-import { Title } from "../styles/components/Title";
 import RoomEnterForm from "../components/main/RoomEnterForm";
 import { HeaderLayout, LayoutSpan } from "../styles/components/Layout";
 import { useRouter } from "next/navigation";
@@ -16,11 +15,13 @@ import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
 import Logo from "../components/common/Logo";
 
 export default function Home() {
-  const [isUser] = useState(false);
-
   const router = useRouter();
 
-  const { member, getMember } = useMembers();
+  const { member, getMember, logoutMember } = useMembers();
+
+  const logout = () => {
+    logoutMember();
+  };
 
   useEffect(() => {
     getMember();
@@ -37,10 +38,15 @@ export default function Home() {
       </HeaderLayout>
       <RoomEnterForm />
       <ButtonsContainer>
-        {isUser ? (
-          <LeftButton type="button">
-            <Link href={`/${member?.id}`}>내 방으로 가기</Link>
-          </LeftButton>
+        {member?.id ? (
+          <>
+            <LeftButton type="button">
+              <Link href={`/${member?.id}`}>내 방으로 가기</Link>
+            </LeftButton>
+            <RightButton onClick={logout} type="button">
+              로그아웃
+            </RightButton>
+          </>
         ) : (
           <>
             <LeftButton type="button">

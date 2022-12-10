@@ -1,5 +1,3 @@
-import axios, { AxiosHeaders } from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -9,15 +7,13 @@ import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
 import { LeftButton, WhiteLeftButton } from "../styles/components/Button";
 import { FormTitle, Input, InputContainer } from "../styles/components/Form";
 import { Frame } from "../styles/components/Frame";
-import { Title } from "../styles/components/Title";
-axios.defaults.withCredentials = true;
 import visitorApi from "../auth/visitorApi";
-import Logo from "../components/common/Logo";
 import {
   FormLayout,
   HeaderLayout,
   LayoutSpan,
 } from "../styles/components/Layout";
+import Logo from "../components/common/Logo";
 
 type SignInForm = {
   email: string;
