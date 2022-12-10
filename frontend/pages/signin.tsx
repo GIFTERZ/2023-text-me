@@ -36,7 +36,7 @@ function SignIn() {
         } = res;
         setCookie('textMeAccessToken', token);
         localStorage.setItem('textMeRefreshTokenId', refreshTokenId);
-        localStorage.setItem('accessExpireyTime', (createdTime + ACCESS_EXPIRY_TIME).toString());
+        localStorage.setItem('textMeAccessExpiryTime', (createdTime + ACCESS_EXPIRY_TIME).toString());
         router.push(`/${res.data.id}`);
       })
       .catch(() => {

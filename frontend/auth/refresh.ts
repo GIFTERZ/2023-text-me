@@ -15,7 +15,7 @@ const checkExpire = (expireTime: number, refreshToken: string) => {
 const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
   const refreshToken = localStorage.getItem('textMeRefreshTokenId');
   let accessToken = getCookie('textMeAccessToken');
-  let expiryTime = Number(localStorage.getItem('accessExpireyTime'));
+  let expiryTime = Number(localStorage.getItem('textMeAccessExpiryTime'));
 
   if (checkExpire(expiryTime, refreshToken)) {
     await axios
@@ -35,7 +35,7 @@ const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> 
         accessToken = res.data.accessToken;
         setCookie('textMeAccessToken', accessToken);
         localStorage.setItem('textMeRefreshTokenId', res.data.refreshToken);
-        localStorage.setItem('accessExpireyTime', (createdTime + ACCESS_EXPIRY_TIME).toString());
+        localStorage.setItem('textMeAccessExpiryTime', (createdTime + ACCESS_EXPIRY_TIME).toString());
       });
   }
   config.headers.Authorization = `Bearer ${accessToken}`;
