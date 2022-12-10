@@ -16,7 +16,7 @@ function ButtonsContainer() {
   }, []);
 
   return (
-    <Container className="dont-save">
+    <Container>
       {member ? (
         <Link href="/mypage">
           <WhiteButton type="button">
