@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-import { useLetterView } from '../../stores/useLetterView';
-import { Letter } from '../../types';
 import { useSearchParams } from 'next/navigation';
 import { useMembers } from '../../stores/useMembers';
-
+import React, { useEffect, useState } from 'react';
+import { useLetterView } from '../../stores/useLetterView';
+import { Letter } from '../../types';
 interface Props {
   letters: Letter[];
 }
@@ -13,9 +12,14 @@ function Background({ letters }: Props) {
   const userId = Number(get('uid'));
   const { open } = useLetterView();
   const { member, getMember } = useMembers();
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     getMember();
+  }, []);
+
+  useEffect(() => {
+    setWidth(window.innerHeight * 1.85);
   }, []);
 
   const checkAuthOpen = (e: any) => {
@@ -46,15 +50,15 @@ function Background({ letters }: Props) {
 
   return (
     <svg
-      width="1231.38"
-      height="666.21"
-      viewBox="8 3 1550 846"
+      width={width}
+      height="100%"
+      viewBox="10 0 1560 854"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       onClick={checkAuthOpen}
     >
-      <rect x="2" y="1" width="1560" height="854" fill="url(#pattern0)" />
+      <rect id="back" x="2" y="1" width="1560" height="854" fill="url(#pattern0)" />
       <g filter="url(#filter10_dii_291_1244)" id="0">
         <rect x="28.7827" y="212" width="98" height="123" rx="2" transform="rotate(8.78363 28.7827 212)" fill="url(#pattern22)" />
         <image
