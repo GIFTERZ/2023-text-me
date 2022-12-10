@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMembers } from '../../stores/useMembers';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMembers } from "../../stores/useMembers";
+import styled from "styled-components";
+import { WhiteButton } from "../../styles/components/Button";
 
 type MemberForm = {
   userName: string;
@@ -9,7 +11,14 @@ type MemberForm = {
 function NicknameContainer() {
   const [editing, setEditing] = useState(false);
 
-  const { isLoading, error, isPatchLoading, patchError, member, patchNickname } = useMembers();
+  const {
+    isLoading,
+    error,
+    isPatchLoading,
+    patchError,
+    member,
+    patchNickname,
+  } = useMembers();
 
   const {
     register,
@@ -18,14 +27,14 @@ function NicknameContainer() {
   } = useForm<MemberForm>();
 
   const toggleEditing = () => {
-    setEditing(prev => !prev);
+    setEditing((prev) => !prev);
   };
 
   const validateForm = (data: MemberForm) => {
     patchNickname(data.userName);
 
     if (patchError) {
-      alert('에러가 발생했습니다.');
+      alert("에러가 발생했습니다.");
       return;
     }
 
@@ -41,29 +50,65 @@ function NicknameContainer() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(validateForm)}>
-        <label>닉네임</label>
-        <input
-          {...register('userName', {
-            required: '닉네임을 입력해주세요.',
+    <Container>
+      <Form onSubmit={handleSubmit(validateForm)}>
+        <Input
+          {...register("userName", {
+            required: "닉네임을 입력해주세요.",
           })}
           defaultValue={member?.userName}
           disabled={!editing}
         />
-        {errors && <em>{errors.userName?.message}</em>}
         {editing ? (
-          <button type="submit" disabled={isPatchLoading}>
+          <WhiteButton type="submit" disabled={isPatchLoading}>
             등록
-          </button>
+          </WhiteButton>
         ) : (
-          <button onClick={toggleEditing} type="button">
+          <WhiteButton onClick={toggleEditing} type="button">
             수정
-          </button>
+          </WhiteButton>
         )}
-      </form>
-    </div>
+      </Form>
+      {errors && <em>{errors.userName?.message}</em>}
+    </Container>
   );
 }
 
 export default NicknameContainer;
+
+const Container = styled.div`
+  margin-bottom: 20px;
+  width: 100%;
+`;
+
+const Form = styled.form`
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  ${WhiteButton} {
+    padding: 5px;
+    height: fit-content;
+    color: #0eca92;
+  }
+`;
+
+const Input = styled.input`
+  padding: 5px;
+
+  margin-bottom: 5px;
+  width: 100%;
+
+  background: none;
+  border: none;
+  border-bottom: ${(p) => (p.disabled ? "none" : "solid 1px black")};
+
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+
+  &:focus {
+    outline: none;
+  }
+`;
