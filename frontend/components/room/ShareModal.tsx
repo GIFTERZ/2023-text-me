@@ -19,7 +19,7 @@ function ShareModal({ close }: Props) {
     <>
       <Overlay onClick={close} />
       <Container>
-        <Title>내방 공유하기</Title>
+        <Title>방 공유하기</Title>
         <RightButton onClick={copyLink} type="button">
           링크 복사하기
         </RightButton>
