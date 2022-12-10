@@ -6,8 +6,13 @@ import { Frame } from "../../../styles/components/Frame";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useRoomInfo } from "../../../stores/useRoomInfo";
 import { useSearchParams } from "next/navigation";
-import { RightButton } from "../../../styles/components/Button";
+import {
+  RightButton,
+  WhiteLeftButton,
+} from "../../../styles/components/Button";
 import { useCardPicture } from "../../../stores/useCardPicture";
+import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
+import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 
 type LetterForm = {
   contents: string;
@@ -59,7 +64,13 @@ export default function index() {
 
   return (
     <Frame>
-      <Title>편지 쓰기</Title>
+      <HeaderLayout>
+        <WhiteLeftButton type="button" onClick={() => router.back()}>
+          <ArrowBackIcon />
+        </WhiteLeftButton>
+        <Title>편지 쓰기</Title>
+        <LayoutSpan />
+      </HeaderLayout>
       <Form onSubmit={handleSubmit(sendData, validateData)}>
         <LetterContainer imgurl={pictureUrl} id="box">
           <ToDiv>To. {roomInfo?.userName}</ToDiv>
@@ -78,7 +89,7 @@ export default function index() {
             <p>From.</p>
             <FromInput
               type="text"
-              placeholder="보내는 사람을 입력해주세요."
+              placeholder="보내는 사람"
               maxLength={10}
               {...register("sender", {
                 required: "보내는 사람을 입력해주세요.",
@@ -186,8 +197,8 @@ const Title = styled.h1`
 `;
 
 const FromInput = styled.input`
+  width: 40%;
   padding: 10px;
-  width: 55%;
   height: 24px;
 
   position: relative;
