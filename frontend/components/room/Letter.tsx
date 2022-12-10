@@ -1,8 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { useCaptureMode } from "../../stores/useCaptureMode";
-import { useLetterView } from "../../stores/useLetterView";
-import { Letter } from "../../types";
+import { useSearchParams } from 'next/navigation';
+import React from 'react';
+import styled from 'styled-components';
+import { useLetterView } from '../../stores/useLetterView';
+import { useMembers } from '../../stores/useMembers';
+import { Letter } from '../../types';
+import { useCaptureMode } from '../../stores/useCaptureMode';
 
 type CardStyle = {
   top: number;
@@ -17,12 +19,29 @@ interface Props {
 }
 
 function LetterComponent({ letter, cardStyle }: Props) {
+  const { get } = useSearchParams();
+  const userId = Number(get('uid'));
   const { open } = useLetterView();
+  const { member, getMember } = useMembers();
   const { isCaptureMode } = useCaptureMode();
+
+  const checkAuthOpen = (letterId: number) => {
+    getMember();
+    console.log('mem id: ' + member?.id);
+    console.log('userid:' + userId);
+    if (member === null || member?.id !== userId) {
+      alert('본인의 편지만 열람할 수 있습니다.');
+      return;
+    }
+
+    if (member.id === userId) {
+      open(letterId);
+    }
+  };
 
   return (
     <Card
-      onClick={() => open(letter.id)}
+      onClick={() => checkAuthOpen(letter.id)}
       top={cardStyle.top}
       left={cardStyle.left}
       rotate={cardStyle.rotate}
@@ -37,16 +56,15 @@ export default LetterComponent;
 
 const Card = styled.div<CardStyle>`
   position: absolute;
-  top: ${(p) => (p.isCaptureMode ? p.top / 1.06 : p.top)}px;
-  left: ${(p) => (p.isCaptureMode ? p.left / 1.05 : p.left)}px;
-  transform: rotate(${(p) => p.rotate}deg);
+  top: ${p => (p.isCaptureMode ? p.top / 1.06 : p.top)}px;
+  left: ${p => (p.isCaptureMode ? p.left / 1.05 : p.left)}px;
+  transform: rotate(${p => p.rotate}deg);
   width: 97px;
   height: 120px;
   padding: 6px 6px 30px 6px;
 
   background: white;
-  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4),
-    inset -1px -1px 2px rgba(106, 106, 106, 0.25),
+  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4), inset -1px -1px 2px rgba(106, 106, 106, 0.25),
     inset 2px 2px 2px rgba(255, 255, 255, 0.6);
   border-radius: 2px;
 
@@ -56,8 +74,8 @@ const Card = styled.div<CardStyle>`
     padding: 5px 5px 20px 5px;
   }
   @media ${({ theme }) => theme.device.large} {
-    top: ${(p) => (p.isCaptureMode ? p.top / 1.15 - 30 : p.top / 1.2)}px;
-    left: ${(p) => (p.isCaptureMode ? p.left / 1.16 : p.left / 1.15)}px;
+    top: ${p => (p.isCaptureMode ? p.top / 1.15 - 30 : p.top / 1.2)}px;
+    left: ${p => (p.isCaptureMode ? p.left / 1.16 : p.left / 1.15)}px;
   }
 `;
 
