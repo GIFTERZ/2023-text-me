@@ -1,14 +1,22 @@
-import Link from 'next/link';
-import { useMembers } from '../stores/useMembers';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import RoomEnterForm from '../components/main/RoomEnterForm';
-import { LeftButton, RightButton } from '../styles/components/Button';
-import { Frame } from '../styles/components/Frame';
-import { Title } from '../styles/components/Title';
-import { getCookie } from '../components/common/Cookie';
+import Link from "next/link";
+import { useMembers } from "../stores/useMembers";
+import { useEffect } from "react";
+import styled from "styled-components";
+import {
+  LeftButton,
+  RightButton,
+  WhiteLeftButton,
+} from "../styles/components/Button";
+import { Frame } from "../styles/components/Frame";
+import RoomEnterForm from "../components/main/RoomEnterForm";
+import { HeaderLayout, LayoutSpan } from "../styles/components/Layout";
+import { useRouter } from "next/navigation";
+import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
+import Logo from "../components/common/Logo";
 
 export default function Home() {
+  const router = useRouter();
+
   const { member, getMember, logoutMember } = useMembers();
 
   const logout = () => {
@@ -21,7 +29,13 @@ export default function Home() {
 
   return (
     <Frame>
-      <Title>Text me!</Title>
+      <HeaderLayout>
+        <WhiteLeftButton onClick={() => router.back()}>
+          <ArrowBackIcon />
+        </WhiteLeftButton>
+        <Logo />
+        <LayoutSpan aria-hidden />
+      </HeaderLayout>
       <RoomEnterForm />
       <ButtonsContainer>
         {member?.id ? (
@@ -36,10 +50,10 @@ export default function Home() {
         ) : (
           <>
             <LeftButton type="button">
-              <Link href={'/signup'}>내 방 만들기</Link>
+              <Link href={"/signup"}>내 방 만들기</Link>
             </LeftButton>
             <RightButton type="button">
-              <Link href={'/signin'}>로그인</Link>
+              <Link href={"/signin"}>로그인</Link>
             </RightButton>
           </>
         )}

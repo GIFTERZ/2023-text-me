@@ -2,6 +2,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import NicknameContainer from "../components/mypage/NicknameContainer";
 import { useMembers } from "../stores/useMembers";
+import styled from "styled-components";
+import ErrorContainer from "../components/common/ErrorContainer";
 
 function Mypage() {
   const { isLoading, error, member, getMember } = useMembers();
@@ -15,16 +17,24 @@ function Mypage() {
   }
 
   if (error) {
-    return <div>에러가 발생했습니다.</div>;
+    return <ErrorContainer text={"에러가 발생했습니다."} />;
   }
 
   return (
-    <div>
+    <Frame>
       <NicknameContainer />
       <Link href={`/${member?.id}`}>내 방으로 가기</Link>
       <Link href={"/"}>다른 사람 방 구경하기</Link>
-    </div>
+    </Frame>
   );
 }
 
 export default Mypage;
+
+const Frame = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+
+  padding: 70px 30px;
+`;

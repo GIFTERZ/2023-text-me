@@ -1,31 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useLetterView } from '../../stores/useLetterView';
-import ReactCardFlip from 'react-card-flip';
-import { useRoomInfo } from '../../stores/useRoomInfo';
-import styled from 'styled-components';
-import { Spinner } from '../../styles/indicators/Loader';
-import DeferredComponent from '../common/DeferredComponent';
-import { useLetters } from '../../stores/useLetters';
+import React, { useEffect, useState } from "react";
+import { useLetterView } from "../../stores/useLetterView";
+import ReactCardFlip from "react-card-flip";
+import { useRoomInfo } from "../../stores/useRoomInfo";
+import styled from "styled-components";
+import { Spinner } from "../../styles/indicators/Loader";
+import DeferredComponent from "../common/DeferredComponent";
 
 function LetterView() {
-  const { letter, getLetter, isOpened, isLoading: isLetterLoading, error: letterError } = useLetterView();
+  const {
+    letter,
+    getLetter,
+    isOpened,
+    isLoading: isLetterLoading,
+    error: letterError,
+  } = useLetterView();
 
   useEffect(() => {
     getLetter();
   }, []);
 
-  const { roomInfo, isLoading: isRoomLoading, error: roomError } = useRoomInfo();
+  const {
+    roomInfo,
+    isLoading: isRoomLoading,
+    error: roomError,
+  } = useRoomInfo();
 
   const [isFlipped, setIsFlipped] = useState(false);
 
   const flip = () => {
-    setIsFlipped(prev => !prev);
+    setIsFlipped((prev) => !prev);
   };
 
   const lineBreak = (content: string) => {
     return (
       <>
-        {content?.split('\n').map(value => (
+        {content?.split("\n").map((value) => (
           <>
             {value}
             <br />
@@ -49,7 +58,12 @@ function LetterView() {
 
   return (
     <Container>
-      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal" flipSpeedBackToFront={1} flipSpeedFrontToBack={1}>
+      <ReactCardFlip
+        isFlipped={isFlipped}
+        flipDirection="horizontal"
+        flipSpeedBackToFront={1}
+        flipSpeedFrontToBack={1}
+      >
         <Card>
           <img src={letter?.imageUrl} onClick={flip} />
         </Card>
@@ -73,37 +87,50 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
+  padding: 24px 24px 48px 24px;
   width: 320px;
   height: 400px;
 
-  border: 5px solid #ffffff;
-  border-radius: 20px;
+  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 2px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+
+  background-color: #ffffff;
 
   img {
-    width: 100%;
-    height: 100%;
+    width: 272px;
+    height: 272px;
 
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 5px;
   }
 
   @media ${({ theme }) => theme.device.small} {
     width: 240px;
+
+    img {
+      width: 190px;
+      height: 190px;
+    }
   }
 `;
 
 const CardBack = styled(Card)<{ imgUrl: string }>`
   display: grid;
   grid-template-rows: 80px 230px 80px;
+  padding: 0;
 
-  background: ${p => `linear-gradient(
+  background: ${(p) => `linear-gradient(
     0deg,
     rgba(255, 255, 255, 0.8),
     rgba(255, 255, 255, 0.8)
     ),
     url(${p.imgUrl})`};
   background-size: cover;
-  border-radius: 20px;
+  border-radius: 5px;
+
+  font-family: "GangwonEduSaeeum";
 `;
 
 const ToText = styled.h2`
@@ -112,9 +139,9 @@ const ToText = styled.h2`
 
   margin: 0 27px;
 
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 27px;
 
   color: #222222;
 
@@ -126,9 +153,10 @@ const ToText = styled.h2`
 const Content = styled.p`
   margin: 0 37px;
 
+  font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 17px;
+  line-height: 25px;
 
   color: #222222;
 
@@ -148,9 +176,9 @@ const FromText = styled.h2`
 
   margin: 0 27px;
 
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 27px;
 
   color: #222222;
 
