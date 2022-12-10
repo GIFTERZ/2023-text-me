@@ -24,7 +24,7 @@ const Modal = styled.div`
   justify-content: center;
 
   width: 80%;
-  height: 10%;
+  height: 20%;
 
   background: white;
   border-radius: 10px;

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import create from 'zustand';
-import api from '../auth/api';
+import visitorApi from '../auth/visitorApi';
 
 type DataType = {
   email: string;
@@ -9,7 +9,7 @@ type DataType = {
 interface RoomEnter {
   isLoading: boolean;
   error: AxiosError | null;
-  enter: (data: DataType, callback: (id: number) => void) => void;
+  enter: (data: string, callback: (id: number) => void) => void;
 }
 
 const useRoomEnter = create<RoomEnter>(set => ({
@@ -17,8 +17,12 @@ const useRoomEnter = create<RoomEnter>(set => ({
   error: null,
   enter: async (data, callback) => {
     set({ isLoading: true });
-    await api
-      .post('/users/find', data)
+    await visitorApi
+      .get('/users/find', {
+        params: {
+          email: data,
+        },
+      })
       .then(res => {
         callback(res.data.id);
       })
