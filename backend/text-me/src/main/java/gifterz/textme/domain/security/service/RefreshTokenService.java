@@ -61,7 +61,6 @@ public class RefreshTokenService {
         }
         RefreshToken refreshToken = verifyExpiration(refreshTokenExist.get());
         String newToken = jwtUtils.generateJwtToken(user);
-        return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken());
-
+        return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 }
