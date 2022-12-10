@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { setCookie } from "../components/common/Cookie";
@@ -14,6 +14,7 @@ import {
   LayoutSpan,
 } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
+import { useMembers } from "../stores/useMembers";
 
 type SignInForm = {
   email: string;
@@ -22,25 +23,40 @@ type SignInForm = {
 
 function SignIn() {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignInForm>();
 
+  const { member, getMember } = useMembers();
+
+  useEffect(() => {
+    if (member) {
+      router.push(`/${member.id}`);
+    }
+  }, [member]);
+
   const signIn = async (data: SignInForm) => {
     await visitorApi
       .post("/users/login", data)
       .then((res) => {
         const {
-          data: { token, refreshTokenId },
+          data: { token, refreshTokenId, id },
         } = res;
         setCookie("textMeAccessToken", token);
         localStorage.setItem("textMeRefreshTokenId", refreshTokenId);
-        router.push(`/${res.data.id}`);
       })
-      .catch(() => {
-        alert("에러가 발생했습니다.");
+      .catch((err) => {
+        if (err.response.status === 400) {
+          alert("이메일 또는 비밀번호를 다시 확인해주세요.");
+        } else {
+          alert("에러가 발생했습니다.");
+        }
+      })
+      .finally(() => {
+        getMember();
       });
   };
 
