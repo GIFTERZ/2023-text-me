@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { useCaptureMode } from "../../stores/useCaptureMode";
-import { Modal } from "../../styles/components/Modal";
+import React from 'react';
+import styled from 'styled-components';
+import { useCaptureMode } from '../../stores/useCaptureMode';
+import { Modal } from '../../styles/components/Modal';
 
 function SaveModal() {
   const { toggleModalOpen } = useCaptureMode();

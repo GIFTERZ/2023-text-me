@@ -9,6 +9,10 @@ import ButtonsContainer from '../../components/room/ButtonsContainer';
 import { RightButton } from '../../styles/components/Button';
 import { useCaptureMode } from '../../stores/useCaptureMode';
 import SaveModal from '../../components/room/SaveModal';
+import { useAlertModal } from '../../stores/useAlertModal';
+import AlertModal from '../../components/room/AlertModal';
+const LETTER_NOT_OWN_MESSAGE = '본인의 편지만 열어볼 수 있어요!';
+const LETTER_NOT_ARRIVE_MESSAGE = '아직 편지가 도착하지 않았어요!';
 
 function Room() {
   const { get } = useSearchParams();
@@ -18,6 +22,7 @@ function Room() {
 
   const { roomInfo, getRoomInfo } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
+  const { alertModalOpen, toggleAlertModalOpen, alertEmptyLetterModalOpen, toggleEmptyLetterModalOpen } = useAlertModal();
 
   useEffect(() => {
     if (userId) {
@@ -41,6 +46,8 @@ function Room() {
         </Link>
       )}
       <LetterViewContainer />
+      {alertModalOpen && <AlertModal text={LETTER_NOT_OWN_MESSAGE} />}
+      {alertEmptyLetterModalOpen && <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />}
       {modalOpen && <SaveModal />}
       {isCaptureMode && (
         <CaptureModeButton type="button" onClick={toggleCaptureMode}>
