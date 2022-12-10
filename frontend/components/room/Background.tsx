@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLetterView } from '../../stores/useLetterView';
 import { Letter } from '../../types';
 import { useSearchParams } from 'next/navigation';
@@ -14,8 +14,11 @@ function Background({ letters }: Props) {
   const { open } = useLetterView();
   const { member, getMember } = useMembers();
 
-  const checkAuthOpen = (e: any) => {
+  useEffect(() => {
     getMember();
+  }, []);
+
+  const checkAuthOpen = (e: any) => {
     if (member === null || member?.id !== userId) {
       alert('본인의 편지만 열람할 수 있습니다.');
       return;
@@ -32,7 +35,7 @@ function Background({ letters }: Props) {
     }
 
     if (member.id === userId) {
-      if (letters[Number(id)]?.id) {
+      if (letters[Number(id)]) {
         open(letters[Number(id)].id);
       } else {
         alert('아직 편지가 없어요!');
