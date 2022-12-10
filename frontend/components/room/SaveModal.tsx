@@ -23,7 +23,7 @@ const Container = styled(Modal)`
   gap: 5px;
   padding: 10px 32px;
 
-  width: fit-content;
+  width: 70%;
   height: fit-content;
 
   background: rgba(21, 21, 21, 0.75);

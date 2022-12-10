@@ -87,6 +87,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
+  padding: 24px 24px 48px 24px;
   width: 320px;
   height: 400px;
 
@@ -94,6 +95,8 @@ const Card = styled.div`
     inset -2px -2px 2px rgba(106, 106, 106, 0.25),
     inset 2px 2px 2px rgba(255, 255, 255, 0.3);
   border-radius: 5px;
+
+  background-color: #ffffff;
 
   img {
     width: 272px;
@@ -116,6 +119,7 @@ const Card = styled.div`
 const CardBack = styled(Card)<{ imgUrl: string }>`
   display: grid;
   grid-template-rows: 80px 230px 80px;
+  padding: 0;
 
   background: ${(p) => `linear-gradient(
     0deg,
