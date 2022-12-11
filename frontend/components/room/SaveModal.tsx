@@ -7,7 +7,9 @@ function SaveModal() {
   const { toggleModalOpen } = useCaptureMode();
   return (
     <Container>
-      캡처 모드입니다. 종료하려면 아래의 종료 버튼을 누르세요.
+      캡처 모드입니다.
+      <br />
+      종료하려면 아래의 종료 버튼을 누르세요.
       <Button type="button" onClick={toggleModalOpen}>
         확인
       </Button>
@@ -22,6 +24,7 @@ const Container = styled(Modal)`
   flex-direction: column;
   gap: 5px;
   padding: 10px 32px;
+  text-align: center;
 
   width: 70%;
   height: fit-content;
