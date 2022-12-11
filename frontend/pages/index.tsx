@@ -1,14 +1,13 @@
-import Link from 'next/link';
-import { useMembers } from '../stores/useMembers';
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import { LeftButton, RightButton } from '../styles/components/Button';
-import { Frame } from '../styles/components/Frame';
-import RoomEnterForm from '../components/main/RoomEnterForm';
-import { HeaderLayout } from '../styles/components/Layout';
-import { useRouter } from 'next/navigation';
-import Logo from '../components/common/Logo';
-import Head from 'next/head';
+import { useMembers } from "../stores/useMembers";
+import { useEffect } from "react";
+import styled from "styled-components";
+import { LeftButton, RightButton } from "../styles/components/Button";
+import { Frame } from "../styles/components/Frame";
+import RoomEnterForm from "../components/main/RoomEnterForm";
+import { HeaderLayout } from "../styles/components/Layout";
+import { useRouter } from "next/navigation";
+import Logo from "../components/common/Logo";
+import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
@@ -25,17 +24,20 @@ export default function Home() {
   return (
     <Frame>
       <Head>
-        <title>text me!</title>
+        <title>Text me!</title>
       </Head>
 
-      <HeaderLayout style={{ justifyContent: 'center' }}>
+      <HeaderLayout style={{ justifyContent: "center" }}>
         <Logo />
       </HeaderLayout>
       <RoomEnterForm />
       <ButtonsContainer>
         {member?.id ? (
           <>
-            <LeftButton type="button" onClick={() => router.push(`/${member?.id}`)}>
+            <LeftButton
+              type="button"
+              onClick={() => router.push(`/${member?.id}`)}
+            >
               내 방으로 가기
             </LeftButton>
             <RightButton onClick={logout} type="button">
@@ -44,10 +46,10 @@ export default function Home() {
           </>
         ) : (
           <>
-            <LeftButton type="button" onClick={() => router.push('/signup')}>
+            <LeftButton type="button" onClick={() => router.push("/signup")}>
               내 방 만들기
             </LeftButton>
-            <RightButton type="button" onClick={() => router.push('/signin')}>
+            <RightButton type="button" onClick={() => router.push("/signin")}>
               로그인
             </RightButton>
           </>
@@ -61,9 +63,9 @@ const ButtonsContainer = styled.div`
   display: flex;
   gap: 12px;
 
-  margin-top: 158px;
-
   width: 100%;
+
+  margin-top: 50px;
 
   ${LeftButton} {
     width: 100%;

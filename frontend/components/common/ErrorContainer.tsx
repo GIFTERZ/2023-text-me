@@ -25,5 +25,5 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 `;
