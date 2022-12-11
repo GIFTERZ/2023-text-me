@@ -3,15 +3,22 @@ import { useMembers } from "../../stores/useMembers";
 import React, { useEffect, useState } from "react";
 import { useLetterView } from "../../stores/useLetterView";
 import { Letter } from "../../types";
+import { useAlertModal } from "../../stores/useAlertModal";
+import { useCaptureMode } from "../../stores/useCaptureMode";
 interface Props {
   letters: Letter[];
 }
 function Background({ letters }: Props) {
   const DEFAULT_IMAGE = "static/images/room-default.png";
+
   const { get } = useSearchParams();
   const userId = Number(get("uid"));
+
   const { open } = useLetterView();
   const { member, getMember } = useMembers();
+  const { toggleAlertModalOpen, toggleEmptyLetterModalOpen } = useAlertModal();
+  const { isCaptureMode } = useCaptureMode();
+
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
@@ -19,23 +26,27 @@ function Background({ letters }: Props) {
   }, []);
 
   useEffect(() => {
-    setWidth(window.innerHeight * 1.85);
+    let newWidth = window.innerHeight * (1560 / 844);
+
+    if (isCaptureMode) {
+      newWidth *= 0.95;
+      document.documentElement.style.overflow = "scroll";
+    } else {
+      document.documentElement.style.overflow = "hidden";
+    }
+
+    setWidth(newWidth);
 
     window.addEventListener("resize", function () {
-      setWidth(window.innerHeight * 1.85);
+      setWidth(newWidth);
     });
 
     return window.removeEventListener("resize", function () {
-      setWidth(window.innerHeight * 1.85);
+      setWidth(newWidth);
     });
-  }, []);
+  }, [isCaptureMode]);
 
   const checkAuthOpen = (e: any) => {
-    if (member === null || member?.id !== userId) {
-      alert("본인의 편지만 열람할 수 있습니다.");
-      return;
-    }
-
     const {
       target: {
         parentElement: { id },
@@ -46,11 +57,16 @@ function Background({ letters }: Props) {
       return;
     }
 
+    if (member === null || member?.id !== userId) {
+      toggleAlertModalOpen();
+      return;
+    }
+
     if (member.id === userId) {
       if (letters[Number(id)]) {
         open(letters[Number(id)].id);
       } else {
-        alert("아직 편지가 없어요!");
+        toggleEmptyLetterModalOpen();
         return;
       }
     }
@@ -59,7 +75,7 @@ function Background({ letters }: Props) {
   return (
     <svg
       width={width}
-      height="100%"
+      height="calc(var(--vh, 1vh) * 100)"
       viewBox="10 0 1560 854"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -104,16 +120,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern23)"
           fillOpacity="0.3"
         />
-        <rect
-          x="28.7827"
-          y="212"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.78363 28.7827 212)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter11_dii_291_1244)" id="1">
         <rect
@@ -141,15 +147,6 @@ function Background({ letters }: Props) {
           rx="2"
           fill="url(#pattern25)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="126"
-          y="259"
-          width="98"
-          height="123"
-          rx="2"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter12_dii_291_1244)" id="2">
@@ -182,16 +179,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern27)"
           fillOpacity="0.3"
         />
-        <rect
-          x="253"
-          y="247.73"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-14.6164 253 247.73)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter0_dii_291_1244)" id="3">
         <rect
@@ -222,16 +209,6 @@ function Background({ letters }: Props) {
           transform="rotate(8.32443 46.8076 432)"
           fill="url(#pattern2)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="46.8076"
-          y="432"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.32443 46.8076 432)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter1_dii_291_1244)" id="4">
@@ -264,16 +241,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern4)"
           fillOpacity="0.3"
         />
-        <rect
-          x="197"
-          y="432.281"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-16.7731 197 432.281)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter2_dii_291_1244)" id="5">
         <rect
@@ -304,16 +271,6 @@ function Background({ letters }: Props) {
           transform="rotate(8.69369 336.592 364)"
           fill="url(#pattern6)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="336.592"
-          y="364"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(8.69369 336.592 364)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter13_dii_291_1244)" id="6">
@@ -346,16 +303,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern29)"
           fillOpacity="0.3"
         />
-        <rect
-          x="408.015"
-          y="187"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(15.0872 408.015 187)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter3_dii_291_1244)" id="7">
         <rect
@@ -386,16 +333,6 @@ function Background({ letters }: Props) {
           transform="rotate(11.0415 502.557 398)"
           fill="url(#pattern8)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="502.557"
-          y="398"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(11.0415 502.557 398)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
 
@@ -429,16 +366,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern33)"
           fillOpacity="0.3"
         />
-        <rect
-          x="529.179"
-          y="215"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(4.74706 529.179 215)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter4_dii_291_1244)" id="9">
         <rect
@@ -469,16 +396,6 @@ function Background({ letters }: Props) {
           transform="rotate(-20.8357 599 398.858)"
           fill="url(#pattern10)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="599"
-          y="398.858"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-20.8357 599 398.858)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
 
@@ -512,16 +429,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern31)"
           fillOpacity="0.3"
         />
-        <rect
-          x="643"
-          y="173.055"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-13.0058 643 173.055)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter5_dii_291_1244)" id="11">
         <rect
@@ -552,16 +459,6 @@ function Background({ letters }: Props) {
           transform="rotate(24.9705 792.925 357)"
           fill="url(#pattern12)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="792.925"
-          y="357"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(24.9705 792.925 357)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter16_dii_291_1244)" id="12">
@@ -594,16 +491,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern35)"
           fillOpacity="0.3"
         />
-        <rect
-          x="797.253"
-          y="98"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(24.1147 797.253 98)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter17_dii_291_1244)" id="13">
         <rect
@@ -634,16 +521,6 @@ function Background({ letters }: Props) {
           transform="rotate(6.59184 878.12 145)"
           fill="url(#pattern37)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="878.12"
-          y="145"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(6.59184 878.12 145)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter6_dii_291_1244)" id="14">
@@ -676,16 +553,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern14)"
           fillOpacity="0.3"
         />
-        <rect
-          x="940"
-          y="397.749"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-3.94876 940 397.749)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter18_dii_291_1244)" id="15">
         <rect
@@ -716,16 +583,6 @@ function Background({ letters }: Props) {
           transform="rotate(-18.1413 1031 140.513)"
           fill="url(#pattern39)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="1031"
-          y="140.513"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-18.1413 1031 140.513)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter7_dii_291_1244)" id="16">
@@ -758,16 +615,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern16)"
           fillOpacity="0.3"
         />
-        <rect
-          x="1079"
-          y="376.401"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-16.2364 1079 376.401)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter19_dii_291_1244)" id="17">
         <rect
@@ -798,16 +645,6 @@ function Background({ letters }: Props) {
           transform="rotate(9.04681 1150.34 85)"
           fill="url(#pattern41)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="1150.34"
-          y="85"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(9.04681 1150.34 85)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter20_dii_291_1244)" id="18">
@@ -840,16 +677,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern43)"
           fillOpacity="0.3"
         />
-        <rect
-          x="1255.88"
-          y="206"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(17.9384 1255.88 206)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter8_dii_291_1244)" id="19">
         <rect
@@ -880,16 +707,6 @@ function Background({ letters }: Props) {
           transform="rotate(20.5965 1274.27 376)"
           fill="url(#pattern18)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="1274.27"
-          y="376"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(20.5965 1274.27 376)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <g filter="url(#filter21_dii_291_1244)" id="20">
@@ -922,16 +739,6 @@ function Background({ letters }: Props) {
           fill="url(#pattern45)"
           fillOpacity="0.3"
         />
-        <rect
-          x="1344"
-          y="236.411"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-5.51054 1344 236.411)"
-          fill="white"
-          fillOpacity="0.1"
-        />
       </g>
       <g filter="url(#filter9_dii_291_1244)" id="21">
         <rect
@@ -962,16 +769,6 @@ function Background({ letters }: Props) {
           transform="rotate(-13.0082 1430 428.059)"
           fill="url(#pattern20)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="1430"
-          y="428.059"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-13.0082 1430 428.059)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <rect
@@ -1011,16 +808,6 @@ function Background({ letters }: Props) {
           transform="rotate(-15.6928 1430 211.507)"
           fill="url(#pattern47)"
           fillOpacity="0.3"
-        />
-        <rect
-          x="1430"
-          y="211.507"
-          width="98"
-          height="123"
-          rx="2"
-          transform="rotate(-15.6928 1430 211.507)"
-          fill="white"
-          fillOpacity="0.1"
         />
       </g>
       <rect

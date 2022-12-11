@@ -15,6 +15,7 @@ import {
 } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
+import Head from "next/head";
 
 type SignInForm = {
   email: string;
@@ -55,12 +56,8 @@ function SignIn() {
           (createdTime + ACCESS_EXPIRY_TIME).toString()
         );
       })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          alert("이메일 또는 비밀번호를 다시 확인해주세요.");
-        } else {
-          alert("에러가 발생했습니다.");
-        }
+      .catch((error) => {
+        alert(error.response.data.message);
       })
       .finally(() => {
         getMember();
@@ -69,6 +66,9 @@ function SignIn() {
 
   return (
     <Frame>
+      <Head>
+        <title>로그인 - Text me!</title>
+      </Head>
       <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />

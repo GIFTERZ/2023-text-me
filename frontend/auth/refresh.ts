@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getCookie, setCookie } from '../components/common/Cookie';
 const ACCESS_EXPIRY_TIME = 36000000;
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const checkExpire = (expireTime: number, refreshToken: string) => {

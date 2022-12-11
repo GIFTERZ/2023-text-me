@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { useAlertModal } from "../../stores/useAlertModal";
+import AlertModal from "../../components/room/AlertModal";
+const LETTER_NOT_OWN_MESSAGE = "본인의 편지만 열어볼 수 있어요!";
+const LETTER_NOT_ARRIVE_MESSAGE = "아직 편지가 도착하지 않았어요!";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import LettersContainer from "../../components/room/LettersContainer";
@@ -10,6 +14,7 @@ import { RightButton } from "../../styles/components/Button";
 import { useCaptureMode } from "../../stores/useCaptureMode";
 import SaveModal from "../../components/room/SaveModal";
 import ErrorContainer from "../../components/common/ErrorContainer";
+import Head from "next/head";
 
 function Room() {
   const { get } = useSearchParams();
@@ -19,6 +24,7 @@ function Room() {
 
   const { roomInfo, getRoomInfo, error } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
+  const { alertModalOpen, alertEmptyLetterModalOpen } = useAlertModal();
 
   useEffect(() => {
     if (userId) {
@@ -32,6 +38,20 @@ function Room() {
 
   return (
     <>
+      <Head>
+        <title>{roomInfo?.userName}님의 방 - Text me!</title>
+        <meta name="author" content="withIT" />
+        <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
+        <meta property="og:image" content="static/images/meta-card.png" />
+        <meta
+          property="og:description"
+          content="추억이 담긴 편지를 작성해보세요!"
+        />
+        <meta
+          property="og:title"
+          content="Text me! 추억이 담긴 편지를 작성해보세요"
+        />
+      </Head>
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
@@ -46,6 +66,10 @@ function Room() {
         </Link>
       )}
       <LetterViewContainer />
+      {alertModalOpen && <AlertModal text={LETTER_NOT_OWN_MESSAGE} />}
+      {alertEmptyLetterModalOpen && (
+        <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />
+      )}
       {modalOpen && <SaveModal />}
       {isCaptureMode && (
         <CaptureModeButton type="button" onClick={toggleCaptureMode}>

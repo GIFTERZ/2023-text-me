@@ -19,6 +19,7 @@ import {
   LayoutSpan,
 } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
+import Head from "next/head";
 
 type SignUpForm = {
   name: string;
@@ -49,13 +50,17 @@ function SignUp() {
       .then((res) => {
         router.push("/signin");
       })
-      .catch(() => {
-        alert("에러가 발생했습니다.");
+      .catch((error) => {
+        alert(error.response.data.message);
       });
   };
 
   return (
     <Frame>
+      <Head>
+        <title>회원가입 - Text me!</title>
+      </Head>
+
       <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />

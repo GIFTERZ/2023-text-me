@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useMembers } from "../stores/useMembers";
 import { useEffect } from "react";
 import styled from "styled-components";
@@ -8,6 +7,7 @@ import RoomEnterForm from "../components/main/RoomEnterForm";
 import { HeaderLayout } from "../styles/components/Layout";
 import { useRouter } from "next/navigation";
 import Logo from "../components/common/Logo";
+import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
@@ -23,6 +23,10 @@ export default function Home() {
 
   return (
     <Frame>
+      <Head>
+        <title>Text me!</title>
+      </Head>
+
       <HeaderLayout style={{ justifyContent: "center" }}>
         <Logo />
       </HeaderLayout>
@@ -59,9 +63,9 @@ const ButtonsContainer = styled.div`
   display: flex;
   gap: 12px;
 
-  margin-top: 158px;
-
   width: 100%;
+
+  margin-top: 50px;
 
   ${LeftButton} {
     width: 100%;

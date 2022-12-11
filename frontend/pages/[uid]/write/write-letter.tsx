@@ -13,6 +13,7 @@ import {
 import { useCardPicture } from "../../../stores/useCardPicture";
 import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
 
 type LetterForm = {
   contents: string;
@@ -64,6 +65,10 @@ export default function index() {
 
   return (
     <Frame>
+      <Head>
+        <title>편지 쓰기 - Text me!</title>
+      </Head>
+
       <HeaderLayout>
         <WhiteLeftButton type="button" onClick={() => router.back()}>
           <ArrowBackIcon />

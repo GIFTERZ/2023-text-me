@@ -29,7 +29,7 @@ public enum ErrorCode {
     PASSWORD_EMPTY(400, "M008", "비밀번호를 입력해주세요."),
     INVALID_LOGIN_INFO(400, "M009", "이메일 또는 비밀번호를 다시 확인해 주세요."),
     UNAUTHORIZED_USER(401, "M010", "로그인 후 이용가능합니다."),
-    USER_EMPTY(400, "M011", "해당 멤버가 없습니다."),
+    USER_EMPTY(400, "M011", "존재하지 않는 사용자입니다."),
     LOGIN_AGAIN(400, "M012", "로그인을 다시 시도해 주세요"),
 
     // Letter

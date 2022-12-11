@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCardPicture } from "../../../stores/useCardPicture";
 import { Frame } from "../../../styles/components/Frame";
 import styled from "styled-components";
@@ -7,11 +7,18 @@ import CameraIcon from "../../../components/write/icons/CameraIcon";
 import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
 import { WhiteLeftButton } from "../../../styles/components/Button";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
 
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const { setPictureUrl, constCard, getConstCard } = useCardPicture();
+  const {
+    setPictureUrl,
+    constCard,
+    getConstCard,
+    setPictureImage,
+    pictureUrl,
+  } = useCardPicture();
 
   useEffect(() => {
     getConstCard();
@@ -29,11 +36,16 @@ export default function index() {
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget: target } = e;
-    select(URL.createObjectURL(target.files[0]));
+    setPictureImage(target.files[0]);
+    router.push(`/${userId}/write/preview-card-picture`);
   };
 
   return (
     <SelectFrame>
+      <Head>
+        <title>카드 사진 선택 - Text me!</title>
+      </Head>
+
       <HeaderLayout>
         <WhiteLeftButton type="button" onClick={() => router.back()}>
           <ArrowBackIcon />

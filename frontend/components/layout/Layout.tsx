@@ -17,7 +17,7 @@ function Layout(props: Props) {
 export default Layout;
 
 const Container = styled.div`
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: white;
 
   @media ${({ theme }) => theme.device.large} {

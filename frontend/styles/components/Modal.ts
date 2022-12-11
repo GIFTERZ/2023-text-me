@@ -5,7 +5,7 @@ const Overlay = styled.div`
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 
   background: rgba(111, 111, 111, 0.8);
 

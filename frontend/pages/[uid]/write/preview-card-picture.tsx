@@ -5,6 +5,7 @@ import { Frame } from "../../../styles/components/Frame";
 import styled from "styled-components";
 import { WhiteLeftButton } from "../../../styles/components/Button";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
 
 export default function index() {
   const router = useRouter();
@@ -16,6 +17,9 @@ export default function index() {
   };
   return (
     <Frame style={{ padding: 20 }}>
+      <Head>
+        <title>카드 사진 미리보기 - Text me!</title>
+      </Head>
       <Header>
         <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />

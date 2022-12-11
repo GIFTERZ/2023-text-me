@@ -9,9 +9,6 @@ import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,16 +38,15 @@ public class LetterService {
 
     public List<LetterResponse> findLettersByUserId(Long id) {
         Optional<User> userExist = userRepository.findById(id);
-        if (userExist.isPresent()) {
-            User user = userExist.get();
-            PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
-            Slice<Letter> letterList = letterRepository.findAllByUserId(user.getId(), pageRequest);
-            return letterList.stream()
-                    .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
-                            letter.getContents(), letter.getImageUrl()))
-                    .collect(Collectors.toList());
+        if (userExist.isEmpty()) {
+            throw new UserNotFoundException();
         }
-        throw new UserNotFoundException();
+        User user = userExist.get();
+        List<Letter> letterList = letterRepository.findAllByUserId(user.getId());
+        return letterList.stream()
+                .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
+                        letter.getContents(), letter.getImageUrl()))
+                .collect(Collectors.toList());
     }
 
     public LetterResponse findLetter(String email, Long id) {

@@ -6,6 +6,7 @@ import { LeftButton, RightButton } from "../../../styles/components/Button";
 import { useRoomInfo } from "../../../stores/useRoomInfo";
 import Link from "next/link";
 import { useMembers } from "../../../stores/useMembers";
+import Head from "next/head";
 
 export default function index() {
   const { pictureUrl } = useCardPicture();
@@ -33,6 +34,10 @@ export default function index() {
 
   return (
     <Frame>
+      <Head>
+        <title>편지 전달 완료 - Text me!</title>
+      </Head>
+
       <Container>
         <Title>{textLimitChangeLine(roomInfo?.userName)}</Title>
         {pictureUrl && <CardImage src={pictureUrl} />}

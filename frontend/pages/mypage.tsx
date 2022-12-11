@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ErrorContainer from "../components/common/ErrorContainer";
 import { RightButton } from "../styles/components/Button";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 function Mypage() {
   const router = useRouter();
@@ -30,6 +31,10 @@ function Mypage() {
 
   return (
     <Frame>
+      <Head>
+        <title>마이페이지 - Text me!</title>
+      </Head>
+
       <Container>
         <NicknameContainer />
         <Link href={`/${member?.id}`}>내 방으로 가기</Link>
