@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCardPicture } from "../../../stores/useCardPicture";
 import { Frame } from "../../../styles/components/Frame";
 import styled from "styled-components";
@@ -12,7 +12,13 @@ import Head from "next/head";
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const { setPictureUrl, constCard, getConstCard } = useCardPicture();
+  const {
+    setPictureUrl,
+    constCard,
+    getConstCard,
+    setPictureImage,
+    pictureUrl,
+  } = useCardPicture();
 
   useEffect(() => {
     getConstCard();
@@ -30,7 +36,8 @@ export default function index() {
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget: target } = e;
-    select(URL.createObjectURL(target.files[0]));
+    setPictureImage(target.files[0]);
+    router.push(`/${userId}/write/preview-card-picture`);
   };
 
   return (
