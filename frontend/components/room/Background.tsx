@@ -30,9 +30,6 @@ function Background({ letters }: Props) {
 
     if (isCaptureMode) {
       newWidth *= 0.95;
-      document.documentElement.style.overflow = "scroll";
-    } else {
-      document.documentElement.style.overflow = "hidden";
     }
 
     setWidth(newWidth);
