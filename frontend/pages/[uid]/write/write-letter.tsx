@@ -93,7 +93,6 @@ export default function index() {
           <FromDiv>
             <p>From.</p>
             <FromInput
-              type="text"
               placeholder="보내는 사람"
               maxLength={10}
               {...register("sender", {
