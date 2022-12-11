@@ -25,3 +25,8 @@ a {
     background: black;
   }
 }
+
+input,
+textarea {
+  -webkit-user-select: auto;
+}
