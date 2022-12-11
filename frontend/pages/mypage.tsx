@@ -1,11 +1,12 @@
-import Link from "next/link";
-import React, { useEffect } from "react";
-import NicknameContainer from "../components/mypage/NicknameContainer";
-import { useMembers } from "../stores/useMembers";
-import styled from "styled-components";
-import ErrorContainer from "../components/common/ErrorContainer";
-import { RightButton } from "../styles/components/Button";
-import { useRouter } from "next/router";
+import Link from 'next/link';
+import React, { useEffect } from 'react';
+import NicknameContainer from '../components/mypage/NicknameContainer';
+import { useMembers } from '../stores/useMembers';
+import styled from 'styled-components';
+import ErrorContainer from '../components/common/ErrorContainer';
+import { RightButton } from '../styles/components/Button';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 function Mypage() {
   const router = useRouter();
@@ -17,7 +18,7 @@ function Mypage() {
 
   const logout = () => {
     logoutMember();
-    router.push("/");
+    router.push('/');
   };
 
   if (isLoading) {
@@ -25,15 +26,19 @@ function Mypage() {
   }
 
   if (error) {
-    return <ErrorContainer text={"에러가 발생했습니다."} />;
+    return <ErrorContainer text={'에러가 발생했습니다.'} />;
   }
 
   return (
     <Frame>
+      <Head>
+        <title>마이페이지</title>
+      </Head>
+
       <Container>
         <NicknameContainer />
         <Link href={`/${member?.id}`}>내 방으로 가기</Link>
-        <Link href={"/"}>다른 사람 방 구경하기</Link>
+        <Link href={'/'}>다른 사람 방 구경하기</Link>
       </Container>
       <RightButton type="button" onClick={logout}>
         로그아웃

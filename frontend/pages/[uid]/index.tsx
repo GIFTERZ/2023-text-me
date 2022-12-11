@@ -14,6 +14,7 @@ import { RightButton } from '../../styles/components/Button';
 import { useCaptureMode } from '../../stores/useCaptureMode';
 import SaveModal from '../../components/room/SaveModal';
 import ErrorContainer from '../../components/common/ErrorContainer';
+import Head from 'next/head';
 
 function Room() {
   const { get } = useSearchParams();
@@ -38,6 +39,10 @@ function Room() {
   return (
     <>
       <Header>
+        <Head>
+          <title>{roomInfo?.userName}님의 방</title>
+        </Head>
+
         <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
       </Header>

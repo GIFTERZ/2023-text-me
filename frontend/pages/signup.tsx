@@ -10,6 +10,7 @@ import visitorApi from '../auth/visitorApi';
 import ArrowBackIcon from '../components/common/icons/ArrowBackIcon';
 import { FormLayout, HeaderLayout, LayoutSpan } from '../styles/components/Layout';
 import Logo from '../components/common/Logo';
+import Head from 'next/head';
 
 type SignUpForm = {
   name: string;
@@ -47,6 +48,10 @@ function SignUp() {
 
   return (
     <Frame>
+      <Head>
+        <title>회원가입</title>
+      </Head>
+
       <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />
