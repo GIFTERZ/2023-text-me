@@ -31,6 +31,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="description" content="text me!" />
           <style />
         </Head>
         <body>

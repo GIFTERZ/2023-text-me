@@ -9,6 +9,7 @@ import { pageview, GA_TRACKING_ID } from '../lib/gtag';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
   setMocking();
@@ -35,6 +36,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <Layout>
+        <Head>
+          <title>t2xt me!</title>
+        </Head>
         <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
         <Script
           id="gtag-init"
