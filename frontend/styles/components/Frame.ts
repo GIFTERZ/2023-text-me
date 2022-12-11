@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Frame = styled.div`
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   padding: 24px;
   background-color: white;
 `;
