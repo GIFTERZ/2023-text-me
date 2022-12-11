@@ -204,6 +204,8 @@ const FromInput = styled.input`
   width: 40%;
   height: 24px;
 
+  padding: 0;
+
   position: relative;
   z-index: 5;
 
