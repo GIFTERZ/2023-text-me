@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useMembers } from "../stores/useMembers";
 import { useEffect } from "react";
 import styled from "styled-components";
@@ -59,9 +58,9 @@ const ButtonsContainer = styled.div`
   display: flex;
   gap: 12px;
 
-  margin-top: 158px;
-
   width: 100%;
+
+  margin-top: 50px;
 
   ${LeftButton} {
     width: 100%;
