@@ -36,9 +36,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <Layout>
-        <Head>
-          <title>t2xt me!</title>
-        </Head>
         <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
         <Script
           id="gtag-init"

@@ -11,6 +11,7 @@ import { setCookie } from '../components/common/Cookie';
 import { FormLayout, HeaderLayout, LayoutSpan } from '../styles/components/Layout';
 import Logo from '../components/common/Logo';
 import { useMembers } from '../stores/useMembers';
+import Head from 'next/head';
 
 type SignInForm = {
   email: string;
@@ -58,6 +59,9 @@ function SignIn() {
 
   return (
     <Frame>
+      <Head>
+        <title>로그인</title>
+      </Head>
       <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />
