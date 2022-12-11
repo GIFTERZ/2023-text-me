@@ -1,16 +1,16 @@
-import React from "react";
-import { useCardPicture } from "../../../stores/useCardPicture";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Frame } from "../../../styles/components/Frame";
-import styled from "styled-components";
-import { WhiteLeftButton } from "../../../styles/components/Button";
-import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
-import Head from "next/head";
-import { HeaderLayout } from "../../../styles/components/Layout";
+import React from 'react';
+import { useCardPicture } from '../../../stores/useCardPicture';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Frame } from '../../../styles/components/Frame';
+import styled from 'styled-components';
+import { WhiteLeftButton } from '../../../styles/components/Button';
+import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
+import Head from 'next/head';
+import { HeaderLayout } from '../../../styles/components/Layout';
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get("uid");
+  const userId = useSearchParams().get('uid');
   const { pictureUrl } = useCardPicture();
 
   const pushWriteScreen = () => {
@@ -19,7 +19,7 @@ export default function index() {
   return (
     <PreviewFrame>
       <Head>
-        <title>카드 사진 미리보기 - Text me!</title>
+        <title>카드 사진 미리보기</title>
       </Head>
       <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>
