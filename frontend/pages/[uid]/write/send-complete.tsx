@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { Frame } from '../../../styles/components/Frame';
-import { LeftButton, RightButton } from '../../../styles/components/Button';
-import { useRoomInfo } from '../../../stores/useRoomInfo';
-import Link from 'next/link';
-import { useMembers } from '../../../stores/useMembers';
-import Head from 'next/head';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { Frame } from "../../../styles/components/Frame";
+import { LeftButton, RightButton } from "../../../styles/components/Button";
+import { useRoomInfo } from "../../../stores/useRoomInfo";
+import Link from "next/link";
+import { useMembers } from "../../../stores/useMembers";
+import Head from "next/head";
 
 export default function index() {
   const { pictureUrl } = useCardPicture();
@@ -35,7 +35,7 @@ export default function index() {
   return (
     <Frame>
       <Head>
-        <title>편지 전달 완료!</title>
+        <title>편지 전달 완료 - Text me!</title>
       </Head>
 
       <Container>
