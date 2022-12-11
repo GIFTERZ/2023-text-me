@@ -28,12 +28,7 @@ function RoomEnterForm() {
   };
 
   const validateForm = async (data: EmailForm) => {
-    enter(data, pushRoom);
-
-    if (error) {
-      // API 명세 후 핸들링 코드 추가
-      alert("에러가 발생했습니다.");
-    }
+    enter(data.email, pushRoom);
   };
 
   return (

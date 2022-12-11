@@ -1,15 +1,15 @@
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
 import LettersContainer from "../../components/room/LettersContainer";
 import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
 import styled from "styled-components";
 import ButtonsContainer from "../../components/room/ButtonsContainer";
 import { RightButton } from "../../styles/components/Button";
-import PlusIcon from "../../components/room/icons/PlusIcon";
 import { useCaptureMode } from "../../stores/useCaptureMode";
 import SaveModal from "../../components/room/SaveModal";
+import ErrorContainer from "../../components/common/ErrorContainer";
 
 function Room() {
   const { get } = useSearchParams();
@@ -17,15 +17,21 @@ function Room() {
 
   const userId = Number(get("uid"));
 
-  const { roomInfo, getRoomInfo } = useRoomInfo();
+  const { roomInfo, getRoomInfo, error } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
 
   useEffect(() => {
-    getRoomInfo(userId);
-  }, []);
+    if (userId) {
+      getRoomInfo(userId);
+    }
+  }, [userId]);
+
+  if (!roomInfo || error) {
+    return <ErrorContainer />;
+  }
 
   return (
-    <Frame id="letters">
+    <>
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
@@ -33,7 +39,7 @@ function Room() {
       <LettersContainer userId={userId} />
       {!isCaptureMode && (
         <Link href={`${pathname}/write/select-card-picture`}>
-          <CTAButton className="dont-save">
+          <CTAButton>
             TEXT <br />
             {roomInfo?.userName}
           </CTAButton>
@@ -46,20 +52,11 @@ function Room() {
           캡처 모드 종료
         </CaptureModeButton>
       )}
-    </Frame>
+    </>
   );
 }
 
 export default Room;
-
-const Frame = styled.div`
-  width: 100vw;
-  overflow-x: scroll;
-
-  @media ${({ theme }) => theme.device.large} {
-    width: fit-content;
-  }
-`;
 
 const Title = styled.h1`
   position: fixed;

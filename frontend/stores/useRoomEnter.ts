@@ -1,29 +1,34 @@
-import axios, { AxiosError } from 'axios';
-import create from 'zustand';
-import api from '../auth/api';
-
-type DataType = {
-  email: string;
-};
+import axios, { AxiosError } from "axios";
+import create from "zustand";
+import visitorApi from "../auth/visitorApi";
 
 interface RoomEnter {
   isLoading: boolean;
   error: AxiosError | null;
-  enter: (data: DataType, callback: (id: number) => void) => void;
+  enter: (data: string, callback: (id: number) => void) => void;
 }
 
-const useRoomEnter = create<RoomEnter>(set => ({
+const useRoomEnter = create<RoomEnter>((set) => ({
   isLoading: false,
   error: null,
   enter: async (data, callback) => {
-    set({ isLoading: true });
-    await api
-      .post('/users/find', data)
-      .then(res => {
+    set({ isLoading: true, error: null });
+    await visitorApi
+      .get("/users/find", {
+        params: {
+          email: data,
+        },
+      })
+      .then((res) => {
         callback(res.data.id);
       })
-      .catch(error => {
+      .catch((error) => {
         set({ error });
+        if (error.response.status === 400) {
+          alert("사용자가 존재하지 않습니다.");
+        } else {
+          alert("에러가 발생했습니다.");
+        }
       })
       .finally(() => {
         set({ isLoading: false });

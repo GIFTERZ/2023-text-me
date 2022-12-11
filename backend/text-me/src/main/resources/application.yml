@@ -2,9 +2,9 @@ server:
   port:8080
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://1f1562b3-3373-483f-adfe-e59d45b24d7e.external.kr1.mysql.rds.nhncloudservice.com:10000/textme
+    username: textme
+    password: textme12!@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -24,9 +24,9 @@ spring:
 security:
   jwt:
     token:
-      secretKey: ${JWT_KEY}
-      expirationMs: ${JWT_EXPIRY}
-      refreshExpirationMs: ${REFRESH_EXPIRY}
+      secretKey: a4b8b807752bca58e4b12e8a01e1842a4df27e75ba49176b5833bde57d28d55c7f5b5c4fcd6b89b5e94f044c99afaefc461589ee9fd26c3e167d8954c06980d
+      expirationMs: 36000000
+      refreshExpirationMs: 5184000000
 
 springdoc:
   api-docs:
@@ -41,11 +41,11 @@ springdoc:
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_ACCESS_KEY_ID}       # AWS IAM AccessKey 적기
-      secretKey: ${AWS_SECRET_ACCESS_KEY}   # AWS IAM SecretKey 적기
+      accessKey: AKIAR3VO3W3NQI7IQ3FE
+      secretKey: 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
     s3:
       bucket: textme-bucket
     region:
       static: ap-northeast-2
     stack:
-      auto=false
+      auto: false

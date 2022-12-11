@@ -114,3 +114,14 @@
   src: url("Cafe24SsurroundAir.ttf") format("truetype");
   font-weight: lighter;
 }
+
+/* 강원 교육 새음 */
+
+@font-face {
+  font-family: "GangwonEduSaeeum";
+  src: url("GangwonEduSaeeumMedium.woff2") format("woff2"),
+    url("GangwonEduSaeeumMedium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

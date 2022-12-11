@@ -1,20 +1,35 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useMembers } from "../../stores/useMembers";
 import { WhiteButton } from "../../styles/components/Button";
+import HomeIcon from "./icons/HomeIcon";
 import MenuIcon from "./icons/MenuIcon";
 import SaveContainer from "./SaveContainer";
 import ShareContainer from "./ShareContainer";
 
 function ButtonsContainer() {
+  const { member, getMember } = useMembers();
+
+  useEffect(() => {
+    getMember();
+  }, []);
+
   return (
-    <Container className="dont-save">
-      {/* To do: 비로그인 구분 */}
-      <Link href="/">
-        <WhiteButton type="button">
-          <MenuIcon />
-        </WhiteButton>
-      </Link>
+    <Container>
+      {member ? (
+        <Link href="/mypage">
+          <WhiteButton type="button">
+            <MenuIcon />
+          </WhiteButton>
+        </Link>
+      ) : (
+        <Link href="/">
+          <WhiteButton type="button">
+            <HomeIcon />
+          </WhiteButton>
+        </Link>
+      )}
       <SaveContainer />
       <ShareContainer />
     </Container>
