@@ -8,11 +8,12 @@ import { HeaderLayout, LayoutSpan } from '../../../styles/components/Layout';
 import { WhiteLeftButton } from '../../../styles/components/Button';
 import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
 import Head from 'next/head';
+import visitorApi from '../../../auth/visitorApi';
 
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get('uid');
-  const { setPictureUrl, constCard, getConstCard } = useCardPicture();
+  const { setPictureUrl, constCard, getConstCard, setPictureImage, pictureUrl } = useCardPicture();
 
   useEffect(() => {
     getConstCard();
@@ -30,7 +31,8 @@ export default function index() {
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget: target } = e;
-    select(URL.createObjectURL(target.files[0]));
+    setPictureImage(target.files[0]);
+    router.push(`/${userId}/write/preview-card-picture`);
   };
 
   return (
