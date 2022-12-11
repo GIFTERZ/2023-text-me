@@ -21,6 +21,10 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 security:
   jwt:
     token:
