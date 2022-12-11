@@ -1,19 +1,16 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { useSendLetter } from "../../../stores/useSendLetter";
-import { useRouter } from "next/router";
-import { Frame } from "../../../styles/components/Frame";
-import { FieldErrors, useForm } from "react-hook-form";
-import { useRoomInfo } from "../../../stores/useRoomInfo";
-import { useSearchParams } from "next/navigation";
-import {
-  RightButton,
-  WhiteLeftButton,
-} from "../../../styles/components/Button";
-import { useCardPicture } from "../../../stores/useCardPicture";
-import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
-import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
-import Head from "next/head";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { useSendLetter } from '../../../stores/useSendLetter';
+import { useRouter } from 'next/router';
+import { Frame } from '../../../styles/components/Frame';
+import { FieldErrors, useForm } from 'react-hook-form';
+import { useRoomInfo } from '../../../stores/useRoomInfo';
+import { useSearchParams } from 'next/navigation';
+import { RightButton, WhiteLeftButton } from '../../../styles/components/Button';
+import { useCardPicture } from '../../../stores/useCardPicture';
+import { HeaderLayout, LayoutSpan } from '../../../styles/components/Layout';
+import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
+import Head from 'next/head';
 
 type LetterForm = {
   contents: string;
@@ -22,7 +19,7 @@ type LetterForm = {
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get("uid");
+  const userId = useSearchParams().get('uid');
   const { register, handleSubmit } = useForm<LetterForm>();
 
   const { pictureUrl } = useCardPicture();
@@ -48,7 +45,7 @@ export default function index() {
     sendLetter(body, pushCompletedPage);
 
     if (error) {
-      alert("편지를 보내는 중 에러가 발생했습니다.");
+      alert('편지를 보내는 중 에러가 발생했습니다.');
     }
   };
 
@@ -81,11 +78,11 @@ export default function index() {
           <ToDiv>To. {roomInfo?.userName}</ToDiv>
           <TextArea
             maxLength={300}
-            {...register("contents", {
-              required: "편지를 입력해주세요.",
+            {...register('contents', {
+              required: '편지를 입력해주세요.',
               maxLength: {
                 value: 300,
-                message: "편지는 300자 이내여야 합니다.",
+                message: '편지는 300자 이내여야 합니다.',
               },
             })}
             placeholder="편지를 입력해주세요."
@@ -96,11 +93,11 @@ export default function index() {
               type="text"
               placeholder="보내는 사람"
               maxLength={10}
-              {...register("sender", {
-                required: "보내는 사람을 입력해주세요.",
+              {...register('sender', {
+                required: '보내는 사람을 입력해주세요.',
                 maxLength: {
                   value: 10,
-                  message: "보내는 사람 이름을 10자 이내로 입력해주세요.",
+                  message: '보내는 사람 이름을 10자 이내로 입력해주세요.',
                 },
               })}
             />
@@ -121,9 +118,10 @@ const LetterContainer = styled.div<{ imgurl: string }>`
   position: relative;
 
   ::before {
-    content: "";
-    background: url(${(props) => props.imgurl});
+    content: '';
+    background: url(${props => props.imgurl});
     background-size: cover;
+    background-position: center center;
     border-radius: 10px;
     opacity: 0.2;
     position: absolute;
@@ -153,7 +151,7 @@ const TextArea = styled.textarea`
 
   color: #000000;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: 'GangwonEduSaeeum';
   font-style: normal;
   font-weight: 400;
   font-size: 17px;
@@ -170,7 +168,7 @@ const ToDiv = styled.div`
   margin-left: 10px;
   margin-bottom: 10px;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: 'GangwonEduSaeeum';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -185,7 +183,7 @@ const FromDiv = styled.div`
   margin-top: 10px;
   justify-content: flex-end;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: 'GangwonEduSaeeum';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -212,7 +210,7 @@ const FromInput = styled.input`
   border: none;
   background: none;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: 'GangwonEduSaeeum';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
