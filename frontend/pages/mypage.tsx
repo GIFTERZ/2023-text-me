@@ -4,13 +4,21 @@ import NicknameContainer from "../components/mypage/NicknameContainer";
 import { useMembers } from "../stores/useMembers";
 import styled from "styled-components";
 import ErrorContainer from "../components/common/ErrorContainer";
+import { RightButton } from "../styles/components/Button";
+import { useRouter } from "next/router";
 
 function Mypage() {
-  const { isLoading, error, member, getMember } = useMembers();
+  const router = useRouter();
+  const { isLoading, error, member, getMember, logoutMember } = useMembers();
 
   useEffect(() => {
     getMember();
   }, []);
+
+  const logout = () => {
+    logoutMember();
+    router.push("/");
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -22,9 +30,14 @@ function Mypage() {
 
   return (
     <Frame>
-      <NicknameContainer />
-      <Link href={`/${member?.id}`}>내 방으로 가기</Link>
-      <Link href={"/"}>다른 사람 방 구경하기</Link>
+      <Container>
+        <NicknameContainer />
+        <Link href={`/${member?.id}`}>내 방으로 가기</Link>
+        <Link href={"/"}>다른 사람 방 구경하기</Link>
+      </Container>
+      <RightButton type="button" onClick={logout}>
+        로그아웃
+      </RightButton>
     </Frame>
   );
 }
@@ -34,7 +47,15 @@ export default Mypage;
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  justify-content: space-between;
+
+  height: 100%;
 
   padding: 70px 30px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
 `;

@@ -19,6 +19,8 @@ const Button = styled.button`
     inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
+  cursor: pointer;
+
   &:focus {
     outline: none;
     background: #8cebb8;
@@ -45,6 +47,8 @@ const WhiteButton = styled.button`
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
     inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
+
+  cursor: pointer;
 
   svg {
     width: 24px;

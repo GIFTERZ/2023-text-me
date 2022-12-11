@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env next start -p 3000",
     "lint": "next lint"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "@types/styled-components": "^5.1.26",
     "axios": "^1.2.0",
     "babel-plugin-styled-components": "^2.0.7",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.29.3",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
+    "@types/gtag.js": "^0.0.12",
     "@types/react-datepicker": "^4",
     "babel-plugin-styled-components": "^2.0.7",
     "msw": "^0.49.1"

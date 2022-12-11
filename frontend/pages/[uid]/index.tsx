@@ -1,6 +1,10 @@
 import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useAlertModal } from '../../stores/useAlertModal';
+import AlertModal from '../../components/room/AlertModal';
+const LETTER_NOT_OWN_MESSAGE = '본인의 편지만 열어볼 수 있어요!';
+const LETTER_NOT_ARRIVE_MESSAGE = '아직 편지가 도착하지 않았어요!';
+import { usePathname, useSearchParams } from 'next/navigation';
+import React, { useEffect } from 'react';
 import LettersContainer from '../../components/room/LettersContainer';
 import LetterViewContainer from '../../components/room/LetterViewContainer';
 import { useRoomInfo } from '../../stores/useRoomInfo';
@@ -9,10 +13,7 @@ import ButtonsContainer from '../../components/room/ButtonsContainer';
 import { RightButton } from '../../styles/components/Button';
 import { useCaptureMode } from '../../stores/useCaptureMode';
 import SaveModal from '../../components/room/SaveModal';
-import { useAlertModal } from '../../stores/useAlertModal';
-import AlertModal from '../../components/room/AlertModal';
-const LETTER_NOT_OWN_MESSAGE = '본인의 편지만 열어볼 수 있어요!';
-const LETTER_NOT_ARRIVE_MESSAGE = '아직 편지가 도착하지 않았어요!';
+import ErrorContainer from '../../components/common/ErrorContainer';
 
 function Room() {
   const { get } = useSearchParams();
@@ -20,7 +21,7 @@ function Room() {
 
   const userId = Number(get('uid'));
 
-  const { roomInfo, getRoomInfo } = useRoomInfo();
+  const { roomInfo, getRoomInfo, error } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
   const { alertModalOpen, alertEmptyLetterModalOpen } = useAlertModal();
 
@@ -29,6 +30,10 @@ function Room() {
       getRoomInfo(userId);
     }
   }, [userId]);
+
+  if (!roomInfo || error) {
+    return <ErrorContainer />;
+  }
 
   return (
     <>

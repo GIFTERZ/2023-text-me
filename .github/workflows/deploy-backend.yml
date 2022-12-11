@@ -1,6 +1,9 @@
 name: Deploy Backend
 
 on:
+  push:
+    branches:
+      - production
   workflow_dispatch:
 
 default:
@@ -21,20 +24,16 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Build
-        run: ./gradlew build --exclude-task test --exclude-task asciidoctor
-
-      - name: Test
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          JWT_EXPIRY: ${{ secrets.JWT_EXPIRY }}
-          JWT_KEY: ${{ secrets.JWT_KEY }}
-          REFRESH_EXPIRY: ${{ secrets.REFRESH_EXPIRY }}
-
-      - name: Deploy
-        run: |
-          cur ${{ secrets.DEPLOY_PROD_BACKEND_REQUEST_URL }}
+      - name: SSH setting
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          envs: GITHUB_SHA
+          scrips: |
+            whoami
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+            docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/} ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+            docker stop server
+            docker run -d --rm --name server -p 80:8080 ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}

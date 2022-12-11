@@ -2,21 +2,15 @@ import Link from "next/link";
 import { useMembers } from "../stores/useMembers";
 import { useEffect } from "react";
 import styled from "styled-components";
-import {
-  LeftButton,
-  RightButton,
-  WhiteLeftButton,
-} from "../styles/components/Button";
+import { LeftButton, RightButton } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
 import RoomEnterForm from "../components/main/RoomEnterForm";
-import { HeaderLayout, LayoutSpan } from "../styles/components/Layout";
+import { HeaderLayout } from "../styles/components/Layout";
 import { useRouter } from "next/navigation";
-import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
 import Logo from "../components/common/Logo";
 
 export default function Home() {
   const router = useRouter();
-
   const { member, getMember, logoutMember } = useMembers();
 
   const logout = () => {
@@ -29,19 +23,18 @@ export default function Home() {
 
   return (
     <Frame>
-      <HeaderLayout>
-        <WhiteLeftButton onClick={() => router.back()}>
-          <ArrowBackIcon />
-        </WhiteLeftButton>
+      <HeaderLayout style={{ justifyContent: "center" }}>
         <Logo />
-        <LayoutSpan aria-hidden />
       </HeaderLayout>
       <RoomEnterForm />
       <ButtonsContainer>
         {member?.id ? (
           <>
-            <LeftButton type="button">
-              <Link href={`/${member?.id}`}>내 방으로 가기</Link>
+            <LeftButton
+              type="button"
+              onClick={() => router.push(`/${member?.id}`)}
+            >
+              내 방으로 가기
             </LeftButton>
             <RightButton onClick={logout} type="button">
               로그아웃
@@ -49,11 +42,11 @@ export default function Home() {
           </>
         ) : (
           <>
-            <LeftButton type="button">
-              <Link href={"/signup"}>내 방 만들기</Link>
+            <LeftButton type="button" onClick={() => router.push("/signup")}>
+              내 방 만들기
             </LeftButton>
-            <RightButton type="button">
-              <Link href={"/signin"}>로그인</Link>
+            <RightButton type="button" onClick={() => router.push("/signin")}>
+              로그인
             </RightButton>
           </>
         )}

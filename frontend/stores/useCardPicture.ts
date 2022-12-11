@@ -1,10 +1,6 @@
-import create from 'zustand';
-import { AxiosError } from 'axios';
-import visitorApi from '../auth/visitorApi';
-
-// type Card = {
-//   cardUrl: string;
-// };
+import create from "zustand";
+import { AxiosError } from "axios";
+import visitorApi from "../auth/visitorApi";
 
 interface CardPicture {
   pictureUrl: string | null;
@@ -15,23 +11,22 @@ interface CardPicture {
   isLoading: boolean;
 }
 
-export const useCardPicture = create<CardPicture>(set => ({
+export const useCardPicture = create<CardPicture>((set) => ({
   isLoading: false,
   pictureUrl: null,
   constCard: [],
   error: null,
-  setPictureUrl: select => {
+  setPictureUrl: (select) => {
     set({ pictureUrl: select });
   },
   getConstCard: async () => {
     set({ isLoading: true });
     await visitorApi
-      .get('/cards')
-      .then(res => {
-        console.log(res);
+      .get("/cards")
+      .then((res) => {
         set({ constCard: res.data });
       })
-      .catch(error => {
+      .catch((error) => {
         set({ error: error });
       })
       .finally(() => set({ isLoading: false }));
