@@ -202,7 +202,6 @@ const Title = styled.h1`
 
 const FromInput = styled.input`
   width: 40%;
-  padding: 10px;
   height: 24px;
 
   position: relative;
