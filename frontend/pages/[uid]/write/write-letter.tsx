@@ -218,6 +218,8 @@ const FromInput = styled.input`
   font-size: 24px;
   line-height: 27px;
 
+  color: #000000;
+
   &:focus {
     outline: none;
   }
