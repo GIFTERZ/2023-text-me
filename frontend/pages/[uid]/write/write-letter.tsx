@@ -90,7 +90,6 @@ export default function index() {
           <FromDiv>
             <p>From.</p>
             <FromInput
-              type="text"
               placeholder="보내는 사람"
               maxLength={10}
               {...register('sender', {
@@ -201,8 +200,9 @@ const Title = styled.h1`
 
 const FromInput = styled.input`
   width: 40%;
-  padding: 10px;
   height: 24px;
+
+  padding: 0;
 
   position: relative;
   z-index: 5;
@@ -215,6 +215,8 @@ const FromInput = styled.input`
   font-weight: 400;
   font-size: 24px;
   line-height: 27px;
+
+  color: #000000;
 
   &:focus {
     outline: none;

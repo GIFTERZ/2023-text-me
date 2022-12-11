@@ -4,7 +4,6 @@ body {
   margin: 0;
   font-family: Pretendard;
   background: #ffffff;
-  overflow: hidden;
 }
 
 a {
@@ -25,4 +24,20 @@ a {
     color: white;
     background: black;
   }
+}
+
+input,
+textarea {
+  -webkit-user-select: auto;
+}
+
+input,
+textarea,
+button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
 }
