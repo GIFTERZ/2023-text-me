@@ -98,7 +98,7 @@ const InputDiv = styled.div`
 
 const CardImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: auto;
 
   border-radius: 10px;
 
