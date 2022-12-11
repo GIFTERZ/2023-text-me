@@ -11,7 +11,7 @@ default:
     working-directory: "backend/text-me"
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
