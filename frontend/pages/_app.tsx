@@ -46,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         <Head>
           <title>Text me!</title>
+          <meta property="og:url" content="https://t2xt.me"></meta>
           <meta name="author" content="GIFTERZ" />
           <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
           <meta
