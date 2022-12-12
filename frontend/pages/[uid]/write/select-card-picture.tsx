@@ -1,19 +1,18 @@
-import React, { useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCardPicture } from "../../../stores/useCardPicture";
-import { Frame } from "../../../styles/components/Frame";
-import styled from "styled-components";
-import CameraIcon from "../../../components/write/icons/CameraIcon";
-import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
-import { WhiteLeftButton } from "../../../styles/components/Button";
-import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
-import Head from "next/head";
+import React, { useEffect, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCardPicture } from '../../../stores/useCardPicture';
+import { Frame } from '../../../styles/components/Frame';
+import styled from 'styled-components';
+import CameraIcon from '../../../components/write/icons/CameraIcon';
+import { HeaderLayout, LayoutSpan } from '../../../styles/components/Layout';
+import { WhiteLeftButton } from '../../../styles/components/Button';
+import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
+import Head from 'next/head';
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get("uid");
-  const { setPictureUrl, constCard, getConstCard, setPictureImage } =
-    useCardPicture();
+  const userId = useSearchParams().get('uid');
+  const { setPictureUrl, constCard, getConstCard, setPictureImage } = useCardPicture();
 
   useEffect(() => {
     getConstCard();
@@ -52,14 +51,7 @@ export default function index() {
         <InputDiv id="image" onClick={handleClick}>
           <CameraIcon />
         </InputDiv>
-        <input
-          style={{ display: "none" }}
-          ref={fileRef}
-          name="file"
-          type="file"
-          accept="image/*"
-          onChange={(e) => fileUploadHandler(e)}
-        />
+        <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
         {constCard?.map((cards, index) => (
           <CardImage key={index} src={cards} onClick={() => select(cards)} />
         ))}
@@ -94,7 +86,7 @@ const InputDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: auto;
 
   border-radius: 10px;
   text-align: center;
