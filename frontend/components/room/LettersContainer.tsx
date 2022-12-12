@@ -7,7 +7,7 @@ import Background from "./Background";
 import LettersMove from "./LettersMove";
 
 interface Props {
-  userId: number;
+  userId: string;
 }
 
 function LettersContainer({ userId }: Props) {

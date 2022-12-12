@@ -20,7 +20,7 @@ interface Props {
 
 function LetterComponent({ letter, cardStyle }: Props) {
   const { get } = useSearchParams();
-  const userId = Number(get("uid"));
+  const userId = get("uid");
 
   const { open } = useLetterView();
   const { member, getMember } = useMembers();

@@ -7,7 +7,7 @@ import { LeftButton, WhiteLeftButton } from "../styles/components/Button";
 import { FormTitle, Input, InputContainer } from "../styles/components/Form";
 import { Frame } from "../styles/components/Frame";
 import visitorApi from "../auth/visitorApi";
-import { setCookie } from "../components/common/Cookie";
+import { setCookie } from "../auth/Cookie";
 import {
   FormLayout,
   HeaderLayout,

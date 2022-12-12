@@ -23,7 +23,8 @@ function RoomEnterForm() {
   } = useForm<EmailForm>();
 
   const { isLoading, enter } = useRoomEnter();
-  const pushRoom = (id: number) => {
+
+  const pushRoom = (id: string) => {
     router.push(`/${id}`);
   };
 
