@@ -62,8 +62,9 @@ public class S3Service {
             int originWidth = image.getWidth();
             int originHeight = image.getHeight();
 
-            if (originWidth < targetWidth)
+            if (originWidth < targetWidth) {
                 return originalImage;
+            }
 
             MarvinImage imageMarvin = new MarvinImage(image);
 
