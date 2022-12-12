@@ -38,7 +38,7 @@ public class S3Service {
         String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
         String fileFormatName = multipartFile.getContentType()
                 .substring(multipartFile.getContentType().lastIndexOf("/") + 1);
-        MultipartFile resizedFile = resizeImage(s3FileName, fileFormatName, multipartFile, 3300);
+        MultipartFile resizedFile = resizeImage(s3FileName, fileFormatName, multipartFile);
 
         if (resizedFile.getSize() > 10000000) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 사이즈가 커 업로드 할 수 없습니다.");
@@ -59,11 +59,12 @@ public class S3Service {
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
-    MultipartFile resizeImage(String fileName, String fileFormatName, MultipartFile originalImage, int targetWidth) {
+    MultipartFile resizeImage(String fileName, String fileFormatName, MultipartFile originalImage) {
         try {
             BufferedImage image = ImageIO.read(originalImage.getInputStream());
             int originWidth = image.getWidth();
             int originHeight = image.getHeight();
+            int targetWidth = 3300;
 
             if (originWidth < targetWidth) {
                 return originalImage;
