@@ -5,6 +5,7 @@ import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.entity.Letter;
 import gifterz.textme.domain.letter.exception.LetterNotFoundException;
 import gifterz.textme.domain.letter.repository.LetterRepository;
+import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
@@ -23,15 +24,19 @@ import java.util.stream.Collectors;
 public class LetterService {
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
+    private final AesUtils aesUtils;
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
-        Optional<User> userExist = userRepository.findById(request.getReceiverId());
+        String decryptedId = aesUtils.decryption(request.getReceiverId());
+        Long userId = Long.valueOf(decryptedId);
+        Optional<User> userExist = userRepository.findById(userId);
         if (userExist.isPresent()) {
             User user = userExist.get();
             Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
             letterRepository.save(letter);
-            return new LetterResponse(letter.getId(), user.getName(), request.getSenderName(), request.getContents(), request.getImageUrl());
+            return new LetterResponse(letter.getId(), user.getName(),
+                    request.getSenderName(), request.getContents(), request.getImageUrl());
         }
         throw new UserNotFoundException();
     }
