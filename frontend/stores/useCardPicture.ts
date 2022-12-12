@@ -5,7 +5,7 @@ import visitorApi from "../auth/visitorApi";
 interface CardPicture {
   pictureUrl: string | null;
   pictureImage: File | null;
-  setPictureImage: (select: File) => void;
+  setPictureImage: (select: File, callback: () => void) => void;
   setPictureUrl: (select: string) => void;
   constCard: string[];
   getConstCard: () => void;
@@ -34,7 +34,7 @@ export const useCardPicture = create<CardPicture>((set) => ({
       })
       .finally(() => set({ isLoading: false }));
   },
-  setPictureImage: async (image: File) => {
+  setPictureImage: async (image: File, callback: () => void) => {
     let formData = new FormData();
     formData.append("images", image);
     await visitorApi
@@ -45,8 +45,10 @@ export const useCardPicture = create<CardPicture>((set) => ({
       })
       .then((res) => {
         set({ pictureUrl: res.data });
+        callback();
       })
       .catch((error) => {
+        console.log(error);
         if (error.reponse?.data?.message) {
           alert(error.response.data.message);
         } else {
