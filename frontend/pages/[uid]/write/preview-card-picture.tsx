@@ -26,7 +26,7 @@ export default function index() {
   return (
     <PreviewFrame>
       <Head>
-        <title>카드 사진 미리보기 - Text me!</title>
+        <title>카드 사진 미리보기</title>
       </Head>
       <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>

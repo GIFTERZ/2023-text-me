@@ -146,6 +146,7 @@ const LetterContainer = styled.div<{ imgurl: string }>`
     content: "";
     background: url(${(props) => props.imgurl});
     background-size: cover;
+    background-position: center center;
     border-radius: 10px;
     opacity: 0.2;
     position: absolute;
