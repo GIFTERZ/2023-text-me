@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { useAlertModal } from "../../stores/useAlertModal";
 import AlertModal from "../../components/room/AlertModal";
-const LETTER_NOT_OWN_MESSAGE = "본인의 편지만 열어볼 수 있어요!";
-const LETTER_NOT_ARRIVE_MESSAGE = "아직 편지가 도착하지 않았어요!";
+
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import LettersContainer from "../../components/room/LettersContainer";
@@ -17,11 +16,14 @@ import ErrorContainer from "../../components/common/ErrorContainer";
 import Head from "next/head";
 import LoadingContainer from "../../components/common/LoadingContainer";
 
+const LETTER_NOT_OWN_MESSAGE = "본인의 편지만 열어볼 수 있어요!";
+const LETTER_NOT_ARRIVE_MESSAGE = "아직 편지가 도착하지 않았어요!";
+
 function Room() {
   const { get } = useSearchParams();
   const pathname = usePathname();
 
-  const userId = Number(get("uid"));
+  const userId = get("uid");
 
   const { roomInfo, getRoomInfo, error, isLoading } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();

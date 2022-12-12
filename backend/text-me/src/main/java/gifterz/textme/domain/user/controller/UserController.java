@@ -40,7 +40,7 @@ public class UserController {
     @PostMapping("/token/refresh")
     public ResponseEntity<TokenRefreshResponse> refreshToken(@JwtAuth String email,
                                                              @RequestBody @Valid final TokenRefreshRequest request) {
-        String token = request.getRefreshToken();
+        String token = request.getAccessToken();
         TokenRefreshResponse tokenRefreshResponse = refreshTokenService.refreshJwtToken(email, token);
         return ResponseEntity.ok().body(tokenRefreshResponse);
     }

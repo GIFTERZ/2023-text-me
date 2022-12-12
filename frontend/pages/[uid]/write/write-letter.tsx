@@ -34,7 +34,7 @@ export default function index() {
   const { loading, error, sendLetter } = useSendLetter();
 
   useEffect(() => {
-    getRoomInfo(Number(userId));
+    getRoomInfo(userId);
   }, [userId]);
 
   const pushCompletedPage = () => {
@@ -47,7 +47,7 @@ export default function index() {
     }
 
     const body = {
-      receiverId: Number(userId),
+      receiverId: userId,
       contents: data.contents,
       senderName: data.sender,
       imageUrl: pictureUrl,

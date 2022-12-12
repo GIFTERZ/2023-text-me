@@ -12,7 +12,7 @@ function Background({ letters }: Props) {
   const DEFAULT_IMAGE = "static/images/room-default.png";
 
   const { get } = useSearchParams();
-  const userId = Number(get("uid"));
+  const userId = get("uid");
 
   const { open } = useLetterView();
   const { member, getMember } = useMembers();

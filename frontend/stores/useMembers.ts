@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
 import create from "zustand";
 import api from "../auth/api";
-import { setCookie } from "../components/common/Cookie";
+import { setCookie } from "../auth/Cookie";
 
 type Member = {
-  id: number;
+  id: string;
   userName: string;
   email: string;
 };
