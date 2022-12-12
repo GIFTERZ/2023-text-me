@@ -17,7 +17,7 @@ export default function index() {
   const { member, getMember } = useMembers();
 
   useEffect(() => {
-    getRoomInfo(Number(userId));
+    getRoomInfo(userId);
   }, [userId]);
 
   useEffect(() => {
