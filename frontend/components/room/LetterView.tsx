@@ -161,12 +161,6 @@ const Content = styled.p`
   color: #222222;
 
   overflow-y: scroll;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    color: none;
-  }
 `;
 
 const FromText = styled.h2`
