@@ -15,6 +15,7 @@ import { useCaptureMode } from "../../stores/useCaptureMode";
 import SaveModal from "../../components/room/SaveModal";
 import ErrorContainer from "../../components/common/ErrorContainer";
 import Head from "next/head";
+import LoadingContainer from "../../components/common/LoadingContainer";
 
 function Room() {
   const { get } = useSearchParams();
@@ -22,7 +23,7 @@ function Room() {
 
   const userId = Number(get("uid"));
 
-  const { roomInfo, getRoomInfo, error } = useRoomInfo();
+  const { roomInfo, getRoomInfo, error, isLoading } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
   const { alertModalOpen, alertEmptyLetterModalOpen } = useAlertModal();
 
@@ -32,7 +33,11 @@ function Room() {
     }
   }, [userId]);
 
-  if (!roomInfo || error) {
+  if (isLoading) {
+    return <LoadingContainer />;
+  }
+
+  if (error) {
     return <ErrorContainer />;
   }
 
@@ -40,17 +45,6 @@ function Room() {
     <>
       <Head>
         <title>{roomInfo?.userName}님의 방 - Text me!</title>
-        <meta name="author" content="withIT" />
-        <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
-        <meta property="og:image" content="static/images/meta-card.png" />
-        <meta
-          property="og:description"
-          content="추억이 담긴 편지를 작성해보세요!"
-        />
-        <meta
-          property="og:title"
-          content="Text me! 추억이 담긴 편지를 작성해보세요"
-        />
       </Head>
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>

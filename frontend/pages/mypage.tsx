@@ -7,6 +7,7 @@ import ErrorContainer from "../components/common/ErrorContainer";
 import { RightButton } from "../styles/components/Button";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import LoadingContainer from "../components/common/LoadingContainer";
 
 function Mypage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ function Mypage() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingContainer />;
   }
 
   if (error) {

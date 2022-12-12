@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useSendLetter } from '../../../stores/useSendLetter';
-import { useRouter } from 'next/router';
-import { Frame } from '../../../styles/components/Frame';
-import { FieldErrors, useForm } from 'react-hook-form';
-import { useRoomInfo } from '../../../stores/useRoomInfo';
-import { useSearchParams } from 'next/navigation';
-import { RightButton, WhiteLeftButton } from '../../../styles/components/Button';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { HeaderLayout, LayoutSpan } from '../../../styles/components/Layout';
-import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
-import Head from 'next/head';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useSendLetter } from "../../../stores/useSendLetter";
+import { useRouter } from "next/router";
+import { Frame } from "../../../styles/components/Frame";
+import { FieldErrors, useForm } from "react-hook-form";
+import { useRoomInfo } from "../../../stores/useRoomInfo";
+import { useSearchParams } from "next/navigation";
+import {
+  RightButton,
+  WhiteLeftButton,
+} from "../../../styles/components/Button";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
+import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
 
 type LetterForm = {
   contents: string;
@@ -19,8 +22,11 @@ type LetterForm = {
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get('uid');
-  const { register, handleSubmit } = useForm<LetterForm>();
+  const userId = useSearchParams().get("uid");
+  const { register, handleSubmit, watch } = useForm<LetterForm>();
+
+  const contentsWatch = watch("contents");
+  const senderWatch = watch("sender");
 
   const { pictureUrl } = useCardPicture();
   const { roomInfo, getRoomInfo } = useRoomInfo();
@@ -29,23 +35,28 @@ export default function index() {
 
   useEffect(() => {
     getRoomInfo(Number(userId));
-  }, []);
+  }, [userId]);
 
   const pushCompletedPage = () => {
     router.push(`/${userId}/write/send-complete`);
   };
 
   const sendData = (data: LetterForm) => {
+    if (!pictureUrl) {
+      alert("카드의 배경 사진을 선택해주세요.");
+    }
+
     const body = {
       receiverId: Number(userId),
       contents: data.contents,
       senderName: data.sender,
       imageUrl: pictureUrl,
     };
+
     sendLetter(body, pushCompletedPage);
 
     if (error) {
-      alert('편지를 보내는 중 에러가 발생했습니다.');
+      alert("편지를 보내는 중 에러가 발생했습니다.");
     }
   };
 
@@ -60,6 +71,21 @@ export default function index() {
     }
   };
 
+  const goBack = () => {
+    if (contentsWatch.length === 0 && senderWatch.length === 0) {
+      router.back();
+      return;
+    }
+
+    const confirm = window.confirm(
+      "작성한 내용이 사라집니다. 뒤로 가시겠습니까?"
+    );
+
+    if (confirm) {
+      router.back();
+    }
+  };
+
   return (
     <Frame>
       <Head>
@@ -67,7 +93,7 @@ export default function index() {
       </Head>
 
       <HeaderLayout>
-        <WhiteLeftButton type="button" onClick={() => router.back()}>
+        <WhiteLeftButton type="button" onClick={goBack}>
           <ArrowBackIcon />
         </WhiteLeftButton>
         <Title>편지 쓰기</Title>
@@ -78,11 +104,11 @@ export default function index() {
           <ToDiv>To. {roomInfo?.userName}</ToDiv>
           <TextArea
             maxLength={300}
-            {...register('contents', {
-              required: '편지를 입력해주세요.',
+            {...register("contents", {
+              required: "편지를 입력해주세요.",
               maxLength: {
                 value: 300,
-                message: '편지는 300자 이내여야 합니다.',
+                message: "편지는 300자 이내여야 합니다.",
               },
             })}
             placeholder="편지를 입력해주세요."
@@ -92,11 +118,11 @@ export default function index() {
             <FromInput
               placeholder="보내는 사람"
               maxLength={10}
-              {...register('sender', {
-                required: '보내는 사람을 입력해주세요.',
+              {...register("sender", {
+                required: "보내는 사람을 입력해주세요.",
                 maxLength: {
                   value: 10,
-                  message: '보내는 사람 이름을 10자 이내로 입력해주세요.',
+                  message: "보내는 사람 이름을 10자 이내로 입력해주세요.",
                 },
               })}
             />
@@ -117,8 +143,8 @@ const LetterContainer = styled.div<{ imgurl: string }>`
   position: relative;
 
   ::before {
-    content: '';
-    background: url(${props => props.imgurl});
+    content: "";
+    background: url(${(props) => props.imgurl});
     background-size: cover;
     background-position: center center;
     border-radius: 10px;
@@ -129,6 +155,10 @@ const LetterContainer = styled.div<{ imgurl: string }>`
     right: 0px;
     bottom: 0px;
   }
+
+  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 2px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.3);
 `;
 
 const Form = styled.form`
@@ -150,10 +180,12 @@ const TextArea = styled.textarea`
 
   color: #000000;
 
-  font-family: 'GangwonEduSaeeum';
+  font-family: "UhbeeMiMi";
+  letter-spacing: 0.06em;
+
   font-style: normal;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 25px;
 
   resize: none;
@@ -167,10 +199,11 @@ const ToDiv = styled.div`
   margin-left: 10px;
   margin-bottom: 10px;
 
-  font-family: 'GangwonEduSaeeum';
+  font-family: "UhbeeMiMi";
+
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 `;
 
@@ -182,10 +215,10 @@ const FromDiv = styled.div`
   margin-top: 10px;
   justify-content: flex-end;
 
-  font-family: 'GangwonEduSaeeum';
+  font-family: "UhbeeMiMi";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 `;
 
@@ -202,7 +235,7 @@ const FromInput = styled.input`
   width: 40%;
   height: 24px;
 
-  padding: 0;
+  padding: 0 px;
 
   position: relative;
   z-index: 5;
@@ -210,7 +243,8 @@ const FromInput = styled.input`
   border: none;
   background: none;
 
-  font-family: 'GangwonEduSaeeum';
+  font-family: "UhbeeMiMi";
+
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
