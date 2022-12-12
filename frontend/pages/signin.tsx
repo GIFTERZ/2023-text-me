@@ -47,10 +47,9 @@ function SignIn() {
       .then((res) => {
         let createdTime = new Date().getTime();
         const {
-          data: { token, refreshTokenId, id },
+          data: { token },
         } = res;
         setCookie("textMeAccessToken", token);
-        localStorage.setItem("textMeRefreshTokenId", refreshTokenId);
         localStorage.setItem(
           "textMeAccessExpiryTime",
           (createdTime + ACCESS_EXPIRY_TIME).toString()
