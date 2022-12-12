@@ -155,6 +155,10 @@ const LetterContainer = styled.div<{ imgurl: string }>`
     right: 0px;
     bottom: 0px;
   }
+
+  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 2px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.3);
 `;
 
 const Form = styled.form`
@@ -176,10 +180,12 @@ const TextArea = styled.textarea`
 
   color: #000000;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
+  letter-spacing: 0.06em;
+
   font-style: normal;
   font-weight: 400;
-  font-size: 21px;
+  font-size: 18px;
   line-height: 25px;
 
   resize: none;
@@ -193,10 +199,11 @@ const ToDiv = styled.div`
   margin-left: 10px;
   margin-bottom: 10px;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
+
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 `;
 
@@ -208,10 +215,10 @@ const FromDiv = styled.div`
   margin-top: 10px;
   justify-content: flex-end;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 `;
 
@@ -228,7 +235,7 @@ const FromInput = styled.input`
   width: 40%;
   height: 24px;
 
-  padding: 0;
+  padding: 0 px;
 
   position: relative;
   z-index: 5;
@@ -236,7 +243,8 @@ const FromInput = styled.input`
   border: none;
   background: none;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
+
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
