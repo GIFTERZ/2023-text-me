@@ -15,6 +15,7 @@ import { useCaptureMode } from "../../stores/useCaptureMode";
 import SaveModal from "../../components/room/SaveModal";
 import ErrorContainer from "../../components/common/ErrorContainer";
 import Head from "next/head";
+import LoadingContainer from "../../components/common/LoadingContainer";
 
 function Room() {
   const { get } = useSearchParams();
@@ -22,7 +23,7 @@ function Room() {
 
   const userId = Number(get("uid"));
 
-  const { roomInfo, getRoomInfo, error } = useRoomInfo();
+  const { roomInfo, getRoomInfo, error, isLoading } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
   const { alertModalOpen, alertEmptyLetterModalOpen } = useAlertModal();
 
@@ -32,7 +33,11 @@ function Room() {
     }
   }, [userId]);
 
-  if (!roomInfo || error) {
+  if (isLoading) {
+    return <LoadingContainer />;
+  }
+
+  if (error) {
     return <ErrorContainer />;
   }
 

@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios';
-import create from 'zustand';
-import visitorApi from '../auth/visitorApi';
+import axios, { AxiosError } from "axios";
+import create from "zustand";
+import visitorApi from "../auth/visitorApi";
 
 interface Room {
   isLoading: boolean;
@@ -9,18 +9,18 @@ interface Room {
   getRoomInfo: (userId: number) => void;
 }
 
-const useRoomInfo = create<Room>(set => ({
+const useRoomInfo = create<Room>((set) => ({
   isLoading: false,
   error: null,
   roomInfo: null,
   getRoomInfo: async (userId: number) => {
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     await visitorApi
       .get(`/users/find/${userId}`)
-      .then(res => {
-        set({ roomInfo: res.data, error: null });
+      .then((res) => {
+        set({ roomInfo: res.data });
       })
-      .catch(error => {
+      .catch((error) => {
         set({ error });
       })
       .finally(() => {
