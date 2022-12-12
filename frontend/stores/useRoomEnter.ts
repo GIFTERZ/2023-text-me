@@ -24,7 +24,11 @@ const useRoomEnter = create<RoomEnter>((set) => ({
       })
       .catch((error) => {
         set({ error });
-        alert(error.response.data.message);
+        if (error.reponse?.data?.message) {
+          alert(error.response.data.message);
+        } else {
+          alert("에러가 발생했습니다.");
+        }
       })
       .finally(() => {
         set({ isLoading: false });
