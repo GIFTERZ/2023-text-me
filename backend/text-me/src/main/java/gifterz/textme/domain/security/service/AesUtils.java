@@ -10,9 +10,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class AesUtils {
 
-    private final String secretKey = "3^mdfo9iu4alkj"; // 비밀키
+    private final String secretKey = "3^mdfo9iu4alkj";
 
-    // 암호화
     public String encryption(String text) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
@@ -32,7 +31,6 @@ public class AesUtils {
         }
     }
 
-    // 복호화
     public String decryption(String encryptedText) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
