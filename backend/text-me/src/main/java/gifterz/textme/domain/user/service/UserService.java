@@ -3,6 +3,7 @@ package gifterz.textme.domain.user.service;
 import gifterz.textme.domain.security.WebSecurityConfig;
 import gifterz.textme.domain.security.entity.RefreshToken;
 import gifterz.textme.domain.security.jwt.JwtUtils;
+import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.security.service.RefreshTokenService;
 import gifterz.textme.domain.user.dto.request.LoginRequest;
 import gifterz.textme.domain.user.dto.request.SignUpRequest;
@@ -33,6 +34,8 @@ public class UserService {
     private final RefreshTokenService refreshTokenService;
     private final JwtUtils jwtUtils;
 
+    private final AesUtils aesUtils;
+
     @Transactional
     public UserResponse signUp(SignUpRequest signUpRequest) {
         User user = new User(signUpRequest.getName(),
@@ -50,7 +53,8 @@ public class UserService {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+        String encryptedUserId = encryptUserId(user);
+        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     @Transactional
@@ -68,14 +72,16 @@ public class UserService {
 
         String accessToken = jwtUtils.generateJwtToken(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
-        return new LoginResponse(user.getId(), user.getEmail(), user.getName(), accessToken,
+        String encryptedUserId = encryptUserId(user);
+        return new LoginResponse(encryptedUserId, user.getEmail(), user.getName(), accessToken,
                 refreshToken.getId(), refreshToken.getCreatedAt());
     }
 
     public UserResponse findUserInfo(String email) {
         Optional<User> userExists = userRepository.findByEmail(email);
         User user = userExists.orElseThrow(UserNotFoundException::new);
-        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+        String encryptedUserId = encryptUserId(user);
+        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     @Transactional
@@ -83,18 +89,26 @@ public class UserService {
         Optional<User> userExists = userRepository.findByEmail(email);
         User user = userExists.orElseThrow(UserNotFoundException::new);
         user.updateUserName(name);
-        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+        String encryptedUserId = encryptUserId(user);
+        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     public UserResponse findUserInfoByEmail(String email) {
         Optional<User> userExists = userRepository.findByEmail(email);
         User user = userExists.orElseThrow(UserNotFoundException::new);
-        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+        String encryptedUserId = encryptUserId(user);
+        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     public UserResponse findUserInfoByUserId(Long id) {
         Optional<User> userExists = userRepository.findById(id);
         User user = userExists.orElseThrow(UserNotFoundException::new);
-        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+        String encryptedUserId = encryptUserId(user);
+        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
+    }
+
+    private String encryptUserId(User user) {
+        String userId = String.valueOf(user.getId());
+        return aesUtils.encryption(userId);
     }
 }
