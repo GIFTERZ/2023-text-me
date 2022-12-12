@@ -23,7 +23,10 @@ type LetterForm = {
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const { register, handleSubmit } = useForm<LetterForm>();
+  const { register, handleSubmit, watch } = useForm<LetterForm>();
+
+  const contentsWatch = watch("contents");
+  const senderWatch = watch("sender");
 
   const { pictureUrl } = useCardPicture();
   const { roomInfo, getRoomInfo } = useRoomInfo();
@@ -32,19 +35,24 @@ export default function index() {
 
   useEffect(() => {
     getRoomInfo(Number(userId));
-  }, []);
+  }, [userId]);
 
   const pushCompletedPage = () => {
     router.push(`/${userId}/write/send-complete`);
   };
 
   const sendData = (data: LetterForm) => {
+    if (!pictureUrl) {
+      alert("카드의 배경 사진을 선택해주세요.");
+    }
+
     const body = {
       receiverId: Number(userId),
       contents: data.contents,
       senderName: data.sender,
       imageUrl: pictureUrl,
     };
+
     sendLetter(body, pushCompletedPage);
 
     if (error) {
@@ -63,6 +71,21 @@ export default function index() {
     }
   };
 
+  const goBack = () => {
+    if (contentsWatch.length === 0 && senderWatch.length === 0) {
+      router.back();
+      return;
+    }
+
+    const confirm = window.confirm(
+      "작성한 내용이 사라집니다. 뒤로 가시겠습니까?"
+    );
+
+    if (confirm) {
+      router.back();
+    }
+  };
+
   return (
     <Frame>
       <Head>
@@ -70,7 +93,7 @@ export default function index() {
       </Head>
 
       <HeaderLayout>
-        <WhiteLeftButton type="button" onClick={() => router.back()}>
+        <WhiteLeftButton type="button" onClick={goBack}>
           <ArrowBackIcon />
         </WhiteLeftButton>
         <Title>편지 쓰기</Title>
@@ -155,7 +178,7 @@ const TextArea = styled.textarea`
   font-family: "GangwonEduSaeeum";
   font-style: normal;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 21px;
   line-height: 25px;
 
   resize: none;

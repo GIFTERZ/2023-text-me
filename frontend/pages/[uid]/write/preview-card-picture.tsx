@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCardPicture } from "../../../stores/useCardPicture";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Frame } from "../../../styles/components/Frame";
@@ -16,6 +16,13 @@ export default function index() {
   const pushWriteScreen = () => {
     router.push(`/${userId}/write/write-letter`);
   };
+  useEffect(() => {
+    if (!pictureUrl) {
+      alert("카드의 배경 사진을 선택해주세요.");
+      router.back();
+    }
+  }, []);
+
   return (
     <PreviewFrame>
       <Head>
