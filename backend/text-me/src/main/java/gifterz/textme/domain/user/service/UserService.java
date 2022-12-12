@@ -73,28 +73,24 @@ public class UserService {
     }
 
     public UserResponse findUserInfo(String email) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 
     @Transactional
     public UserResponse updateUserName(String email, String name) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         user.updateUserName(name);
         return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 
     public UserResponse findUserInfoByEmail(String email) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 
     public UserResponse findUserInfoByUserId(Long id) {
-        Optional<User> userExists = userRepository.findById(id);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return new UserResponse(user.getId(), user.getName(), user.getEmail());
     }
 }
