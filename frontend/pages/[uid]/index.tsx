@@ -45,17 +45,6 @@ function Room() {
     <>
       <Head>
         <title>{roomInfo?.userName}님의 방 - Text me!</title>
-        <meta name="author" content="withIT" />
-        <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
-        <meta property="og:image" content="static/images/meta-card.png" />
-        <meta
-          property="og:description"
-          content="추억이 담긴 편지를 작성해보세요!"
-        />
-        <meta
-          property="og:title"
-          content="Text me! 추억이 담긴 편지를 작성해보세요"
-        />
       </Head>
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>
