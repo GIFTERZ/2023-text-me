@@ -1,18 +1,20 @@
-import React, { useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { Frame } from '../../../styles/components/Frame';
-import styled from 'styled-components';
-import CameraIcon from '../../../components/write/icons/CameraIcon';
-import { HeaderLayout, LayoutSpan } from '../../../styles/components/Layout';
-import { WhiteLeftButton } from '../../../styles/components/Button';
-import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
-import Head from 'next/head';
+import React, { useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { Frame } from "../../../styles/components/Frame";
+import styled from "styled-components";
+import CameraIcon from "../../../components/write/icons/CameraIcon";
+import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
+import { WhiteLeftButton } from "../../../styles/components/Button";
+import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
+import Compressor from "compressorjs";
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get('uid');
-  const { setPictureUrl, constCard, getConstCard, setPictureImage } = useCardPicture();
+  const userId = useSearchParams().get("uid");
+  const { setPictureUrl, constCard, getConstCard, setPictureImage } =
+    useCardPicture();
 
   useEffect(() => {
     getConstCard();
@@ -29,9 +31,26 @@ export default function index() {
   };
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { currentTarget: target } = e;
-    setPictureImage(target.files[0]);
-    router.push(`/${userId}/write/preview-card-picture`);
+    const {
+      currentTarget: { files },
+    } = e;
+    let file = files[0];
+    setPictureImage(file, () =>
+      router.push(`/${userId}/write/preview-card-picture`)
+    );
+    new Compressor(file, {
+      success(result) {
+        file = new File([result], "image", { type: result.type });
+        setPictureImage(file, () =>
+          router.push(`/${userId}/write/preview-card-picture`)
+        );
+      },
+      error() {
+        setPictureImage(file, () =>
+          router.push(`/${userId}/write/preview-card-picture`)
+        );
+      },
+    });
   };
 
   return (
@@ -39,7 +58,6 @@ export default function index() {
       <Head>
         <title>카드 사진 선택 - Text me!</title>
       </Head>
-
       <HeaderLayout>
         <WhiteLeftButton type="button" onClick={() => router.back()}>
           <ArrowBackIcon />
@@ -51,7 +69,14 @@ export default function index() {
         <InputDiv id="image" onClick={handleClick}>
           <CameraIcon />
         </InputDiv>
-        <input style={{ display: 'none' }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
+        <input
+          style={{ display: "none" }}
+          ref={fileRef}
+          name="file"
+          type="file"
+          accept="image/*"
+          onChange={(e) => fileUploadHandler(e)}
+        />
         {constCard?.map((cards, index) => (
           <CardImage key={index} src={cards} onClick={() => select(cards)} />
         ))}
