@@ -48,7 +48,7 @@ export const useCardPicture = create<CardPicture>((set) => ({
         callback();
       })
       .catch((error) => {
-        if (error.reponse?.data?.message) {
+        if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
           alert("에러가 발생했습니다.");
