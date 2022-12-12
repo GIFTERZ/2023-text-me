@@ -13,6 +13,7 @@ import {
 import { useCardPicture } from "../../../stores/useCardPicture";
 import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
 
 type LetterForm = {
   contents: string;
@@ -22,7 +23,10 @@ type LetterForm = {
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const { register, handleSubmit } = useForm<LetterForm>();
+  const { register, handleSubmit, watch } = useForm<LetterForm>();
+
+  const contentsWatch = watch("contents");
+  const senderWatch = watch("sender");
 
   const { pictureUrl } = useCardPicture();
   const { roomInfo, getRoomInfo } = useRoomInfo();
@@ -30,20 +34,25 @@ export default function index() {
   const { loading, error, sendLetter } = useSendLetter();
 
   useEffect(() => {
-    getRoomInfo(Number(userId));
-  }, []);
+    getRoomInfo(userId);
+  }, [userId]);
 
   const pushCompletedPage = () => {
     router.push(`/${userId}/write/send-complete`);
   };
 
   const sendData = (data: LetterForm) => {
+    if (!pictureUrl) {
+      alert("카드의 배경 사진을 선택해주세요.");
+    }
+
     const body = {
-      receiverId: Number(userId),
+      receiverId: userId,
       contents: data.contents,
       senderName: data.sender,
       imageUrl: pictureUrl,
     };
+
     sendLetter(body, pushCompletedPage);
 
     if (error) {
@@ -62,10 +71,29 @@ export default function index() {
     }
   };
 
+  const goBack = () => {
+    if (contentsWatch.length === 0 && senderWatch.length === 0) {
+      router.back();
+      return;
+    }
+
+    const confirm = window.confirm(
+      "작성한 내용이 사라집니다. 뒤로 가시겠습니까?"
+    );
+
+    if (confirm) {
+      router.back();
+    }
+  };
+
   return (
     <Frame>
+      <Head>
+        <title>편지 쓰기 - Text me!</title>
+      </Head>
+
       <HeaderLayout>
-        <WhiteLeftButton type="button" onClick={() => router.back()}>
+        <WhiteLeftButton type="button" onClick={goBack}>
           <ArrowBackIcon />
         </WhiteLeftButton>
         <Title>편지 쓰기</Title>
@@ -88,7 +116,6 @@ export default function index() {
           <FromDiv>
             <p>From.</p>
             <FromInput
-              type="text"
               placeholder="보내는 사람"
               maxLength={10}
               {...register("sender", {
@@ -119,6 +146,7 @@ const LetterContainer = styled.div<{ imgurl: string }>`
     content: "";
     background: url(${(props) => props.imgurl});
     background-size: cover;
+    background-position: center center;
     border-radius: 10px;
     opacity: 0.2;
     position: absolute;
@@ -127,6 +155,10 @@ const LetterContainer = styled.div<{ imgurl: string }>`
     right: 0px;
     bottom: 0px;
   }
+
+  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 2px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.3);
 `;
 
 const Form = styled.form`
@@ -148,10 +180,12 @@ const TextArea = styled.textarea`
 
   color: #000000;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
+  letter-spacing: 0.06em;
+
   font-style: normal;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 25px;
 
   resize: none;
@@ -165,10 +199,11 @@ const ToDiv = styled.div`
   margin-left: 10px;
   margin-bottom: 10px;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
+
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 `;
 
@@ -180,10 +215,10 @@ const FromDiv = styled.div`
   margin-top: 10px;
   justify-content: flex-end;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 `;
 
@@ -198,8 +233,9 @@ const Title = styled.h1`
 
 const FromInput = styled.input`
   width: 40%;
-  padding: 10px;
   height: 24px;
+
+  padding: 0 5px;
 
   position: relative;
   z-index: 5;
@@ -207,11 +243,14 @@ const FromInput = styled.input`
   border: none;
   background: none;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhbeeMiMi";
+
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
   line-height: 27px;
+
+  color: #000000;
 
   &:focus {
     outline: none;

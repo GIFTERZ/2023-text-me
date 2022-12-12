@@ -1,10 +1,15 @@
-import { useRouter } from 'next/router';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import { useRoomEnter } from '../../stores/useRoomEnter';
-import { LeftButton } from '../../styles/components/Button';
-import { Input, InputContainer, FormTitle, Description } from '../../styles/components/Form';
+import { useRouter } from "next/router";
+import React from "react";
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import { useRoomEnter } from "../../stores/useRoomEnter";
+import { LeftButton } from "../../styles/components/Button";
+import {
+  Input,
+  InputContainer,
+  FormTitle,
+  Description,
+} from "../../styles/components/Form";
 
 type EmailForm = {
   email: string;
@@ -17,18 +22,14 @@ function RoomEnterForm() {
     formState: { errors },
   } = useForm<EmailForm>();
 
-  const { isLoading, enter, error } = useRoomEnter();
-  const pushRoom = (id: number) => {
+  const { isLoading, enter } = useRoomEnter();
+
+  const pushRoom = (id: string) => {
     router.push(`/${id}`);
   };
 
   const validateForm = async (data: EmailForm) => {
     enter(data.email, pushRoom);
-
-    if (error) {
-      // API 명세 후 핸들링 코드 추가
-      alert('에러가 발생했습니다.');
-    }
   };
 
   return (
@@ -36,16 +37,17 @@ function RoomEnterForm() {
       <div>
         <FormTitle>이메일로 다른 사람 방 입장하기</FormTitle>
         <Description>
-          Text me! 는 연말에 서로 마음을 나눌 수 있는 편지쓰기 사이트에요. 이메일을 입력해서 다른사람의 방에 입장해보세요. 💌
+          Text me! 는 연말에 서로 마음을 나눌 수 있는 편지쓰기 사이트에요.
+          이메일을 입력해서 다른사람의 방에 입장해보세요. 💌
         </Description>
       </div>
       <InputContainer>
         <Input
-          {...register('email', {
-            required: '값을 입력해주세요.',
+          {...register("email", {
+            required: "값을 입력해주세요.",
             pattern: {
               value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-              message: '올바른 이메일 형식이 아닙니다.',
+              message: "올바른 이메일 형식이 아닙니다.",
             },
           })}
           type="text"

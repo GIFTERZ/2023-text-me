@@ -5,7 +5,7 @@ const Rotate = keyframes`
 
 `;
 const PrixClipFix = keyframes`
-      0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+        0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
         25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
         50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
         75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
@@ -18,7 +18,7 @@ const Spinner = styled.span`
   height: 48px;
   border-radius: 50%;
   position: relative;
-  animation: ${Rotate} 1s linear infinite;
+  animation: ${Rotate} 2s linear infinite;
 
   &::before {
     content: "";
@@ -26,7 +26,7 @@ const Spinner = styled.span`
     position: absolute;
     inset: 0px;
     border-radius: 50%;
-    border: 5px solid #fff;
+    border: 5px solid #0eca92;
     animation: ${PrixClipFix} 2s linear infinite;
   }
 `;

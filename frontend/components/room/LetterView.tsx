@@ -34,7 +34,7 @@ function LetterView() {
   const lineBreak = (content: string) => {
     return (
       <>
-        {content?.split("\n").map((value) => (
+        {content?.split("\n").map((value, index) => (
           <>
             {value}
             <br />
@@ -130,7 +130,7 @@ const CardBack = styled(Card)<{ imgUrl: string }>`
   background-size: cover;
   border-radius: 5px;
 
-  font-family: "GangwonEduSaeeum";
+  font-family: "UhBeeMiMi";
 `;
 
 const ToText = styled.h2`
@@ -140,7 +140,7 @@ const ToText = styled.h2`
   margin: 0 27px;
 
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 
   color: #222222;
@@ -155,7 +155,7 @@ const Content = styled.p`
 
   font-style: normal;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 25px;
 
   color: #222222;
@@ -177,7 +177,7 @@ const FromText = styled.h2`
   margin: 0 27px;
 
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 27px;
 
   color: #222222;

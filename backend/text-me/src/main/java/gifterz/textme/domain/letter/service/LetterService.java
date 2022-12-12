@@ -5,13 +5,11 @@ import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.entity.Letter;
 import gifterz.textme.domain.letter.exception.LetterNotFoundException;
 import gifterz.textme.domain.letter.repository.LetterRepository;
+import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,25 +23,22 @@ import java.util.stream.Collectors;
 public class LetterService {
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
+    private final AesUtils aesUtils;
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
-        User user = userRepository.findById(request.getReceiverId()).orElseThrow(UserNotFoundException::new);
+        String decryptedId = aesUtils.decryption(request.getReceiverId());
+        Long userId = Long.valueOf(decryptedId);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
         letterRepository.save(letter);
-        notifyLetterSent(letter);
-        return new LetterResponse(letter.getId(), user.getName(), request.getSenderName(),
-                request.getContents(), request.getImageUrl());
-    }
-
-    private void notifyLetterSent(Letter letter) {
-        letter.publishEvent(letter);
+        return new LetterResponse(letter.getId(), user.getName(),
+                request.getSenderName(), request.getContents(), request.getImageUrl());
     }
 
     public List<LetterResponse> findLettersByUserId(Long id) {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
-        Slice<Letter> letterList = letterRepository.findAllByUserId(user.getId(), pageRequest);
+        List<Letter> letterList = letterRepository.findAllByUserId(user.getId());
         return letterList.stream()
                 .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
                         letter.getContents(), letter.getImageUrl()))

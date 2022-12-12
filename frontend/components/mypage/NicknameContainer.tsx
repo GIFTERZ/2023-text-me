@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMembers } from "../../stores/useMembers";
 import styled from "styled-components";
@@ -51,24 +51,28 @@ function NicknameContainer() {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit(validateForm)}>
-        <Input
-          {...register("userName", {
-            required: "닉네임을 입력해주세요.",
-          })}
-          defaultValue={member?.userName}
-          disabled={!editing}
-        />
-        {editing ? (
-          <WhiteButton type="submit" disabled={isPatchLoading}>
-            등록
-          </WhiteButton>
-        ) : (
-          <WhiteButton onClick={toggleEditing} type="button">
+      <RowLayout>
+        <Form onSubmit={handleSubmit(validateForm)}>
+          <Input
+            {...register("userName", {
+              required: "닉네임을 입력해주세요.",
+            })}
+            defaultValue={member?.userName}
+            disabled={!editing}
+            placeholder="닉네임을 입력해주세요."
+          />
+          {editing && (
+            <WhiteButton type="submit" disabled={isPatchLoading}>
+              등록
+            </WhiteButton>
+          )}
+        </Form>
+        {!editing && (
+          <WhiteButton type="button" onClick={toggleEditing}>
             수정
           </WhiteButton>
         )}
-      </Form>
+      </RowLayout>
       {errors && <em>{errors.userName?.message}</em>}
     </Container>
   );
@@ -79,13 +83,6 @@ export default NicknameContainer;
 const Container = styled.div`
   margin-bottom: 20px;
   width: 100%;
-`;
-
-const Form = styled.form`
-  display: flex;
-  justify-content: space-between;
-
-  width: 100%;
 
   ${WhiteButton} {
     padding: 5px;
@@ -94,8 +91,22 @@ const Form = styled.form`
   }
 `;
 
+const RowLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+`;
+
+const Form = styled.form`
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+`;
+
 const Input = styled.input`
-  padding: 5px;
+  padding: 0px 5px;
 
   margin-bottom: 5px;
   width: 100%;
@@ -107,6 +118,12 @@ const Input = styled.input`
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
+
+  color: #000000;
+
+  &::placeholder {
+    color: gray;
+  }
 
   &:focus {
     outline: none;

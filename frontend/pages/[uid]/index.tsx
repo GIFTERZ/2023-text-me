@@ -1,23 +1,33 @@
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import LettersContainer from '../../components/room/LettersContainer';
-import LetterViewContainer from '../../components/room/LetterViewContainer';
-import { useRoomInfo } from '../../stores/useRoomInfo';
-import styled from 'styled-components';
-import ButtonsContainer from '../../components/room/ButtonsContainer';
-import { RightButton } from '../../styles/components/Button';
-import { useCaptureMode } from '../../stores/useCaptureMode';
-import SaveModal from '../../components/room/SaveModal';
+import Link from "next/link";
+import { useAlertModal } from "../../stores/useAlertModal";
+import AlertModal from "../../components/room/AlertModal";
+
+import { usePathname, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
+import LettersContainer from "../../components/room/LettersContainer";
+import LetterViewContainer from "../../components/room/LetterViewContainer";
+import { useRoomInfo } from "../../stores/useRoomInfo";
+import styled from "styled-components";
+import ButtonsContainer from "../../components/room/ButtonsContainer";
+import { RightButton } from "../../styles/components/Button";
+import { useCaptureMode } from "../../stores/useCaptureMode";
+import SaveModal from "../../components/room/SaveModal";
+import ErrorContainer from "../../components/common/ErrorContainer";
+import Head from "next/head";
+import LoadingContainer from "../../components/common/LoadingContainer";
+
+const LETTER_NOT_OWN_MESSAGE = "본인의 편지만 열어볼 수 있어요!";
+const LETTER_NOT_ARRIVE_MESSAGE = "아직 편지가 도착하지 않았어요!";
 
 function Room() {
   const { get } = useSearchParams();
   const pathname = usePathname();
 
-  const userId = Number(get('uid'));
+  const userId = get("uid");
 
-  const { roomInfo, getRoomInfo } = useRoomInfo();
+  const { roomInfo, getRoomInfo, error, isLoading } = useRoomInfo();
   const { isCaptureMode, toggleCaptureMode, modalOpen } = useCaptureMode();
+  const { alertModalOpen, alertEmptyLetterModalOpen } = useAlertModal();
 
   useEffect(() => {
     if (userId) {
@@ -25,8 +35,19 @@ function Room() {
     }
   }, [userId]);
 
+  if (isLoading) {
+    return <LoadingContainer />;
+  }
+
+  if (error) {
+    return <ErrorContainer />;
+  }
+
   return (
     <>
+      <Head>
+        <title>{roomInfo?.userName}님의 방 - Text me!</title>
+      </Head>
       <Header>
         <Title>{roomInfo?.userName}'s room</Title>
         {!isCaptureMode && <ButtonsContainer />}
@@ -41,6 +62,10 @@ function Room() {
         </Link>
       )}
       <LetterViewContainer />
+      {alertModalOpen && <AlertModal text={LETTER_NOT_OWN_MESSAGE} />}
+      {alertEmptyLetterModalOpen && (
+        <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />
+      )}
       {modalOpen && <SaveModal />}
       {isCaptureMode && (
         <CaptureModeButton type="button" onClick={toggleCaptureMode}>
@@ -79,7 +104,8 @@ const Title = styled.h1`
 
   z-index: 10;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
@@ -102,7 +128,8 @@ const CTAButton = styled(RightButton)`
 
   padding: 13px 24px;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {

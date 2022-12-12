@@ -21,6 +21,10 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 security:
   jwt:
     token:
@@ -41,11 +45,11 @@ springdoc:
 cloud:
   aws:
     credentials:
-      accessKey: AKIAR3VO3W3NQI7IQ3FE     # AWS IAM AccessKey 적기
-      secretKey: WmphyIriD/EB8dn/iCti6omjPo2cVL18stWC1yI1   # AWS IAM SecretKey 적기
+      accessKey: AKIAR3VO3W3NQI7IQ3FE
+      secretKey: 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
     s3:
       bucket: textme-bucket
     region:
       static: ap-northeast-2
     stack:
-      auto=false
+      auto: false

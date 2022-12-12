@@ -7,7 +7,7 @@ import Background from "./Background";
 import LettersMove from "./LettersMove";
 
 interface Props {
-  userId: number;
+  userId: string;
 }
 
 function LettersContainer({ userId }: Props) {
@@ -54,7 +54,10 @@ export default LettersContainer;
 const Container = styled.div<{ isCaptureMode: boolean }>`
   position: absolute;
   width: 100vw;
-  height: ${(p) => (p.isCaptureMode ? "95vh" : "100vh")};
+  height: ${(p) =>
+    p.isCaptureMode
+      ? "calc(var(--vh, 1vh) * 95)"
+      : "calc(var(--vh, 1vh) * 100)"};
   left: 0;
   top: 0;
 
@@ -64,6 +67,8 @@ const Container = styled.div<{ isCaptureMode: boolean }>`
 
   overflow-x: scroll;
   -ms-overflow-style: none;
+
+  overflow-y: hidden;
 
   &::-webkit-scrollbar {
     display: none;

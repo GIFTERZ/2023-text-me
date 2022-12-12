@@ -1,11 +1,11 @@
-import { AxiosError } from 'axios';
-import create from 'zustand';
-import api from '../auth/api';
-import { setCookie } from '../components/common/Cookie';
+import { AxiosError } from "axios";
+import create from "zustand";
+import api from "../auth/api";
+import { setCookie } from "../auth/Cookie";
 
 type Member = {
+  id: string;
   userName: string;
-  id: number;
   email: string;
 };
 
@@ -20,34 +20,34 @@ interface Members {
   patchNickname: (data: string) => void;
 }
 
-const useMembers = create<Members>(set => ({
+const useMembers = create<Members>((set) => ({
   isLoading: false,
   error: null,
   isPatchLoading: false,
   patchError: null,
   member: null,
   getMember: async () => {
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     await api
-      .get('/users')
-      .then(res => {
+      .get("/users")
+      .then((res) => {
         set({ member: res.data });
       })
-      .catch(error => {
+      .catch((error) => {
         set({ error });
       })
       .finally(() => {
         set({ isLoading: false });
       });
   },
-  patchNickname: async data => {
-    set({ isPatchLoading: true });
+  patchNickname: async (data) => {
+    set({ isPatchLoading: true, patchError: null });
     await api
-      .patch('/users', data)
-      .then(res => {
+      .patch("/users", null, { params: { name: data } })
+      .then((res) => {
         set({ member: res.data });
       })
-      .catch(patchError => {
+      .catch((patchError) => {
         set({ patchError });
       })
       .finally(() => {
@@ -57,7 +57,7 @@ const useMembers = create<Members>(set => ({
 
   logoutMember: () => {
     set({ member: null });
-    setCookie('textMeAccessToken', null);
+    setCookie("textMeAccessToken", null);
   },
 }));
 

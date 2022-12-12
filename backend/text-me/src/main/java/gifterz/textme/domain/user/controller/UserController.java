@@ -1,6 +1,7 @@
 package gifterz.textme.domain.user.controller;
 
 import gifterz.textme.domain.security.jwt.JwtAuth;
+import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.security.service.RefreshTokenService;
 import gifterz.textme.domain.user.dto.request.LoginRequest;
 import gifterz.textme.domain.user.dto.request.SignUpRequest;
@@ -22,6 +23,7 @@ public class UserController {
 
     private final UserService userService;
     private final RefreshTokenService refreshTokenService;
+    private final AesUtils aesUtils;
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid final SignUpRequest request) {
@@ -38,7 +40,7 @@ public class UserController {
     @PostMapping("/token/refresh")
     public ResponseEntity<TokenRefreshResponse> refreshToken(@JwtAuth String email,
                                                              @RequestBody @Valid final TokenRefreshRequest request) {
-        String token = request.getRefreshToken();
+        String token = request.getAccessToken();
         TokenRefreshResponse tokenRefreshResponse = refreshTokenService.refreshJwtToken(email, token);
         return ResponseEntity.ok().body(tokenRefreshResponse);
     }
@@ -62,8 +64,10 @@ public class UserController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<UserResponse> findUserInfoByUserId(@PathVariable("id") final Long id) {
-        UserResponse userResponse = userService.findUserInfoByUserId(id);
+    public ResponseEntity<UserResponse> findUserInfoByUserId(@PathVariable("id") final String id) {
+        String decryptedId = aesUtils.decryption(id);
+        Long decryptedUserId = Long.valueOf(decryptedId);
+        UserResponse userResponse = userService.findUserInfoByUserId(decryptedUserId);
         return ResponseEntity.ok().body(userResponse);
     }
 }
