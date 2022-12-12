@@ -35,9 +35,6 @@ export default function index() {
       currentTarget: { files },
     } = e;
     let file = files[0];
-    setPictureImage(file, () =>
-      router.push(`/${userId}/write/preview-card-picture`)
-    );
     new Compressor(file, {
       success(result) {
         file = new File([result], "image", { type: result.type });
