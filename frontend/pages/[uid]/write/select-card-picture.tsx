@@ -12,13 +12,8 @@ import Head from "next/head";
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const {
-    setPictureUrl,
-    constCard,
-    getConstCard,
-    setPictureImage,
-    pictureUrl,
-  } = useCardPicture();
+  const { setPictureUrl, constCard, getConstCard, setPictureImage } =
+    useCardPicture();
 
   useEffect(() => {
     getConstCard();

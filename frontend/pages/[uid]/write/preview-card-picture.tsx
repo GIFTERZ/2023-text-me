@@ -16,6 +16,7 @@ export default function index() {
   const pushWriteScreen = () => {
     router.push(`/${userId}/write/write-letter`);
   };
+
   useEffect(() => {
     if (!pictureUrl) {
       alert("카드의 배경 사진을 선택해주세요.");
