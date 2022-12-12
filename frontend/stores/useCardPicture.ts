@@ -1,6 +1,6 @@
-import create from 'zustand';
-import { AxiosError } from 'axios';
-import visitorApi from '../auth/visitorApi';
+import create from "zustand";
+import { AxiosError } from "axios";
+import visitorApi from "../auth/visitorApi";
 
 interface CardPicture {
   pictureUrl: string | null;
@@ -13,39 +13,41 @@ interface CardPicture {
   isLoading: boolean;
 }
 
-export const useCardPicture = create<CardPicture>(set => ({
+export const useCardPicture = create<CardPicture>((set) => ({
   isLoading: false,
   pictureUrl: null,
   constCard: [],
   error: null,
   pictureImage: null,
-  setPictureUrl: select => {
+  setPictureUrl: (select) => {
     set({ pictureUrl: select });
   },
   getConstCard: async () => {
     set({ isLoading: true });
     await visitorApi
-      .get('/cards')
-      .then(res => {
+      .get("/cards")
+      .then((res) => {
         set({ constCard: res.data });
       })
-      .catch(error => {
+      .catch((error) => {
         set({ error: error });
       })
       .finally(() => set({ isLoading: false }));
   },
   setPictureImage: async (image: File) => {
     let formData = new FormData();
-    formData.append('images', image);
+    formData.append("images", image);
     await visitorApi
-      .post('/files/upload', formData, {
+      .post("/files/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
-      .then(res => {
+      .then((res) => {
         set({ pictureUrl: res.data });
       })
-      .catch(error => console.log(error));
+      .catch((error) => {
+        alert(error.response.message);
+      });
   },
 }));

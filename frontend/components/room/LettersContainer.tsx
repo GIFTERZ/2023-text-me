@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useCaptureMode } from '../../stores/useCaptureMode';
-import { useLetterPagination } from '../../stores/useLetterPagination';
-import { useLetters } from '../../stores/useLetters';
-import Background from './Background';
-import LettersMove from './LettersMove';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useCaptureMode } from "../../stores/useCaptureMode";
+import { useLetterPagination } from "../../stores/useLetterPagination";
+import { useLetters } from "../../stores/useLetters";
+import Background from "./Background";
+import LettersMove from "./LettersMove";
 
 interface Props {
   userId: number;
@@ -39,7 +39,12 @@ function LettersContainer({ userId }: Props) {
   return (
     <Container isCaptureMode={isCaptureMode}>
       {!isCaptureMode && letters.length > PAGE_LETTER && <LettersMove />}
-      <Background letters={letters.slice(pagination * PAGE_LETTER, pagination * PAGE_LETTER + PAGE_LETTER)} />
+      <Background
+        letters={letters.slice(
+          pagination * PAGE_LETTER,
+          pagination * PAGE_LETTER + PAGE_LETTER
+        )}
+      />
     </Container>
   );
 }
@@ -49,7 +54,10 @@ export default LettersContainer;
 const Container = styled.div<{ isCaptureMode: boolean }>`
   position: absolute;
   width: 100vw;
-  height: ${p => (p.isCaptureMode ? '95vh' : '100vh')};
+  height: ${(p) =>
+    p.isCaptureMode
+      ? "calc(var(--vh, 1vh) * 95)"
+      : "calc(var(--vh, 1vh) * 100)"};
   left: 0;
   top: 0;
 
@@ -59,6 +67,8 @@ const Container = styled.div<{ isCaptureMode: boolean }>`
 
   overflow-x: scroll;
   -ms-overflow-style: none;
+
+  overflow-y: hidden;
 
   &::-webkit-scrollbar {
     display: none;

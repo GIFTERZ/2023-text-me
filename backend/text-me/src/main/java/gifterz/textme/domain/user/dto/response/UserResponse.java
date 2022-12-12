@@ -1,14 +1,17 @@
 package gifterz.textme.domain.user.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class UserResponse {
 
-    private Long id;
-    private String userName;
-    private String email;
+    private final String id;
+    private final String userName;
+    private final String email;
 
+    public UserResponse(String id, String userName, String email) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+    }
 }

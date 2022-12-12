@@ -28,11 +28,8 @@ function Background({ letters }: Props) {
   useEffect(() => {
     let newWidth = window.innerHeight * (1560 / 844);
 
-    if (isCaptureMode) {
-      newWidth *= 0.95;
-      document.documentElement.style.overflow = "scroll";
-    } else {
-      document.documentElement.style.overflow = "hidden";
+    if (window.innerWidth > 1560) {
+      newWidth = window.innerWidth;
     }
 
     setWidth(newWidth);
@@ -44,7 +41,7 @@ function Background({ letters }: Props) {
     return window.removeEventListener("resize", function () {
       setWidth(newWidth);
     });
-  }, [isCaptureMode]);
+  }, []);
 
   const checkAuthOpen = (e: any) => {
     const {
@@ -74,8 +71,8 @@ function Background({ letters }: Props) {
 
   return (
     <svg
-      width={width}
-      height="calc(var(--vh, 1vh) * 100)"
+      width={isCaptureMode ? width * 0.95 : width}
+      height="100%"
       viewBox="10 0 1560 854"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

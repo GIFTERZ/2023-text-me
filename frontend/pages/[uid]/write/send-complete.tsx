@@ -7,12 +7,18 @@ import { useRoomInfo } from "../../../stores/useRoomInfo";
 import Link from "next/link";
 import { useMembers } from "../../../stores/useMembers";
 import Head from "next/head";
+import { useSearchParams } from "next/navigation";
 
 export default function index() {
-  const { pictureUrl } = useCardPicture();
-  const { roomInfo } = useRoomInfo();
+  const userId = useSearchParams().get("uid");
 
+  const { pictureUrl } = useCardPicture();
+  const { roomInfo, getRoomInfo } = useRoomInfo();
   const { member, getMember } = useMembers();
+
+  useEffect(() => {
+    getRoomInfo(Number(userId));
+  }, [userId]);
 
   useEffect(() => {
     getMember();
@@ -42,14 +48,18 @@ export default function index() {
         <Title>{textLimitChangeLine(roomInfo?.userName)}</Title>
         {pictureUrl && <CardImage src={pictureUrl} />}
         <div>
-          {!member && (
-            <LeftButton>
-              <Link href="/signup">내 방 만들기</Link>
-            </LeftButton>
+          {member ? (
+            <Link href={`/${member?.id}`}>
+              <LeftButton>내 방으로 가기 </LeftButton>
+            </Link>
+          ) : (
+            <Link href="/signup">
+              <LeftButton>내 방 만들기 </LeftButton>
+            </Link>
           )}
-          <RightButton>
-            <Link href={`/${roomInfo?.id}`}>확인하기</Link>
-          </RightButton>
+          <Link href={`/${roomInfo?.id}`}>
+            <RightButton>확인하기</RightButton>
+          </Link>
         </div>
       </Container>
     </Frame>
@@ -100,4 +110,6 @@ const CardImage = styled.img`
   width: 140px;
   height: 175px;
   border-radius: 10px;
+
+  object-fit: cover;
 `;

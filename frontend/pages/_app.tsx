@@ -45,7 +45,22 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={theme}>
       <Layout>
         <Head>
-          <title>t2xt me!</title>
+          <title>Text me!</title>
+          <meta property="og:url" content="https://t2xt.me"></meta>
+          <meta name="author" content="GIFTERZ" />
+          <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
+          <meta
+            property="og:image"
+            content="static/images/room-background.png"
+          />
+          <meta
+            property="og:description"
+            content="추억이 담긴 편지를 작성해보세요!"
+          />
+          <meta
+            property="og:title"
+            content="Text me! 추억이 담긴 편지를 작성해보세요"
+          />
         </Head>
         <Script
           strategy="afterInteractive"

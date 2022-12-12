@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCardPicture } from "../../../stores/useCardPicture";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Frame } from "../../../styles/components/Frame";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { WhiteLeftButton } from "../../../styles/components/Button";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 import Head from "next/head";
+import { HeaderLayout } from "../../../styles/components/Layout";
 
 export default function index() {
   const router = useRouter();
@@ -15,12 +16,20 @@ export default function index() {
   const pushWriteScreen = () => {
     router.push(`/${userId}/write/write-letter`);
   };
+
+  useEffect(() => {
+    if (!pictureUrl) {
+      alert("카드의 배경 사진을 선택해주세요.");
+      router.back();
+    }
+  }, []);
+
   return (
-    <Frame style={{ padding: 20 }}>
+    <PreviewFrame>
       <Head>
-        <title>카드 사진 미리보기 - Text me!</title>
+        <title>카드 사진 미리보기</title>
       </Head>
-      <Header>
+      <HeaderLayout>
         <WhiteLeftButton onClick={() => router.back()}>
           <ArrowBackIcon />
         </WhiteLeftButton>
@@ -28,11 +37,22 @@ export default function index() {
         <WhiteRightButton type="button" onClick={pushWriteScreen}>
           선택
         </WhiteRightButton>
-      </Header>
+      </HeaderLayout>
       <PreviewDiv>{pictureUrl && <CardImage src={pictureUrl} />}</PreviewDiv>
-    </Frame>
+    </PreviewFrame>
   );
 }
+
+const PreviewFrame = styled(Frame)`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  ${HeaderLayout} {
+    width: 100%;
+  }
+`;
 
 const Title = styled.h1`
   font-style: normal;
@@ -43,11 +63,6 @@ const Title = styled.h1`
 `;
 
 const PreviewDiv = styled.div`
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -64,11 +79,6 @@ const PreviewDiv = styled.div`
   @media ${({ theme }) => theme.device.large} {
     width: 358px;
   }
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const CardImage = styled.img`
