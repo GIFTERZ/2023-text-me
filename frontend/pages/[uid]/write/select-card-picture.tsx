@@ -40,7 +40,6 @@ export default function index() {
       <Head>
         <title>카드 사진 선택 - Text me!</title>
       </Head>
-
       <HeaderLayout>
         <WhiteLeftButton type="button" onClick={() => router.back()}>
           <ArrowBackIcon />
@@ -94,7 +93,7 @@ const InputDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: auto;
 
   border-radius: 10px;
   text-align: center;
