@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -29,41 +28,31 @@ public class LetterService {
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
-        Optional<User> userExist = userRepository.findById(request.getReceiverId());
-        if (userExist.isPresent()) {
-            User user = userExist.get();
-            Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
-            letterRepository.save(letter);
-            return new LetterResponse(letter.getId(), user.getName(), request.getSenderName(), request.getContents(), request.getImageUrl());
-        }
-        throw new UserNotFoundException();
+        User user = userRepository.findById(request.getReceiverId()).orElseThrow(UserNotFoundException::new);
+        Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
+        letterRepository.save(letter);
+        notifyLetterSent(letter);
+        return new LetterResponse(letter.getId(), user.getName(), request.getSenderName(),
+                request.getContents(), request.getImageUrl());
+    }
+
+    private void notifyLetterSent(Letter letter) {
+        letter.publishEvent(letter);
     }
 
     public List<LetterResponse> findLettersByUserId(Long id) {
-        Optional<User> userExist = userRepository.findById(id);
-        if (userExist.isPresent()) {
-            User user = userExist.get();
-            PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
-            Slice<Letter> letterList = letterRepository.findAllByUserId(user.getId(), pageRequest);
-            return letterList.stream()
-                    .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
-                            letter.getContents(), letter.getImageUrl()))
-                    .collect(Collectors.toList());
-        }
-        throw new UserNotFoundException();
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
+        Slice<Letter> letterList = letterRepository.findAllByUserId(user.getId(), pageRequest);
+        return letterList.stream()
+                .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
+                        letter.getContents(), letter.getImageUrl()))
+                .collect(Collectors.toList());
     }
 
     public LetterResponse findLetter(String email, Long id) {
-        Optional<User> userExist = userRepository.findByEmail(email);
-        if (userExist.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-        User user = userExist.get();
-        Optional<Letter> letterExist = letterRepository.findById(id);
-        if (letterExist.isEmpty()) {
-            throw new LetterNotFoundException();
-        }
-        Letter letter = letterExist.get();
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        Letter letter = letterRepository.findById(id).orElseThrow(LetterNotFoundException::new);
         return new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
                 letter.getContents(), letter.getImageUrl());
     }
