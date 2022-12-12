@@ -48,7 +48,6 @@ export const useCardPicture = create<CardPicture>((set) => ({
         callback();
       })
       .catch((error) => {
-        console.log(error);
         if (error.reponse?.data?.message) {
           alert(error.response.data.message);
         } else {
