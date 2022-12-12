@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { useCardPicture } from "../../../stores/useCardPicture";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Frame } from "../../../styles/components/Frame";
-import styled from "styled-components";
-import { WhiteLeftButton } from "../../../styles/components/Button";
-import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
-import Head from "next/head";
-import { HeaderLayout } from "../../../styles/components/Layout";
+import React, { useEffect } from 'react';
+import { useCardPicture } from '../../../stores/useCardPicture';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Frame } from '../../../styles/components/Frame';
+import styled from 'styled-components';
+import { WhiteLeftButton } from '../../../styles/components/Button';
+import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
+import Head from 'next/head';
+import { HeaderLayout } from '../../../styles/components/Layout';
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get("uid");
-  const { pictureUrl } = useCardPicture();
+  const userId = useSearchParams().get('uid');
+  const { pictureUrl, setPictureUrl } = useCardPicture();
 
   const pushWriteScreen = () => {
     router.push(`/${userId}/write/write-letter`);
@@ -19,10 +19,15 @@ export default function index() {
 
   useEffect(() => {
     if (!pictureUrl) {
-      alert("카드의 배경 사진을 선택해주세요.");
+      alert('카드의 배경 사진을 선택해주세요.');
       router.back();
     }
   }, []);
+
+  const moveBack = () => {
+    setPictureUrl(null);
+    router.back();
+  };
 
   return (
     <PreviewFrame>
@@ -30,7 +35,7 @@ export default function index() {
         <title>카드 사진 미리보기</title>
       </Head>
       <HeaderLayout>
-        <WhiteLeftButton onClick={() => router.back()}>
+        <WhiteLeftButton onClick={() => moveBack()}>
           <ArrowBackIcon />
         </WhiteLeftButton>
         <Title>카드 미리보기</Title>
