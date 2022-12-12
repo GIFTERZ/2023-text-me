@@ -8,6 +8,7 @@ import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
 import { WhiteLeftButton } from "../../../styles/components/Button";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 import Head from "next/head";
+import Compressor from "compressorjs";
 
 export default function index() {
   const router = useRouter();
@@ -30,9 +31,23 @@ export default function index() {
   };
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { currentTarget: target } = e;
-    setPictureImage(target.files[0]);
-    router.push(`/${userId}/write/preview-card-picture`);
+    const {
+      currentTarget: { files },
+    } = e;
+    let file = files[0];
+    new Compressor(file, {
+      success(result) {
+        file = new File([result], "image", { type: result.type });
+        setPictureImage(file, () =>
+          router.push(`/${userId}/write/preview-card-picture`)
+        );
+      },
+      error() {
+        setPictureImage(file, () =>
+          router.push(`/${userId}/write/preview-card-picture`)
+        );
+      },
+    });
   };
 
   return (
@@ -40,7 +55,6 @@ export default function index() {
       <Head>
         <title>카드 사진 선택 - Text me!</title>
       </Head>
-
       <HeaderLayout>
         <WhiteLeftButton type="button" onClick={() => router.back()}>
           <ArrowBackIcon />
@@ -94,7 +108,7 @@ const InputDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: auto;
 
   border-radius: 10px;
   text-align: center;

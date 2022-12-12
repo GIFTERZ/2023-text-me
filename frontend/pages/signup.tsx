@@ -51,7 +51,11 @@ function SignUp() {
         router.push("/signin");
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        if (error.response.data.message) {
+          alert(error.response.data.message);
+        } else {
+          alert("에러가 발생했습니다.");
+        }
       });
   };
 
