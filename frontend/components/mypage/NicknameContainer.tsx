@@ -59,6 +59,7 @@ function NicknameContainer() {
             })}
             defaultValue={member?.userName}
             disabled={!editing}
+            placeholder="닉네임을 입력해주세요."
           />
           {editing && (
             <WhiteButton type="submit" disabled={isPatchLoading}>
@@ -105,7 +106,7 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 5px;
+  padding: 0px 5px;
 
   margin-bottom: 5px;
   width: 100%;
@@ -117,6 +118,12 @@ const Input = styled.input`
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
+
+  color: #000000;
+
+  &::placeholder {
+    color: gray;
+  }
 
   &:focus {
     outline: none;
