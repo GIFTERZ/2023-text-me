@@ -11,6 +11,7 @@ import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class LetterService {
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
     private final AesUtils aesUtils;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
@@ -33,8 +35,13 @@ public class LetterService {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
         letterRepository.save(letter);
+        notifyLetterSent(letter);
         return new LetterResponse(letter.getId(), user.getName(),
                 request.getSenderName(), request.getContents(), request.getImageUrl());
+    }
+
+    private void notifyLetterSent(Letter letter) {
+        letter.publishEvent(eventPublisher);
     }
 
     public List<AllLetterResponse> findLettersByUserId(Long id) {
