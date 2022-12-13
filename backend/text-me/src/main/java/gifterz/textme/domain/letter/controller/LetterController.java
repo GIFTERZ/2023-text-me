@@ -1,6 +1,7 @@
 package gifterz.textme.domain.letter.controller;
 
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
+import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.service.LetterService;
 import gifterz.textme.domain.security.jwt.JwtAuth;
@@ -25,10 +26,10 @@ public class LetterController {
     }
 
     @GetMapping("/members/{id}")
-    public ResponseEntity<List<LetterResponse>> findLetters(@PathVariable("id") final String id) {
+    public ResponseEntity<List<AllLetterResponse>> findLetters(@PathVariable("id") final String id) {
         String decryptedId = aesUtils.decryption(id);
         Long decryptedUserId = Long.valueOf(decryptedId);
-        List<LetterResponse> letterResponses = letterService.findLettersByUserId(decryptedUserId);
+        List<AllLetterResponse> letterResponses = letterService.findLettersByUserId(decryptedUserId);
         return ResponseEntity.ok().body(letterResponses);
     }
 

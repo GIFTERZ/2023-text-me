@@ -33,7 +33,6 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenService refreshTokenService;
     private final JwtUtils jwtUtils;
-
     private final AesUtils aesUtils;
 
     @Transactional
@@ -61,11 +60,7 @@ public class UserService {
     public LoginResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-        Optional<User> userExists = userRepository.findByEmail(email);
-        if (userExists.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-        User user = userExists.get();
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(email, password));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -78,31 +73,27 @@ public class UserService {
     }
 
     public UserResponse findUserInfo(String email) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         String encryptedUserId = encryptUserId(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     @Transactional
     public UserResponse updateUserName(String email, String name) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         user.updateUserName(name);
         String encryptedUserId = encryptUserId(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     public UserResponse findUserInfoByEmail(String email) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         String encryptedUserId = encryptUserId(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
     public UserResponse findUserInfoByUserId(Long id) {
-        Optional<User> userExists = userRepository.findById(id);
-        User user = userExists.orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         String encryptedUserId = encryptUserId(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
