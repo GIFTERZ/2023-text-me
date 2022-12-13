@@ -1,7 +1,7 @@
 
 
 <center>
-<p align="center"><img src="https://velog.velcdn.com/images/sysh9498/post/6954dee8-bb2e-41b9-b269-05334bbf37c2/image.png" height="300px" width="300px"></p>
+<p align="center"><img src="https://velog.velcdn.com/images/sysh9498/post/6954dee8-bb2e-41b9-b269-05334bbf37c2/image.png" height="100px" width="150px"></p>
 
 
 </center>
