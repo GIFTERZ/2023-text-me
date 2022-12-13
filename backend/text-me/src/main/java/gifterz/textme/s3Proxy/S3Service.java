@@ -3,7 +3,11 @@ package gifterz.textme.s3Proxy;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import gifterz.textme.s3Proxy.exception.InvalidFileContentException;
+import gifterz.textme.s3Proxy.exception.InvalidFileImage;
+import gifterz.textme.s3Proxy.exception.failFileResize;
+import io.jsonwebtoken.lang.Assert;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import marvin.image.MarvinImage;
 import org.apache.commons.lang3.ObjectUtils;
 import org.marvinproject.image.transform.scale.Scale;
@@ -19,8 +23,10 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class S3Service {
@@ -62,6 +68,9 @@ public class S3Service {
     MultipartFile resizeImage(String fileName, String fileFormatName, MultipartFile originalImage) {
         try {
             BufferedImage image = ImageIO.read(originalImage.getInputStream());
+            if (image == null) {
+                throw new InvalidFileImage();
+            }
             int originWidth = image.getWidth();
             int originHeight = image.getHeight();
             int targetWidth = 3300;
@@ -86,7 +95,7 @@ public class S3Service {
             return new MockMultipartFile(fileName, baos.toByteArray());
 
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 리사이즈에 실패했습니다.");
+            throw new failFileResize();
         }
     }
 }
