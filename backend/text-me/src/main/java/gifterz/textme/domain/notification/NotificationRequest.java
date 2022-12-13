@@ -1,8 +1,13 @@
 package gifterz.textme.domain.notification;
 
 import gifterz.textme.domain.user.entity.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-public class NotificationRequestDto {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+public class NotificationRequest {
 
     private User receiver;
     private String content;
