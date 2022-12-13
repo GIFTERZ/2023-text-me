@@ -1,16 +1,13 @@
 
 
-<center>
+
 <p align="center"><img src="https://velog.velcdn.com/images/sysh9498/post/6954dee8-bb2e-41b9-b269-05334bbf37c2/image.png" height="100px" width="150px"></p>
 
-
-</center>
+<center>
 💌 따뜻한 편지와 함께 만드는 추억 저장소:<br/>
 text me!
-<center>
-
-
 </center>
+
 
 ## 💌 Text Me! 
 <center>
