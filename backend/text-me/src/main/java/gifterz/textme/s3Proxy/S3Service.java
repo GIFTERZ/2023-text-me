@@ -64,7 +64,7 @@ public class S3Service {
             BufferedImage image = ImageIO.read(originalImage.getInputStream());
             int originWidth = image.getWidth();
             int originHeight = image.getHeight();
-            int targetWidth = 3300;
+            int targetWidth = 2500;
 
             if (originWidth < targetWidth) {
                 return originalImage;
