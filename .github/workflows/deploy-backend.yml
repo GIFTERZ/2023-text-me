@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
-          scrips: |
+          script: |
             whoami
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
             docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/} ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
