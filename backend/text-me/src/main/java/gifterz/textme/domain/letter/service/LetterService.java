@@ -1,6 +1,7 @@
 package gifterz.textme.domain.letter.service;
 
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
+import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.entity.Letter;
 import gifterz.textme.domain.letter.exception.LetterNotFoundException;
@@ -41,7 +42,7 @@ public class LetterService {
         throw new UserNotFoundException();
     }
 
-    public List<LetterResponse> findLettersByUserId(Long id) {
+    public List<AllLetterResponse> findLettersByUserId(Long id) {
         Optional<User> userExist = userRepository.findById(id);
         if (userExist.isEmpty()) {
             throw new UserNotFoundException();
@@ -49,8 +50,7 @@ public class LetterService {
         User user = userExist.get();
         List<Letter> letterList = letterRepository.findAllByUserId(user.getId());
         return letterList.stream()
-                .map(letter -> new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
-                        letter.getContents(), letter.getImageUrl()))
+                .map(letter -> new AllLetterResponse(letter.getId(), user.getName(), letter.getImageUrl()))
                 .collect(Collectors.toList());
     }
 
