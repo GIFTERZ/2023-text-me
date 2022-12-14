@@ -12,8 +12,10 @@ import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +57,9 @@ public class LetterService {
     public LetterResponse findLetter(String email, Long id) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Letter letter = letterRepository.findById(id).orElseThrow(LetterNotFoundException::new);
+        if (user != letter.getUser()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "편지를 볼 권한이 없습니다.");
+        }
         return new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
                 letter.getContents(), letter.getImageUrl());
     }
