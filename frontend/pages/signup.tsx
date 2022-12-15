@@ -104,8 +104,12 @@ function SignUp() {
                   value: 8,
                   message: "최소 8자 이상의 비밀번호를 입력해주세요.",
                 },
+                maxLength: {
+                  value: 64,
+                  message: "비밀번호는 64자를 초과하면 안됩니다.",
+                },
                 pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,64}$/,
                   message: "영소문자, 숫자를 포함하여 입력해주세요.",
                 },
               })}
