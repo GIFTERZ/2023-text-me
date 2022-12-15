@@ -43,7 +43,7 @@ public class User extends BaseEntity {
 
 
     private static void validatePassword(String password) {
-        String REGEX = "^[a-z0-9]{10,20}$";
+        String REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,}$";
         checkSize(password);
         checkArgument(Pattern.matches(REGEX, password));
     }

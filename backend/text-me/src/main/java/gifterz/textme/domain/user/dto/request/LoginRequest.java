@@ -14,7 +14,7 @@ public class LoginRequest {
     private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요")
-    @Pattern(regexp = "^[a-z0-9]{10,20}$",
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,}$",
             message = "이메일 또는 비밀번호를 다시 확인해주세요.")
     private String password;
 }
