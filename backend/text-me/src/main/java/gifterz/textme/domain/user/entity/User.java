@@ -43,13 +43,13 @@ public class User extends BaseEntity {
 
 
     private static void validatePassword(String password) {
-        String REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,}$";
+        String REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,64}$";
         checkSize(password);
         checkArgument(Pattern.matches(REGEX, password));
     }
 
     private static void checkSize(String password) {
-        if (password.isBlank() || password.length() < 8 || password.length() > 12) {
+        if (password.isBlank() || password.length() < 8 || password.length() > 64) {
             throw new IllegalArgumentException("Invalid Password");
         }
     }
