@@ -7,28 +7,18 @@ import { Spinner } from "../../styles/indicators/Loader";
 import DeferredComponent from "../common/DeferredComponent";
 
 function LetterView() {
-  const {
-    letter,
-    getLetter,
-    isOpened,
-    isLoading: isLetterLoading,
-    error: letterError,
-  } = useLetterView();
+  const { letter, getLetter, isOpened, isLoading: isLetterLoading, error: letterError } = useLetterView();
 
   useEffect(() => {
     getLetter();
   }, []);
 
-  const {
-    roomInfo,
-    isLoading: isRoomLoading,
-    error: roomError,
-  } = useRoomInfo();
+  const { roomInfo, isLoading: isRoomLoading, error: roomError } = useRoomInfo();
 
   const [isFlipped, setIsFlipped] = useState(false);
 
   const flip = () => {
-    setIsFlipped((prev) => !prev);
+    setIsFlipped(prev => !prev);
   };
 
   const lineBreak = (content: string) => {
@@ -58,12 +48,7 @@ function LetterView() {
 
   return (
     <Container>
-      <ReactCardFlip
-        isFlipped={isFlipped}
-        flipDirection="horizontal"
-        flipSpeedBackToFront={1}
-        flipSpeedFrontToBack={1}
-      >
+      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal" flipSpeedBackToFront={1} flipSpeedFrontToBack={1}>
         <Card>
           <img src={letter?.imageUrl} onClick={flip} />
         </Card>
@@ -91,8 +76,7 @@ const Card = styled.div`
   width: 320px;
   height: 400px;
 
-  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4),
-    inset -2px -2px 2px rgba(106, 106, 106, 0.25),
+  box-shadow: 1px 1px 8px 3px rgba(62, 78, 82, 0.4), inset -2px -2px 2px rgba(106, 106, 106, 0.25),
     inset 2px 2px 2px rgba(255, 255, 255, 0.3);
   border-radius: 5px;
 
@@ -121,13 +105,14 @@ const CardBack = styled(Card)<{ imgUrl: string }>`
   grid-template-rows: 80px 230px 80px;
   padding: 0;
 
-  background: ${(p) => `linear-gradient(
+  background: ${p => `linear-gradient(
     0deg,
     rgba(255, 255, 255, 0.8),
     rgba(255, 255, 255, 0.8)
     ),
     url(${p.imgUrl})`};
   background-size: cover;
+  background-position: center;
   border-radius: 5px;
 
   font-family: "UhBeeMiMi";
