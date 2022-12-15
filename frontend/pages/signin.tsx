@@ -97,10 +97,6 @@ function SignIn() {
                   value: 10,
                   message: "최소 10자 이상의 비밀번호를 입력해주세요.",
                 },
-                maxLength: {
-                  value: 20,
-                  message: "비밀번호는 20자를 초과하면 안됩니다.",
-                },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
                   message: "영소문자, 숫자가 포함된 8자 이상의 비밀번호를 입력해주세요",
