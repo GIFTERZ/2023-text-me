@@ -8,11 +8,7 @@ import { FormTitle, Input, InputContainer } from "../styles/components/Form";
 import { Frame } from "../styles/components/Frame";
 import visitorApi from "../auth/visitorApi";
 import { setCookie } from "../auth/Cookie";
-import {
-  FormLayout,
-  HeaderLayout,
-  LayoutSpan,
-} from "../styles/components/Layout";
+import { FormLayout, HeaderLayout, LayoutSpan } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
 import Head from "next/head";
@@ -44,18 +40,15 @@ function SignIn() {
   const signIn = async (data: SignInForm) => {
     await visitorApi
       .post("/users/login", data)
-      .then((res) => {
+      .then(res => {
         let createdTime = new Date().getTime();
         const {
           data: { token },
         } = res;
         setCookie("textMeAccessToken", token);
-        localStorage.setItem(
-          "textMeAccessExpiryTime",
-          (createdTime + ACCESS_EXPIRY_TIME).toString()
-        );
+        localStorage.setItem("textMeAccessExpiryTime", (createdTime + ACCESS_EXPIRY_TIME).toString());
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
@@ -109,8 +102,8 @@ function SignIn() {
                   message: "비밀번호는 20자를 초과하면 안됩니다.",
                 },
                 pattern: {
-                  value: /^(?=.*\d)(?=.*[A-Za-z])[\40-\176]{10,220}$/,
-                  message: "영문, 숫자를 혼용하여 입력해주세요.",
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
+                  message: "영어 소문자, 숫자는 필수로 포함되어야 합니다.(8자 이상)",
                 },
               })}
               placeholder="비밀번호를 입력해주세요."
