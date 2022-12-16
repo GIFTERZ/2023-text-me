@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import gifterz.textme.s3Proxy.exception.InvalidFileContentException;
 import gifterz.textme.s3Proxy.exception.InvalidFileImage;
 import gifterz.textme.s3Proxy.exception.failFileResize;
-import io.jsonwebtoken.lang.Assert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marvin.image.MarvinImage;
@@ -23,7 +22,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Slf4j
@@ -46,12 +44,12 @@ public class S3Service {
                 .substring(multipartFile.getContentType().lastIndexOf("/") + 1);
         MultipartFile resizedFile = resizeImage(s3FileName, fileFormatName, multipartFile);
 
-        if (resizedFile.getSize() > 10000000) {
+        if (resizedFile.getSize() > 14999999) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 사이즈가 커 업로드 할 수 없습니다.");
         }
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(resizedFile.getSize());
-        objMeta.setContentType(multipartFile.getContentType());
+        objMeta.setContentType(resizedFile.getContentType());
 
         try (InputStream inputStream = resizedFile.getInputStream()) {
             amazonS3Client.putObject(bucket, s3FileName, inputStream, objMeta);
@@ -73,7 +71,7 @@ public class S3Service {
             }
             int originWidth = image.getWidth();
             int originHeight = image.getHeight();
-            int targetWidth = 2500;
+            int targetWidth = 700;
 
             if (originWidth < targetWidth) {
                 return originalImage;
