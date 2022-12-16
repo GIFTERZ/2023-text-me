@@ -28,6 +28,8 @@ jobs:
           distribution: 'temurin'
           
       - name: Set environment variables
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
           echo "::set-env name=DB_URL::${{ secrets.DB_URL }}"
           echo "::set-env name=DB_USERNAME::${{ secrets.DB_USERNAME }}"
