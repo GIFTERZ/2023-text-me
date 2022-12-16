@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id 'com.google.cloud.tools.jib' version '3.2.0'
+	id 'com.google.cloud.tools.jib' version '3.3.1'
 }
 
 group = 'gifterz'
@@ -47,13 +47,23 @@ tasks.named('test') {
 }
 
 jib {
-	from {
-		image = "eclipse-temurin:11-jre"
-	}
 	to {
 		image = "sanha1998/text-me-docker-repo"
 	}
+	from {
+		image = "eclipse-temurin:11-jre"
+	}
 	container {
 		jvmFlags = ["-Xms128m", "-Xmx128m"]
+		environment = [
+				'DB_URL': System.getenv('DB_URL'),
+				'DB_USERNAME': System.getenv('DB_USERNAME'),
+				'DB_PASSWORD': System.getenv('DB_PASSWORD'),
+				'JWT_KEY': System.getenv('JWT_KEY'),
+				'JWT_EXPIRY': System.getenv('JWT_EXPIRY'),
+				'REFRESH_EXPIRY': System.getenv('REFRESH_EXPIRY'),
+				'AWS_ACCESS_KEY_ID': System.getenv('AWS_ACCESS_KEY_ID'),
+				'AWS_SECRET_ACCESS_KEY': System.getenv('AWS_SECRET_ACCESS_KEY')
+		]
 	}
 }
