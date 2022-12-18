@@ -6,6 +6,8 @@
 
 <div align="center"> 💌 따뜻한 편지와 함께 만드는 추억 저장소:<br/> 
 ***text me!*** </div>
+</br>
+</br>
 
 
 
@@ -20,6 +22,8 @@
 |<img width="500" height="550" src="https://velog.velcdn.com/images/sysh9498/post/93f67569-3a92-41da-acbd-22967a3d04ef/image.jpg" alt="img" />|<img src="https://user-images.githubusercontent.com/79951703/208312023-626f7961-2052-4237-a965-1658e7e911f1.gif" alt="image" width="100%" />|<img width="500" src="https://velog.velcdn.com/images/sysh9498/post/59898681-cab6-472e-9e67-8d75f2e07755/image.jpg" alt="img" />|
 
 **Text Me**는 한장의 사진과 따뜻한 메세지로, **함께 나눈 추억을 공유하고 이를 보관할 수 있는 사이트**에요.
+</br>
+</br>
 
 </div>
 
