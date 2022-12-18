@@ -17,6 +17,7 @@
 |<img width=500 src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />|<img src="https://velog.velcdn.com/images/sysh9498/post/ccbff0bc-8584-4f15-9d98-a1926a9c135b/image.jpg" alt="img" />|<img width=500 src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />|
 |<center>**내 방 보기**|**편지 확인하기**|**마이페이지**</center>|
 |<img width=500 src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />|<img width=500 src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />|<img width=500 src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />|
+
 **Text Me**는 한장의 사진과 따뜻한 메세지로, **함께 나눈 추억을 공유하고 이를 보관할 수 있는 사이트**에요.
 
 </center>
