@@ -14,7 +14,7 @@
 
 | 유저로그인| 회원가입| 편지쓰기|
 | -------------- | --------------- | --------------- |
-| |  |  |
+|![](https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg) | ![](https://velog.velcdn.com/images/sysh9498/post/ccbff0bc-8584-4f15-9d98-a1926a9c135b/image.jpg) | ![](https://velog.velcdn.com/images/sysh9498/post/93f67569-3a92-41da-acbd-22967a3d04ef/image.jpg) |
 | **내 방 보기** | **편지 확인하기** | **마이페이지** |
 |  |  |  |
 
