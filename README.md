@@ -14,9 +14,10 @@
 
 | 유저로그인| 회원가입| 편지쓰기|
 | -------------- | --------------- | --------------- |
-|![](https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg) | ![](https://velog.velcdn.com/images/sysh9498/post/ccbff0bc-8584-4f15-9d98-a1926a9c135b/image.jpg) | ![](https://velog.velcdn.com/images/sysh9498/post/93f67569-3a92-41da-acbd-22967a3d04ef/image.jpg) |
+|![](https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg) | ![](https://velog.velcdn.com/images/sysh9498/post/ccbff0bc-8584-4f15-9d98-a1926a9c135b/image.jpg) |  |
 | **내 방 보기** | **편지 확인하기** | **마이페이지** |
-|  | ![](https://user-images.githubusercontent.com/79951703/208311005-9d283821-05f2-4246-aa14-81b7b8ea391d.gif) | <img width="296" alt="스크린샷 2022-12-19 오전 2 17 53" src="https://user-images.githubusercontent.com/79951703/208311111-1d772cfa-3713-4ffb-b798-9e412875ade3.png"> |
+| ![](https://velog.velcdn.com/images/sysh9498/post/93f67569-3a92-41da-acbd-22967a3d04ef/image.jpg) | ![](https://user-images.githubusercontent.com/79951703/208311005-9d283821-05f2-4246-aa14-81b7b8ea391d.gif)
+ | <img width="296" alt="스크린샷 2022-12-19 오전 2 17 53" src="https://user-images.githubusercontent.com/79951703/208311111-1d772cfa-3713-4ffb-b798-9e412875ade3.png"> |
 
 **Text Me**는 한장의 사진과 따뜻한 메세지로, **함께 나눈 추억을 공유하고 이를 보관할 수 있는 사이트**에요.
 
