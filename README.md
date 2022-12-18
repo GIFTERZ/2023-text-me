@@ -14,7 +14,7 @@
 
 |유저로그인|회원가입|편지쓰기|
 | -------------- | --------------- | --------------- |
-|<img width="500" src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />||<img width="500" src="https://user-images.githubusercontent.com/79951703/208311978-ac010e77-6140-496f-a5d9-ca694842c91a.gif" alt="img" />|
+|<img width="500" src="https://velog.velcdn.com/images/sysh9498/post/c27d6dec-deea-4530-bffd-006f28d1e0ed/image.jpg" alt="img" />|<img src="https://velog.velcdn.com/images/sysh9498/post/ccbff0bc-8584-4f15-9d98-a1926a9c135b/image.jpg" alt="image" width=500|<img width="500" src="https://user-images.githubusercontent.com/79951703/208311978-ac010e77-6140-496f-a5d9-ca694842c91a.gif" alt="img" />|
 |<center>**내 방 보기**|**편지 확인하기**|**마이페이지**</center>|
 |<img width="500" src="https://velog.velcdn.com/images/sysh9498/post/93f67569-3a92-41da-acbd-22967a3d04ef/image.jpg" alt="img" />||<img width="500" src="https://velog.velcdn.com/images/sysh9498/post/59898681-cab6-472e-9e67-8d75f2e07755/image.jpg" alt="img" />|
 
