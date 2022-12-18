@@ -11,7 +11,7 @@ text me! </div>
 
 ## 💌 Text Me! 
 
-<center>
+<div align="center">
 
 |유저로그인|회원가입|편지쓰기|
 | -------------- | --------------- | --------------- |
@@ -21,7 +21,7 @@ text me! </div>
 
 **Text Me**는 한장의 사진과 따뜻한 메세지로, **함께 나눈 추억을 공유하고 이를 보관할 수 있는 사이트**에요.
 
-</center>
+</div>
 
 ## 🛠 Tech Stack
 ### FrontEnd
