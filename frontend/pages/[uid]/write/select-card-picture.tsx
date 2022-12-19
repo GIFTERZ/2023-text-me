@@ -35,8 +35,8 @@ export default function index() {
     } = e;
     let file = files[0];
     new Compressor(file, {
-      maxWidth: 600,
-      maxHeight: 800,
+      maxWidth: 550,
+      maxHeight: 550,
       success(result) {
         file = new File([result], "image", { type: result.type });
         setPictureImage(file, () => router.push(`/${userId}/write/preview-card-picture`));
