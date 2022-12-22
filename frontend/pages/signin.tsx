@@ -94,8 +94,8 @@ function SignIn() {
               {...register("password", {
                 required: "비밀번호를 입력해주세요.",
                 minLength: {
-                  value: 10,
-                  message: "최소 10자 이상의 비밀번호를 입력해주세요.",
+                  value: 8,
+                  message: "최소 8자 이상의 비밀번호를 입력해주세요.",
                 },
                 maxLength: {
                   value: 64,
