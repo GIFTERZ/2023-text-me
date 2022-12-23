@@ -10,6 +10,11 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Head from "next/head";
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   setMocking();
@@ -39,6 +44,11 @@ export default function App({ Component, pageProps }: AppProps) {
   const setHeightProperty = () => {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  const setKakaoSDK = () => {
+    console.log(window.Kakao);
+    window.Kakao.init("d584b8c48db8ad88883d617810f74a87");
   };
 
   return (
