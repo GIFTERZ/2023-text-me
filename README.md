@@ -32,6 +32,7 @@ text me! </div>***
 Next.js 13, JavaScript, TypeScript, Zustand, MSW, Styled Component
 
 ### BackEnd
+![BackEnd skill set](https://i.imgur.com/ryAPQN0.png)
 
 ## 🔌 Infrastructures
 
