@@ -5,12 +5,14 @@ import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.Map;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class NotificationService {
 
@@ -51,6 +53,7 @@ public class NotificationService {
         try {
             emitter.send(SseEmitter.event()
                     .id(eventId)
+                    .name("sse")
                     .data(data));
         } catch (IOException e) {
             emitterRepository.deleteById(emitterId);
@@ -62,6 +65,7 @@ public class NotificationService {
         return userId + "_" + System.currentTimeMillis();
     }
 
+    @Transactional
     public void send(User receiver, String content, String url) {
         Notification notification = notificationRepository.save(createNotification(receiver, content, url));
 
