@@ -1,9 +1,8 @@
 package gifterz.textme.domain.notification;
 
-import gifterz.textme.domain.user.entity.User;
+import gifterz.textme.domain.security.jwt.JwtAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,8 +17,8 @@ public class NotificationController {
 
     @GetMapping(value = "/subscribe", produces = "text/event-stream")
     @ResponseStatus(HttpStatus.OK)
-    public SseEmitter subscribe(@AuthenticationPrincipal User user,
+    public SseEmitter subscribe(@JwtAuth String email,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-        return notificationService.subscribe(user.getId(), lastEventId);
+        return notificationService.subscribe(email, lastEventId);
     }
 }
