@@ -1,6 +1,8 @@
 package gifterz.textme.domain.notification;
 
 import gifterz.textme.domain.user.entity.User;
+import gifterz.textme.domain.user.exception.UserNotFoundException;
+import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -14,8 +16,12 @@ public class NotificationService {
 
     private final EmitterRepository emitterRepository;
     private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
 
-    public SseEmitter subscribe(Long userId, String lastEventId) {
+    public SseEmitter subscribe(String email, String lastEventId) {
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        Long userId = user.getId();
+
         String emitterId = makeTimeIncludeId(userId);
         SseEmitter emitter = emitterRepository.save(emitterId, new SseEmitter());
         emitter.onCompletion(() -> emitterRepository.deleteById(emitterId));
