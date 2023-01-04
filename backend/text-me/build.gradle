@@ -43,6 +43,10 @@ dependencies {
 
 	//FCM
 	implementation 'com.google.firebase:firebase-admin:7.1.1'
+
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 tasks.named('test') {
