@@ -1,5 +1,6 @@
 package gifterz.textme.domain.user.controller;
 
+import gifterz.textme.common.firebase.FCMService;
 import gifterz.textme.domain.security.jwt.JwtAuth;
 import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.security.service.RefreshTokenService;
@@ -23,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
     private final RefreshTokenService refreshTokenService;
+    private final FCMService fcmService;
     private final AesUtils aesUtils;
 
     @PostMapping("/signup")
@@ -34,7 +36,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid final LoginRequest request) {
         LoginResponse loginResponse = userService.login(request);
+        fcmService.saveToken(request);
         return ResponseEntity.ok().body(loginResponse);
+    }
+
+    @DeleteMapping("/logout")
+    public void logout(@JwtAuth String email) {
+        fcmService.deleteToken(email);
     }
 
     @PostMapping("/token/refresh")

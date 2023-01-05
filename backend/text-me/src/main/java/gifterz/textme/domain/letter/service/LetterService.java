@@ -1,5 +1,6 @@
 package gifterz.textme.domain.letter.service;
 
+import gifterz.textme.common.firebase.FCMService;
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
 import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
@@ -11,7 +12,6 @@ import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,25 +25,22 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class LetterService {
+
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
+    private final FCMService fcmService;
     private final AesUtils aesUtils;
-    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
         String decryptedId = aesUtils.decryption(request.getReceiverId());
         Long userId = Long.valueOf(decryptedId);
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Letter letter = Letter.of(user, request.getSenderName(), request.getContents(), request.getImageUrl());
+        User receiver = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        Letter letter = Letter.of(receiver, request.getSenderName(), request.getContents(), request.getImageUrl());
         letterRepository.save(letter);
-        notifyLetterSent(letter);
-        return new LetterResponse(letter.getId(), user.getName(),
+        fcmService.sendLetterReceivedNotification(receiver.getEmail());
+        return new LetterResponse(letter.getId(), receiver.getName(),
                 request.getSenderName(), request.getContents(), request.getImageUrl());
-    }
-
-    private void notifyLetterSent(Letter letter) {
-        letter.publishEvent(eventPublisher);
     }
 
     public List<AllLetterResponse> findLettersByUserId(Long id) {
