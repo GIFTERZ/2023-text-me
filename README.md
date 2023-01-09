@@ -29,7 +29,7 @@ text me! </div>***
 
 ## 🛠 Tech Stack
 ### FrontEnd
-![FrontEnd skill set](https://velog.velcdn.com/images/sysh9498/post/a8212a96-ef8b-4adf-9a30-561ae95c6192/image.png)
+![FrontEnd skill set](https://velog.velcdn.com/images/sysh9498/post/964b7e26-de92-4865-a554-b3e77c870469/image.jpg)
 
 ### BackEnd
 ![BackEnd skill set](https://i.imgur.com/ryAPQN0.png)
