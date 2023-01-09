@@ -29,7 +29,7 @@ text me! </div>***
 
 ## 🛠 Tech Stack
 ### FrontEnd
-Next.js 13, JavaScript, TypeScript, Zustand, MSW, Styled Component
+![FrontEnd skill set](https://velog.velcdn.com/images/sysh9498/post/a8212a96-ef8b-4adf-9a30-561ae95c6192/image.png)
 
 ### BackEnd
 ![BackEnd skill set](https://i.imgur.com/ryAPQN0.png)
