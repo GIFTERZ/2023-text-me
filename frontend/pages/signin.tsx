@@ -12,6 +12,7 @@ import { FormLayout, HeaderLayout, LayoutSpan } from "../styles/components/Layou
 import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
 import Head from "next/head";
+import { useKakaoLogin } from "../stores/useKakaoLogin";
 
 type SignInForm = {
   email: string;
@@ -30,6 +31,7 @@ function SignIn() {
   } = useForm<SignInForm>();
 
   const { member, getMember } = useMembers();
+  const { getKakaoToken } = useKakaoLogin();
 
   useEffect(() => {
     if (member) {
@@ -59,6 +61,18 @@ function SignIn() {
         getMember();
       });
   };
+
+  const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_RESTAPI_KEY;
+  const KAKAO_REDIRECT_URI = `${process.env.NEXT_PUBLIC_SERVICE_URL}/signin`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  useEffect(() => {
+    const code = new URL(window.location.href).searchParams.get("code");
+
+    if (code) {
+      getKakaoToken({ code });
+    }
+  }, []);
 
   return (
     <Frame>
@@ -110,8 +124,11 @@ function SignIn() {
             />
             {errors.password && <em>{errors.password.message}</em>}
           </InputContainer>
+          <LeftButton type="submit">로그인</LeftButton>
+          <KakaoLoginButton href={KAKAO_AUTH_URL} role="button">
+            <img src="static/images/kakao_login_medium_wide.png" />
+          </KakaoLoginButton>
         </FormLayout>
-        <LeftButton type="submit">확인</LeftButton>
       </Form>
     </Frame>
   );
@@ -126,7 +143,33 @@ const Form = styled.form`
 
   width: 100%;
   height: 85%;
+`;
 
-  ${LeftButton} {
+const KakaoLoginButton = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 17px;
+
+  color: #000000 85%;
+
+  background: #fee500;
+  border: none;
+
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
+
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    background: #fee500;
+    color: #fee500;
   }
+  border-radius: 10px 10px 10px 10px;
 `;

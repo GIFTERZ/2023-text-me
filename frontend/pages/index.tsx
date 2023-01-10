@@ -46,11 +46,8 @@ export default function Home() {
           </>
         ) : (
           <>
-            <LeftButton type="button" onClick={() => router.push("/signup")}>
-              내 방 만들기
-            </LeftButton>
             <RightButton type="button" onClick={() => router.push("/signin")}>
-              로그인
+              로그인하고 내 방으로 가기
             </RightButton>
           </>
         )}
