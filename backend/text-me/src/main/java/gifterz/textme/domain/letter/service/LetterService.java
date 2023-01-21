@@ -47,7 +47,11 @@ public class LetterService {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         List<Letter> letterList = letterRepository.findAllByUserId(user.getId());
         return letterList.stream()
-                .map(letter -> new AllLetterResponse(letter.getId(), user.getName(), letter.getImageUrl()))
+                .map(letter -> AllLetterResponse.builder()
+                        .id(letter.getId())
+                        .receiverName(user.getName())
+                        .imageUrl(letter.getImageUrl())
+                        .build())
                 .collect(Collectors.toList());
     }
 
