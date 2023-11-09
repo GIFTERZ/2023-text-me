@@ -3,7 +3,10 @@ package gifterz.textme.s3Proxy;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import gifterz.textme.s3Proxy.exception.InvalidFileContentException;
+import gifterz.textme.s3Proxy.exception.InvalidFileImage;
+import gifterz.textme.s3Proxy.exception.failFileResize;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import marvin.image.MarvinImage;
 import org.apache.commons.lang3.ObjectUtils;
 import org.marvinproject.image.transform.scale.Scale;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class S3Service {
@@ -40,12 +44,12 @@ public class S3Service {
                 .substring(multipartFile.getContentType().lastIndexOf("/") + 1);
         MultipartFile resizedFile = resizeImage(s3FileName, fileFormatName, multipartFile);
 
-        if (resizedFile.getSize() > 10000000) {
+        if (resizedFile.getSize() > 14999999) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 사이즈가 커 업로드 할 수 없습니다.");
         }
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(resizedFile.getSize());
-        objMeta.setContentType(multipartFile.getContentType());
+        objMeta.setContentType(resizedFile.getContentType());
 
         try (InputStream inputStream = resizedFile.getInputStream()) {
             amazonS3Client.putObject(bucket, s3FileName, inputStream, objMeta);
@@ -62,9 +66,12 @@ public class S3Service {
     MultipartFile resizeImage(String fileName, String fileFormatName, MultipartFile originalImage) {
         try {
             BufferedImage image = ImageIO.read(originalImage.getInputStream());
+            if (image == null) {
+                throw new InvalidFileImage();
+            }
             int originWidth = image.getWidth();
             int originHeight = image.getHeight();
-            int targetWidth = 2500;
+            int targetWidth = 700;
 
             if (originWidth < targetWidth) {
                 return originalImage;
@@ -86,7 +93,7 @@ public class S3Service {
             return new MockMultipartFile(fileName, baos.toByteArray());
 
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 리사이즈에 실패했습니다.");
+            throw new failFileResize();
         }
     }
 }

@@ -48,6 +48,7 @@ public class NotificationService {
                     .data(data));
         } catch (IOException e) {
             emitterRepository.deleteById(emitterId);
+            throw new RuntimeException("알림 연결 오류가 발생했습니다.");
         }
     }
 
@@ -65,7 +66,7 @@ public class NotificationService {
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);
-                    sendNotification(emitter, eventId, key, NotificationResponseDto.create(notification));
+                    sendNotification(emitter, eventId, key, NotificationResponse.create(notification));
                 }
         );
     }

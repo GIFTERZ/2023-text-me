@@ -13,7 +13,7 @@ public class NotificationListener {
 
     @TransactionalEventListener
     @Async
-    public void handleNotification(NotificationRequestDto requestDto) {
+    public void handleNotification(NotificationRequest requestDto) {
         notificationService.send(requestDto.getReceiver(), requestDto.getContent(), requestDto.getUrl());
     }
 }
