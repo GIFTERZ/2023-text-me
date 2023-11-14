@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.github.downgoon:marvin:1.5.5'
     implementation 'com.github.downgoon:MarvinPlugins:1.5.5'
     implementation group: 'com.jtransc', name: 'jtransc-rt', version: '0.6.8'
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
