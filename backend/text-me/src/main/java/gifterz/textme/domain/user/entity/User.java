@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
@@ -30,6 +30,7 @@ public class User extends BaseEntity {
 
     @Lob
     @Column(nullable = false)
+    @Transient
     private String password;
 
     public User(String name, String email, String password) {

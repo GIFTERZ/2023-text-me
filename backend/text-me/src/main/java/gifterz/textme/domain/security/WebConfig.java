@@ -1,8 +1,10 @@
 package gifterz.textme.domain.security;
 
+import gifterz.textme.domain.oauth.util.OauthServerTypeConverter;
 import gifterz.textme.domain.security.jwt.JwtAuthArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,5 +29,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:8080", "http://localhost:3000",
                         "https://t2xt.me", "http://192.168.0.82:3000")
                 .allowCredentials(true);
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new OauthServerTypeConverter());
     }
 }
