@@ -6,6 +6,10 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    cache:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
   jpa:
     hibernate:
@@ -15,6 +19,7 @@ spring:
         default_batch_fetch_size: 500
         format_sql: true
         show_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
   autoconfigure:
@@ -53,3 +58,13 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+
+fcm:
+  certification: ${GOOGLE_APPLICATION_CREDENTIALS}
+
+oauth:
+  kakao:
+    client_id: ${KAKAO_CLIENT_ID}
+    redirect_uri: ${KAKAO_REDIRECT_URI}
+    client_secret: ${KAKAO_CLIENT_SECRET}
+    scope: ${KAKAO_SCOPE}

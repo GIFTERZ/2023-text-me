@@ -1,12 +1,11 @@
 package gifterz.textme.domain.letter.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AllLetterResponse {
     private Long id;
     private String receiverName;
