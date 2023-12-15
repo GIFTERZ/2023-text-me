@@ -1,18 +1,19 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
-import { LeftButton, WhiteLeftButton } from "../styles/components/Button";
-import { FormTitle, Input, InputContainer } from "../styles/components/Form";
+import { WhiteLeftButton } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
 import visitorApi from "../auth/visitorApi";
 import { setCookie } from "../auth/Cookie";
-import { FormLayout, HeaderLayout, LayoutSpan } from "../styles/components/Layout";
+import { HeaderLayout, LayoutSpan } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
 import Head from "next/head";
 import { useKakaoLogin } from "../stores/useKakaoLogin";
+import Form from "../common/form/Form";
+import SignInFormContext from "../components/signin/SigninFormContext";
 
 type SignInForm = {
   email: string;
@@ -39,18 +40,21 @@ function SignIn() {
     }
   }, [member]);
 
-  const signIn = async (data: SignInForm) => {
+  const signIn = async (data: FieldValues) => {
     await visitorApi
       .post("/users/login", data)
-      .then(res => {
+      .then((res) => {
         let createdTime = new Date().getTime();
         const {
           data: { token },
         } = res;
         setCookie("textMeAccessToken", token);
-        localStorage.setItem("textMeAccessExpiryTime", (createdTime + ACCESS_EXPIRY_TIME).toString());
+        localStorage.setItem(
+          "textMeAccessExpiryTime",
+          (createdTime + ACCESS_EXPIRY_TIME).toString()
+        );
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
@@ -86,64 +90,21 @@ function SignIn() {
         <Logo />
         <LayoutSpan aria-hidden />
       </HeaderLayout>
-      <Form onSubmit={handleSubmit(signIn)}>
-        <FormLayout>
-          <FormTitle>로그인</FormTitle>
-          <InputContainer>
-            <Input
-              {...register("email", {
-                required: "이메일을 입력해주세요.",
-                pattern: {
-                  value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                  message: "올바른 이메일 형식이 아닙니다.",
-                },
-              })}
-              placeholder="이메일을 입력해주세요."
-            />
-            {errors.email && <em>{errors.email.message}</em>}
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="password"
-              {...register("password", {
-                required: "비밀번호를 입력해주세요.",
-                minLength: {
-                  value: 8,
-                  message: "최소 8자 이상의 비밀번호를 입력해주세요.",
-                },
-                maxLength: {
-                  value: 64,
-                  message: "비밀번호는 64자를 초과하면 안됩니다.",
-                },
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,64}$/,
-                  message: "영소문자, 숫자가 포함된 8자 이상의 비밀번호를 입력해주세요",
-                },
-              })}
-              placeholder="비밀번호를 입력해주세요."
-            />
-            {errors.password && <em>{errors.password.message}</em>}
-          </InputContainer>
-          <LeftButton type="submit">로그인</LeftButton>
-          <KakaoLoginButton href={KAKAO_AUTH_URL} role="button">
-            <img src="static/images/kakao_login_medium_wide.png" />
-          </KakaoLoginButton>
-        </FormLayout>
+      <Form
+        onSubmit={signIn}
+        inputs={SignInFormContext.getContext()}
+        buttonText={"로그인"}
+      >
+        <h2>로그인</h2>
       </Form>
+      <KakaoLoginButton href={KAKAO_AUTH_URL} role="button">
+        <img src="static/images/kakao_login_medium_wide.png" />
+      </KakaoLoginButton>
     </Frame>
   );
 }
 
 export default SignIn;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  width: 100%;
-  height: 85%;
-`;
 
 const KakaoLoginButton = styled.a`
   display: flex;
