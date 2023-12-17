@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1102beb-f562-4ebb-b025-e35b124d92ff" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/text-me.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/text-me/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backend/text-me/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/text-me/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/text-me/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/text-me/src/main/java/gifterz/textme/TextMeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/text-me/src/main/java/gifterz/textme/TextMeApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/text-me/src/main/java/gifterz/textme/domain/security/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/text-me/src/main/java/gifterz/textme/domain/security/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/text-me/src/main/java/gifterz/textme/domain/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/text-me/src/main/java/gifterz/textme/domain/security/jwt/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/text-me/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/text-me/src/main/resources/application.yml" afterDir="false" />
+    <list default="true" id="b1102beb-f562-4ebb-b025-e35b124d92ff" name="Changes" comment="refactor: upgrade java version from 11 to 17">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +82,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/add-kakao-login&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/User/IdeaProjects/2023-text-me&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -265,8 +254,20 @@
       <workItem from="1699783062272" duration="2189000" />
       <workItem from="1699794465492" duration="240000" />
       <workItem from="1699794714588" duration="149000" />
+      <workItem from="1700576074365" duration="1929000" />
+      <workItem from="1700657264802" duration="599000" />
+      <workItem from="1700732653403" duration="16000" />
+      <workItem from="1702819741531" duration="22000" />
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="refactor: upgrade java version from 11 to 17">
+      <option name="closed" value="true" />
+      <created>1700576565952</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1700576565952</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,7 +284,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -298,7 +299,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="docs: rebuild" />
     <MESSAGE value="refactor: 보안을 위해 비밀번호에 @Transient 키워드 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: 보안을 위해 비밀번호에 @Transient 키워드 추가" />
+    <MESSAGE value="refactor: upgrade java version from 11 to 17" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: upgrade java version from 11 to 17" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
