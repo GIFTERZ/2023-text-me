@@ -78,7 +78,14 @@ jib {
                 'JWT_EXPIRY'           : System.getenv("JWT_EXPIRY"),
                 'REFRESH_EXPIRY'       : System.getenv("REFRESH_EXPIRY"),
                 'AWS_ACCESS_KEY_ID'    : System.getenv("AWS_ACCESS_KEY_ID"),
-                'AWS_SECRET_ACCESS_KEY': System.getenv("AWS_SECRET_ACCESS_KEY")
+                'AWS_SECRET_ACCESS_KEY': System.getenv("AWS_SECRET_ACCESS_KEY"),
+                'GOOGLE_APPLICATION_CREDENTIALS' : System.getenv("GOOGLE_APPLICATION_CREDENTIALS"),
+                'KAKAO_CLIENT_ID' : System.getenv("KAKAO_CLIENT_ID"),
+                'KAKAO_CLIENT_SECRET' : System.getenv("KAKAO_CLIENT_SECRET"),
+                'KAKAO_REDIRECT_URI' : System.getenv("KAKAO_REDIRECT_URI"),
+                'KAKAO_SCOPE' : System.getenv("KAKAO_SCOPE"),
+                'REDIS_HOST' : System.getenv("REDIS_HOST"),
+                'REDIS_PORT' : System.getenv("REDIS_PORT")
         ]
     }
 }
