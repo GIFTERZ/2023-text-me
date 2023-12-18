@@ -25,9 +25,7 @@ interface FormProps {
     [name: string]: InputType;
   };
   buttonText: string;
-  style?: {
-    Form: StyledComponent<"form", any>;
-  };
+  Style?: StyledComponent<"form", any>;
 }
 
 type FormAdaptorProps = {
@@ -46,7 +44,7 @@ const Form = ({
   onSubmit,
   inputs,
   buttonText,
-  style = { Form: Default },
+  Style = Default,
 }: FormProps) => {
   const {
     register,
@@ -55,7 +53,7 @@ const Form = ({
   } = useForm();
 
   return (
-    <style.Form onSubmit={handleSubmit(onSubmit)}>
+    <Style onSubmit={handleSubmit(onSubmit)}>
       {children}
       {Object.entries(inputs).map(([name, input]: [string, InputType]) => (
         <Input
@@ -64,10 +62,10 @@ const Form = ({
           errorMessage={String(errors[name]?.message || "")}
         />
       ))}
-      <Button props={{ type: "submit" }} style={{ Button: GreenRightCorner }}>
+      <Button props={{ type: "submit" }} Style={GreenRightCorner}>
         {buttonText}
       </Button>
-    </style.Form>
+    </Style>
   );
 };
 

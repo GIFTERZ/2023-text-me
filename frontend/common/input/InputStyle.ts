@@ -1,14 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const DefaultLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  color: #222222;
-`;
-
-const DefaultInput = styled.input`
+const defaultInput = css`
   width: 100%;
 
   padding: 13px 20px;
@@ -31,4 +23,16 @@ const DefaultInput = styled.input`
   }
 `;
 
-export { DefaultLabel, DefaultInput };
+const Default = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  color: #222222;
+
+  input {
+    ${defaultInput}
+  }
+`;
+
+export { Default };

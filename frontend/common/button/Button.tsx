@@ -5,13 +5,11 @@ import { Default } from "./ButtonStyle";
 interface ButtonProps {
   children: ReactNode;
   props?: ButtonHTMLAttributes<HTMLButtonElement>;
-  style?: {
-    Button: StyledComponent<"button", any>;
-  };
+  Style?: StyledComponent<"button", any>;
 }
 
-function Button({ children, props, style = { Button: Default } }: ButtonProps) {
-  return <style.Button {...props}>{children}</style.Button>;
+function Button({ children, props, Style = Default }: ButtonProps) {
+  return <Style {...props}>{children}</Style>;
 }
 
 export default Button;
