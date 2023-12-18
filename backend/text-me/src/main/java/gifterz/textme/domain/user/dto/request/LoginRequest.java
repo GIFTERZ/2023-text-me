@@ -2,9 +2,9 @@ package gifterz.textme.domain.user.dto.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Data
 public class LoginRequest {
@@ -17,4 +17,6 @@ public class LoginRequest {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,64}$",
             message = "이메일 또는 비밀번호를 다시 확인해주세요.")
     private String password;
+
+    private String token;
 }

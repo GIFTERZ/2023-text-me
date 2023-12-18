@@ -1,18 +1,22 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
-import { LeftButton, WhiteLeftButton } from "../styles/components/Button";
-import { FormTitle, Input, InputContainer } from "../styles/components/Form";
+import { WhiteLeftButton } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
 import visitorApi from "../auth/visitorApi";
 import { setCookie } from "../auth/Cookie";
-import { FormLayout, HeaderLayout, LayoutSpan } from "../styles/components/Layout";
+import { HeaderLayout, LayoutSpan } from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
 import Head from "next/head";
 import { useKakaoLogin } from "../stores/useKakaoLogin";
+<<<<<<< HEAD
+=======
+import Form from "../common/form/Form";
+import SignInFormContext from "../components/signin/SigninFormContext";
+>>>>>>> 3b7844b15be6c8d7595dcbc09bb3c0d26a8b1c72
 
 type SignInForm = {
   email: string;
@@ -39,18 +43,21 @@ function SignIn() {
     }
   }, [member]);
 
-  const signIn = async (data: SignInForm) => {
+  const signIn = async (data: FieldValues) => {
     await visitorApi
       .post("/users/login", data)
-      .then(res => {
+      .then((res) => {
         let createdTime = new Date().getTime();
         const {
           data: { token },
         } = res;
         setCookie("textMeAccessToken", token);
-        localStorage.setItem("textMeAccessExpiryTime", (createdTime + ACCESS_EXPIRY_TIME).toString());
+        localStorage.setItem(
+          "textMeAccessExpiryTime",
+          (createdTime + ACCESS_EXPIRY_TIME).toString()
+        );
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
@@ -86,6 +93,7 @@ function SignIn() {
         <Logo />
         <LayoutSpan aria-hidden />
       </HeaderLayout>
+<<<<<<< HEAD
       <Form onSubmit={handleSubmit(signIn)}>
         <FormLayout>
           <FormTitle>로그인</FormTitle>
@@ -129,18 +137,44 @@ function SignIn() {
             <img src="static/images/kakao_login_medium_wide.png" />
           </KakaoLoginButton>
         </FormLayout>
+=======
+      <Form
+        onSubmit={signIn}
+        inputs={SignInFormContext.getContext()}
+        buttonText={"로그인"}
+      >
+        <h2>로그인</h2>
+>>>>>>> 3b7844b15be6c8d7595dcbc09bb3c0d26a8b1c72
       </Form>
+      <KakaoLoginButton href={KAKAO_AUTH_URL} role="button">
+        <img src="static/images/kakao_login_medium_wide.png" />
+      </KakaoLoginButton>
     </Frame>
   );
 }
 
 export default SignIn;
 
-const Form = styled.form`
+const KakaoLoginButton = styled.a`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
 
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 17px;
+
+  color: #000000 85%;
+
+  background: #fee500;
+  border: none;
+
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
+
+<<<<<<< HEAD
   width: 100%;
   height: 85%;
 `;
@@ -164,6 +198,8 @@ const KakaoLoginButton = styled.a`
     inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
+=======
+>>>>>>> 3b7844b15be6c8d7595dcbc09bb3c0d26a8b1c72
   cursor: pointer;
 
   &:focus {

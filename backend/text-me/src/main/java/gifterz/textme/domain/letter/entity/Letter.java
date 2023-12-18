@@ -2,15 +2,13 @@ package gifterz.textme.domain.letter.entity;
 
 import gifterz.textme.domain.entity.BaseEntity;
 import gifterz.textme.domain.entity.StatusType;
-import gifterz.textme.domain.notification.NotificationRequest;
 import gifterz.textme.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
@@ -42,12 +40,5 @@ public class Letter extends BaseEntity {
         this.senderName = senderName;
         this.contents = contents;
         this.imageUrl = imageUrl;
-    }
-
-    public void publishEvent(ApplicationEventPublisher eventPublisher) {
-        eventPublisher.publishEvent(
-                new NotificationRequest(
-                        this.user, String.format(senderName + "로 부터 편지가 도착했습니다."), "")
-        );
     }
 }
