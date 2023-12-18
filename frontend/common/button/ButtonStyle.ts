@@ -35,8 +35,12 @@ const color = {
     }
   `,
   white: css`
-    color: "#000000";
+    color: #000000;
     background: #ffffff;
+  `,
+  kakao: css`
+    color: #000000 75%;
+    background: #fee500;
   `,
 };
 
@@ -49,9 +53,20 @@ const corner = {
   `,
 };
 
+const layout = {
+  icon: css`
+    justify-content: space-around;
+  `,
+};
+
 const GreenRightCorner = styled(Default)`
   ${color.green}
   ${corner.right}
+`;
+
+const GreenLeftCorner = styled(Default)`
+  ${color.green}
+  ${corner.left}
 `;
 
 const WhiteLeftCorner = styled(Default)`
@@ -59,4 +74,15 @@ const WhiteLeftCorner = styled(Default)`
   ${corner.left}
 `;
 
-export { Default, GreenRightCorner };
+const Kakao = styled(Default)`
+  ${layout.icon}
+  ${color.kakao}
+  ${corner.right}
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+export { Default, GreenRightCorner, GreenLeftCorner, Kakao };

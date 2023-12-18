@@ -1,7 +1,6 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import styled from "styled-components";
 import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
 import { WhiteLeftButton } from "../styles/components/Button";
 import { Frame } from "../styles/components/Frame";
@@ -12,11 +11,11 @@ import Logo from "../components/common/Logo";
 import { useMembers } from "../stores/useMembers";
 import Head from "next/head";
 import { useKakaoLogin } from "../stores/useKakaoLogin";
-<<<<<<< HEAD
-=======
 import Form from "../common/form/Form";
 import SignInFormContext from "../components/signin/SigninFormContext";
->>>>>>> 3b7844b15be6c8d7595dcbc09bb3c0d26a8b1c72
+import { Kakao } from "../common/button/ButtonStyle";
+import Button from "../common/button/Button";
+import { Icon } from "@iconify/react";
 
 type SignInForm = {
   email: string;
@@ -93,119 +92,20 @@ function SignIn() {
         <Logo />
         <LayoutSpan aria-hidden />
       </HeaderLayout>
-<<<<<<< HEAD
-      <Form onSubmit={handleSubmit(signIn)}>
-        <FormLayout>
-          <FormTitle>로그인</FormTitle>
-          <InputContainer>
-            <Input
-              {...register("email", {
-                required: "이메일을 입력해주세요.",
-                pattern: {
-                  value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                  message: "올바른 이메일 형식이 아닙니다.",
-                },
-              })}
-              placeholder="이메일을 입력해주세요."
-            />
-            {errors.email && <em>{errors.email.message}</em>}
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="password"
-              {...register("password", {
-                required: "비밀번호를 입력해주세요.",
-                minLength: {
-                  value: 8,
-                  message: "최소 8자 이상의 비밀번호를 입력해주세요.",
-                },
-                maxLength: {
-                  value: 64,
-                  message: "비밀번호는 64자를 초과하면 안됩니다.",
-                },
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,64}$/,
-                  message: "영소문자, 숫자가 포함된 8자 이상의 비밀번호를 입력해주세요",
-                },
-              })}
-              placeholder="비밀번호를 입력해주세요."
-            />
-            {errors.password && <em>{errors.password.message}</em>}
-          </InputContainer>
-          <LeftButton type="submit">로그인</LeftButton>
-          <KakaoLoginButton href={KAKAO_AUTH_URL} role="button">
-            <img src="static/images/kakao_login_medium_wide.png" />
-          </KakaoLoginButton>
-        </FormLayout>
-=======
       <Form
         onSubmit={signIn}
         inputs={SignInFormContext.getContext()}
         buttonText={"로그인"}
       >
         <h2>로그인</h2>
->>>>>>> 3b7844b15be6c8d7595dcbc09bb3c0d26a8b1c72
       </Form>
-      <KakaoLoginButton href={KAKAO_AUTH_URL} role="button">
-        <img src="static/images/kakao_login_medium_wide.png" />
-      </KakaoLoginButton>
+      <Button Style={Kakao}>
+        <Icon icon="bxs:message-rounded" color="black" />
+        <span>카카오 로그인</span>
+        <span aria-hidden></span>
+      </Button>
     </Frame>
   );
 }
 
 export default SignIn;
-
-const KakaoLoginButton = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px;
-
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 17px;
-
-  color: #000000 85%;
-
-  background: #fee500;
-  border: none;
-
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
-    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
-    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
-
-<<<<<<< HEAD
-  width: 100%;
-  height: 85%;
-`;
-
-const KakaoLoginButton = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px;
-
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 17px;
-
-  color: #000000 85%;
-
-  background: #fee500;
-  border: none;
-
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
-    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
-    inset 2px 2px 3px rgba(255, 255, 255, 0.5);
-
-=======
->>>>>>> 3b7844b15be6c8d7595dcbc09bb3c0d26a8b1c72
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    background: #fee500;
-    color: #fee500;
-  }
-  border-radius: 10px 10px 10px 10px;
-`;
