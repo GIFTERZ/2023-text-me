@@ -42,4 +42,10 @@ public class OpenApiConfig {
         String[] paths = {"/cards/**"};
         return GroupedOpenApi.builder().group("카드 관련 API").pathsToMatch(paths).build();
     }
+
+    @Bean
+    public GroupedOpenApi oauthApi() {
+        String[] paths = {"/oauth/**"};
+        return GroupedOpenApi.builder().group("oauth 관련 API").pathsToMatch(paths).build();
+    }
 }
