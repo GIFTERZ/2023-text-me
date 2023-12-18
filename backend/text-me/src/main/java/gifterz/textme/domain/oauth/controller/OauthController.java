@@ -5,7 +5,6 @@ import gifterz.textme.domain.oauth.entity.OauthServerType;
 import gifterz.textme.domain.oauth.service.OauthService;
 import gifterz.textme.domain.user.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
