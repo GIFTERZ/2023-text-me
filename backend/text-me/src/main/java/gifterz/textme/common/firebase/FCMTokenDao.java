@@ -11,10 +11,10 @@ public class FCMTokenDao {
 
     private final StringRedisTemplate tokenRedisTemplate;
 
-    public void saveToken(LoginRequest loginRequest) {
-        tokenRedisTemplate.opsForValue()
-                .set(loginRequest.getEmail(), loginRequest.getToken());
-    }
+//    public void saveToken(LoginRequest loginRequest) {
+//        tokenRedisTemplate.opsForValue()
+//                .set(loginRequest.getEmail(), loginRequest.getToken());
+//    }
 
     public String getToken(String email) {
         return tokenRedisTemplate.opsForValue().get(email);
