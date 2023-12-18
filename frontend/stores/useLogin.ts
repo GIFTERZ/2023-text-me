@@ -1,29 +1,21 @@
 import { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
-import { setCookie } from "../auth/Cookie";
-import { ACCESS_EXPIRY_TIME } from "../constants/signin";
+import { FieldValues } from "react-hook-form";
 import { setAccessToken, setExpiryTime } from "../utils/setAccessToken";
 
-type LoginBody = {
-  code: string;
-};
-
-interface KakaoLogin {
+interface Login {
   loading: boolean;
   error: AxiosError | null;
-  getKakaoToken: (data: LoginBody) => void;
+  getToken: (data: FieldValues, callback: Function) => void;
 }
 
-const useKakaoLogin = create<KakaoLogin>((set) => ({
+const useLogin = create<Login>((set) => ({
   loading: false,
   error: null,
-  getKakaoToken: async ({ code }) => {
-    set({ loading: true });
+  getToken: async (data, callback) => {
     await visitorApi
-      .post("/users/kakao-login", {
-        accessToken: code,
-      })
+      .post("/users/login", data)
       .then((res) => {
         const {
           data: { token },
@@ -33,8 +25,6 @@ const useKakaoLogin = create<KakaoLogin>((set) => ({
         setExpiryTime(createdTime);
       })
       .catch((error) => {
-        set({ error });
-
         if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
@@ -42,9 +32,9 @@ const useKakaoLogin = create<KakaoLogin>((set) => ({
         }
       })
       .finally(() => {
-        set({ loading: false });
+        callback();
       });
   },
 }));
 
-export { useKakaoLogin };
+export { useLogin };
