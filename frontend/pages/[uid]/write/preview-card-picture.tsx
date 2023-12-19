@@ -35,7 +35,10 @@ export default function index() {
         <title>카드 사진 미리보기</title>
       </Head>
       <HeaderLayout>
-        <WhiteLeftButton onClick={() => moveBack()}>
+        <WhiteLeftButton
+          onClick={() => moveBack()}
+          aria-label="이전 페이지로 이동"
+        >
           <ArrowBackIcon />
         </WhiteLeftButton>
         <Title>카드 미리보기</Title>

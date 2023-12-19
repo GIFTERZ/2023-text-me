@@ -13,7 +13,13 @@ function BackHeader({ children }: Props) {
   const router = useRouter();
   return (
     <HeaderLayout>
-      <Button Style={WhiteLeftSquare} props={{ onClick: () => router.back() }}>
+      <Button
+        Style={WhiteLeftSquare}
+        props={{
+          onClick: () => router.back(),
+          "aria-label": "이전 페이지로 이동",
+        }}
+      >
         <ArrowBackIcon />
       </Button>
       {children}
