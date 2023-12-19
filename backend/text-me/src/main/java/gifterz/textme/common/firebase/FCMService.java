@@ -26,9 +26,9 @@ public class FCMService implements NotificationService {
         send(message);
     }
 
-    public void saveToken(LoginRequest loginRequest) {
-        fcmTokenDao.saveToken(loginRequest);
-    }
+//    public void saveToken(LoginRequest loginRequest) {
+//        fcmTokenDao.saveToken(loginRequest);
+//    }
 
     public void deleteToken(String email) {
         fcmTokenDao.deleteToken(email);
