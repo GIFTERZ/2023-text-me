@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
+import { PATH } from "../constants/api";
 
 interface Room {
   isLoading: boolean;
@@ -16,7 +17,7 @@ const useRoomInfo = create<Room>((set) => ({
   getRoomInfo: async (userId: string) => {
     set({ isLoading: true, error: null });
     await visitorApi
-      .get(`/users/find/${userId}`)
+      .get(PATH.USER.FIND_ONE(userId))
       .then((res) => {
         set({ roomInfo: res.data });
       })

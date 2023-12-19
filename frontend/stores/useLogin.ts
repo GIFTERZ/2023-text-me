@@ -3,6 +3,7 @@ import create from "zustand";
 import visitorApi from "../auth/visitorApi";
 import { FieldValues } from "react-hook-form";
 import { setAccessToken, setExpiryTime } from "../utils/setAccessToken";
+import { PATH } from "../constants/api";
 
 interface Login {
   loading: boolean;
@@ -15,7 +16,7 @@ const useLogin = create<Login>((set) => ({
   error: null,
   getToken: async (data, callback) => {
     await visitorApi
-      .post("/users/login", data)
+      .post(PATH.USER.LOGIN.EMAIL, data)
       .then((res) => {
         const {
           data: { token },

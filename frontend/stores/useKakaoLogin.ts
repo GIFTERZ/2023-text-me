@@ -1,8 +1,7 @@
 import { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
-import { setCookie } from "../auth/Cookie";
-import { ACCESS_EXPIRY_TIME } from "../constants/signin";
+import { PATH } from "../constants/api";
 import { setAccessToken, setExpiryTime } from "../utils/setAccessToken";
 
 type LoginBody = {
@@ -21,8 +20,8 @@ const useKakaoLogin = create<KakaoLogin>((set) => ({
   getKakaoToken: async ({ code }) => {
     set({ loading: true });
     await visitorApi
-      .post("/users/kakao-login", {
-        accessToken: code,
+      .post(PATH.USER.LOGIN.KAKAO, {
+        authCode: code,
       })
       .then((res) => {
         const {
