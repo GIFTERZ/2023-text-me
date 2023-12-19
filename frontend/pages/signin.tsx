@@ -34,7 +34,7 @@ function SignIn() {
       <Head>
         <title>로그인 - Text me!</title>
       </Head>
-      <BackHeader>
+      <BackHeader onBackClick={() => router.push("/")}>
         <Logo />
       </BackHeader>
       <Form
