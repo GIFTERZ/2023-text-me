@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Frame } from '../../../styles/components/Frame';
-import styled from 'styled-components';
-import { WhiteLeftButton } from '../../../styles/components/Button';
-import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
-import Head from 'next/head';
-import { HeaderLayout } from '../../../styles/components/Layout';
+import React, { useEffect } from "react";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Frame } from "../../../styles/components/Frame";
+import styled from "styled-components";
+import { WhiteLeftButton } from "../../../styles/components/Button";
+import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
+import Head from "next/head";
+import { HeaderLayout } from "../../../styles/components/Layout";
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get('uid');
+  const userId = useSearchParams().get("uid");
   const { pictureUrl, setPictureUrl } = useCardPicture();
 
   const pushWriteScreen = () => {
@@ -19,7 +19,7 @@ export default function index() {
 
   useEffect(() => {
     if (!pictureUrl) {
-      alert('카드의 배경 사진을 선택해주세요.');
+      alert("카드의 배경 사진을 선택해주세요.");
       router.back();
     }
   }, []);

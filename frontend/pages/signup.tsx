@@ -3,14 +3,24 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { LeftButton, WhiteLeftButton } from "../styles/components/Button";
-import { Input, FormTitle, Description, InputContainer } from "../styles/components/Form";
+import {
+  Input,
+  FormTitle,
+  Description,
+  InputContainer,
+} from "../styles/components/Form";
 import { Frame } from "../styles/components/Frame";
 import { Title } from "../styles/components/Title";
 import visitorApi from "../auth/visitorApi";
 import ArrowBackIcon from "../components/common/icons/ArrowBackIcon";
-import { FormLayout, HeaderLayout, LayoutSpan } from "../styles/components/Layout";
+import {
+  FormLayout,
+  HeaderLayout,
+  LayoutSpan,
+} from "../styles/components/Layout";
 import Logo from "../components/common/Logo";
 import Head from "next/head";
+import BackHeader from "../components/common/BackHeader";
 
 type SignUpForm = {
   name: string;
@@ -38,10 +48,10 @@ function SignUp() {
     };
     await visitorApi
       .post("/users/signup", body)
-      .then(res => {
+      .then((res) => {
         router.push("/signin");
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response.data.message) {
           alert(error.response.data.message);
         } else {
@@ -55,19 +65,16 @@ function SignUp() {
       <Head>
         <title>회원가입 - Text me!</title>
       </Head>
-
-      <HeaderLayout>
-        <WhiteLeftButton onClick={() => router.back()}>
-          <ArrowBackIcon />
-        </WhiteLeftButton>
+      <BackHeader>
         <Logo />
-        <LayoutSpan aria-hidden />
-      </HeaderLayout>
+      </BackHeader>
       <Form onSubmit={handleSubmit(signUp)}>
         <FormLayout>
           <div>
             <FormTitle>회원가입하고 내 방 만들기</FormTitle>
-            <Description>이메일과 비밀번호는 잊어버리면 찾을 수 없습니다.</Description>
+            <Description>
+              이메일과 비밀번호는 잊어버리면 찾을 수 없습니다.
+            </Description>
           </div>
           <InputContainer>
             <Input
@@ -122,11 +129,15 @@ function SignUp() {
               type="password"
               {...register("passwordConfirm", {
                 required: "비밀번호 확인을 입력해주세요.",
-                validate: value => value === passwordField || "비밀번호와 비밀번호 확인이 다릅니다.",
+                validate: (value) =>
+                  value === passwordField ||
+                  "비밀번호와 비밀번호 확인이 다릅니다.",
               })}
               placeholder="비밀번호 확인"
             />
-            {errors.passwordConfirm && <em>{errors.passwordConfirm.message}</em>}
+            {errors.passwordConfirm && (
+              <em>{errors.passwordConfirm.message}</em>
+            )}
           </InputContainer>
         </FormLayout>
         <LeftButton type="submit">확인</LeftButton>

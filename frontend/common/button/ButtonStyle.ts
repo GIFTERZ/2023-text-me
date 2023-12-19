@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { WhiteLeftButton } from "../../styles/components/Button";
 
 const Default = styled.button`
   display: flex;
@@ -85,4 +86,15 @@ const Kakao = styled(Default)`
   }
 `;
 
-export { Default, GreenRightCorner, GreenLeftCorner, Kakao };
+const WhiteLeftSquare = styled(WhiteLeftButton)`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px 10px 10px 0px;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+export { Default, WhiteLeftSquare, GreenRightCorner, GreenLeftCorner, Kakao };
