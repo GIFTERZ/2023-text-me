@@ -9,12 +9,20 @@ const Default = styled.form`
 
   h2 {
     margin: 0;
+    font-size: 20px;
+  }
+  p {
+    margin: 0;
   }
 
   div {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
+  }
+
+  input {
+    margin-block: 1px;
   }
 `;
 
