@@ -12,7 +12,7 @@ public class HttpInterfaceConfig {
 
     @Bean
     KakaoApi kakaoApi() {
-        WebClient client = WebClient.create("https://kauth.kakao.com");
+        WebClient client = WebClient.create();
         HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
                 .builder(WebClientAdapter.forClient(client))
                 .build();

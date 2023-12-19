@@ -2,6 +2,7 @@ package gifterz.textme.domain.oauth.entity;
 
 import gifterz.textme.domain.entity.BaseEntity;
 
+import gifterz.textme.domain.entity.StatusType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class OauthMember extends BaseEntity {
     }
 
     private OauthMember(OauthId oauthId, String email, String nickname) {
+        super(StatusType.ACTIVATE.getStatus());
         this.oauthId = oauthId;
         this.email = email;
         this.nickname = nickname;
