@@ -32,7 +32,7 @@ public class KakaoMemberClient implements OauthMemberClient {
     @Override
     public OauthMember fetchMember(String authCode) {
         KakaoToken kakaoToken = fetchKakaoToken(authCode);
-        String bearerToken = "Bearer" + kakaoToken.accessToken();
+        String bearerToken = "Bearer " + kakaoToken.accessToken();
         KakaoMemberResponse response = kakaoApi.fetchMemberInfo(bearerToken, APPLICATION_FORM_URLENCODED_VALUE);
         OauthId oauthId = OauthId.of(response.id(), OauthServerType.KAKAO);
         KakaoAccount kakaoAccount = response.kakaoAccount();
@@ -42,7 +42,7 @@ public class KakaoMemberClient implements OauthMemberClient {
 
     private KakaoToken fetchKakaoToken(String authCode) {
         MultiValueMap<String, String> params = getParamForKakaoToken(authCode);
-        return kakaoApi.fetchToken(APPLICATION_FORM_URLENCODED_VALUE, params);
+        return kakaoApi.fetchToken(params);
     }
 
     private MultiValueMap<String, String> getParamForKakaoToken(String authCode) {
