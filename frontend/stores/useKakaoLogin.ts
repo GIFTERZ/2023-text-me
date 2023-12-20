@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
 import { PATH } from "../constants/api";
-import { setAccessToken, setExpiryTime } from "../utils/setAccessToken";
+import { setAccessToken, setExpiryTime } from "../auth/utils";
 
 type LoginBody = {
   code: string;
