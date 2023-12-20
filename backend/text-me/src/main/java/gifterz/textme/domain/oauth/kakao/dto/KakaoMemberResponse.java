@@ -1,15 +1,17 @@
 package gifterz.textme.domain.oauth.kakao.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gifterz.textme.domain.oauth.kakao.entity.KakaoAccount;
 import jakarta.persistence.Embedded;
 
 import java.time.LocalDateTime;
 
-public record KakaoMemberResponse (
+@JsonNaming(SnakeCaseStrategy.class)
+public record KakaoMemberResponse(
         Long id,
-        boolean hasSignedUp,
         LocalDateTime connectedAt,
         @Embedded
         KakaoAccount kakaoAccount
-){
+) {
 }
