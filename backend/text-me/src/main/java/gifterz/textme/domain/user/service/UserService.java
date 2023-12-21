@@ -119,9 +119,20 @@ public class UserService {
     }
 
     public UserResponse findUserInfoByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        String encryptedUserId = encryptUserEmail(user);
-        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
+        Optional<User> userExists = userRepository.findByEmail(email);
+        if (userExists.isPresent()) {
+            User user = userExists.get();
+            String encryptedText = encryptUserEmail(user);
+            return new UserResponse(encryptedText, user.getName(), user.getEmail());
+        }
+
+        Optional<OauthMember> oauthMemberExists = oauthMemberRepository.findByEmail(email);
+        if (oauthMemberExists.isPresent()) {
+            OauthMember oauthMember = oauthMemberExists.get();
+            String encryptedUserId = encryptUserEmail(oauthMember);
+            return new UserResponse(encryptedUserId, oauthMember.getNickname(), oauthMember.getEmail());
+        }
+        throw new UserNotFoundException();
     }
 
     public UserResponse findUserInfoByUserId(String encryptedId) {
