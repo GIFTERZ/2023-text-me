@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,8 @@ public class UserService {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
 
         String accessToken = jwtUtils.generateJwtToken(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
