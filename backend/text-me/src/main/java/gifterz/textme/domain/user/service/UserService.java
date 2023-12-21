@@ -137,8 +137,7 @@ public class UserService {
 
     public UserResponse findUserInfoByUserId(String encryptedId) {
         String userEmail = aesUtils.decrypt(encryptedId);
-        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
-        return new UserResponse(encryptedId, user.getName(), user.getEmail());
+        return findUserInfoByEmail(userEmail);
     }
 
     private String encryptUserEmail(User user) {
