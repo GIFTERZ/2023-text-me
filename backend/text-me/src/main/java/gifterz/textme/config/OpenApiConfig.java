@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,5 +41,11 @@ public class OpenApiConfig {
     public GroupedOpenApi cardApi() {
         String[] paths = {"/cards/**"};
         return GroupedOpenApi.builder().group("카드 관련 API").pathsToMatch(paths).build();
+    }
+
+    @Bean
+    public GroupedOpenApi oauthApi() {
+        String[] paths = {"/oauth/**"};
+        return GroupedOpenApi.builder().group("oauth 관련 API").pathsToMatch(paths).build();
     }
 }

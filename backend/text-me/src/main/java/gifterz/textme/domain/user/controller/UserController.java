@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid final LoginRequest request) {
         LoginResponse loginResponse = userService.login(request);
-        fcmService.saveToken(request);
+//        fcmService.saveToken(request);
         return ResponseEntity.ok().body(loginResponse);
     }
 
