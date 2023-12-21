@@ -16,6 +16,7 @@ import gifterz.textme.domain.user.exception.EmailDuplicatedException;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final OauthMemberRepository oauthMemberRepository;
@@ -58,7 +60,7 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(password);
         User user = User.of(name, email, encodedPassword);
         userRepository.save(user);
-        String encryptedUserId = encryptUserId(user);
+        String encryptedUserId = encryptUserEmail(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
@@ -74,7 +76,7 @@ public class UserService {
 
         String accessToken = jwtUtils.generateJwtToken(user);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
-        String encryptedUserId = encryptUserId(user);
+        String encryptedUserId = encryptUserEmail(user);
         return new LoginResponse(encryptedUserId, user.getEmail(), user.getName(), accessToken,
                 refreshToken.getId(), refreshToken.getCreatedAt());
     }
@@ -83,14 +85,14 @@ public class UserService {
         Optional<User> userExists = userRepository.findByEmail(email);
         if (userExists.isPresent()) {
             User user = userExists.get();
-            String encryptedUserId = encryptUserId(user);
+            String encryptedUserId = encryptUserEmail(user);
             return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
         }
 
         Optional<OauthMember> oauthMemberExists = oauthMemberRepository.findByEmail(email);
         if (oauthMemberExists.isPresent()) {
             OauthMember oauthMember = oauthMemberExists.get();
-            String encryptedUserId = encryptUserId(oauthMember);
+            String encryptedUserId = encryptUserEmail(oauthMember);
             return new UserResponse(encryptedUserId, oauthMember.getNickname(), oauthMember.getEmail());
         }
         throw new UserNotFoundException();
@@ -98,31 +100,43 @@ public class UserService {
 
     @Transactional
     public UserResponse updateUserName(String email, String name) {
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        user.updateUserName(name);
-        String encryptedUserId = encryptUserId(user);
-        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
+        Optional<User> userExists = userRepository.findByEmail(email);
+        if (userExists.isPresent()) {
+            User user = userExists.get();
+            user.updateUserName(name);
+            String encryptedText = encryptUserEmail(user);
+            return new UserResponse(encryptedText, user.getName(), user.getEmail());
+        }
+
+        Optional<OauthMember> oauthMemberExists = oauthMemberRepository.findByEmail(email);
+        if (oauthMemberExists.isPresent()) {
+            OauthMember oauthMember = oauthMemberExists.get();
+            oauthMember.updateName(name);
+            String encryptedUserId = encryptUserEmail(oauthMember);
+            return new UserResponse(encryptedUserId, oauthMember.getNickname(), oauthMember.getEmail());
+        }
+        throw new UserNotFoundException();
     }
 
     public UserResponse findUserInfoByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        String encryptedUserId = encryptUserId(user);
+        String encryptedUserId = encryptUserEmail(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
     }
 
-    public UserResponse findUserInfoByUserId(Long id) {
-        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        String encryptedUserId = encryptUserId(user);
-        return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
+    public UserResponse findUserInfoByUserId(String encryptedId) {
+        String userEmail = aesUtils.decrypt(encryptedId);
+        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        return new UserResponse(encryptedId, user.getName(), user.getEmail());
     }
 
-    private String encryptUserId(User user) {
-        String userId = String.valueOf(user.getId());
-        return aesUtils.encryption(userId);
+    private String encryptUserEmail(User user) {
+        String userEmail = String.valueOf(user.getEmail());
+        return aesUtils.encrypt(userEmail);
     }
 
-    private String encryptUserId(OauthMember oauthMember) {
-        String userId = String.valueOf(oauthMember.getId());
-        return aesUtils.encryption(userId);
+    private String encryptUserEmail(OauthMember oauthMember) {
+        String userEmail = String.valueOf(oauthMember.getEmail());
+        return aesUtils.encrypt(userEmail);
     }
 }
