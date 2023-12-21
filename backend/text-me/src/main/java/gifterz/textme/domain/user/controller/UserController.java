@@ -73,9 +73,7 @@ public class UserController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<UserResponse> findUserInfoByUserId(@PathVariable("id") final String id) {
-        String decryptedId = aesUtils.decryption(id);
-        Long decryptedUserId = Long.valueOf(decryptedId);
-        UserResponse userResponse = userService.findUserInfoByUserId(decryptedUserId);
+        UserResponse userResponse = userService.findUserInfoByUserId(id);
         return ResponseEntity.ok().body(userResponse);
     }
 }

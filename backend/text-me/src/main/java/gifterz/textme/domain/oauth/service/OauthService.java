@@ -47,7 +47,7 @@ public class OauthService {
     }
 
     private String encryptUserId(OauthMember user) {
-        String userId = String.valueOf(user.getId());
-        return aesUtils.encryption(userId);
+        String userEmail = String.valueOf(user.getEmail());
+        return aesUtils.encrypt(userEmail);
     }
 }
