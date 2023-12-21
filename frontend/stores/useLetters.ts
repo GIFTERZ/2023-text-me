@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import create from "zustand";
 import { Letter } from "../types";
 import visitorApi from "../auth/visitorApi";
+import { PATH } from "../constants/api";
 
 interface Letters {
   isLoading: boolean;
@@ -17,7 +18,7 @@ const useLetters = create<Letters>((set) => ({
   getLetters: async (userId: string) => {
     set({ isLoading: true });
     await visitorApi
-      .get(`/letters/members/${userId}`)
+      .get(PATH.LETTER.GET_MEMBER_ALL(userId))
       .then((res) => {
         set({ letters: res.data });
       })

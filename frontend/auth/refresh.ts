@@ -1,9 +1,13 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { deleteCookie, getCookie, setCookie } from "./Cookie";
-
-const ACCESS_EXPIRY_TIME = 36000000;
-const TEXT_ME_ACCESS_TOKEN = "textMeAccessToken";
-const TEXT_ME_ACCESS_EXPIRY_TIME = "textMeAccessExpiryTime";
+import { PATH } from "../constants/api";
+import { ACCESS_EXPIRY_TIME } from "../constants/token";
+import {
+  deleteAccessToken,
+  getAccessToken,
+  getExpiryTime,
+  setAccessToken,
+  setExpiryTime,
+} from "./utils";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -19,13 +23,13 @@ const checkExpire = (expireTime: number) => {
 const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
-  let accessToken = getCookie(TEXT_ME_ACCESS_TOKEN);
-  let expiryTime = Number(localStorage.getItem(TEXT_ME_ACCESS_EXPIRY_TIME));
+  let accessToken = getAccessToken();
+  let expiryTime = Number(getExpiryTime());
 
   if (checkExpire(expiryTime)) {
     await axios
       .post(
-        "/users/token/refresh",
+        PATH.USER.REFRESH,
         {
           accessToken,
         },
@@ -38,11 +42,8 @@ const refresh = async (
       .then((res) => {
         let createdTime = new Date().getTime();
         accessToken = res.data.accessToken;
-        setCookie(TEXT_ME_ACCESS_TOKEN, accessToken);
-        localStorage.setItem(
-          TEXT_ME_ACCESS_EXPIRY_TIME,
-          (createdTime + ACCESS_EXPIRY_TIME).toString()
-        );
+        setAccessToken(accessToken);
+        setExpiryTime(createdTime + ACCESS_EXPIRY_TIME);
       });
   }
   config.headers.Authorization = `Bearer ${accessToken}`;
@@ -50,7 +51,7 @@ const refresh = async (
 };
 
 const refreshError = () => {
-  deleteCookie(TEXT_ME_ACCESS_TOKEN);
+  deleteAccessToken();
   alert("로그인이 만료되었습니다.");
   window.location.href = "/";
 };

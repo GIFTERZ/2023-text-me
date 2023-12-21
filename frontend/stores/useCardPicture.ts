@@ -1,6 +1,7 @@
 import create from "zustand";
 import { AxiosError } from "axios";
 import visitorApi from "../auth/visitorApi";
+import { PATH } from "../constants/api";
 
 interface CardPicture {
   pictureUrl: string | null;
@@ -25,7 +26,7 @@ export const useCardPicture = create<CardPicture>((set) => ({
   getConstCard: async () => {
     set({ isLoading: true });
     await visitorApi
-      .get("/cards")
+      .get(PATH.CARD.ROOT)
       .then((res) => {
         set({ constCard: res.data });
       })
@@ -38,7 +39,7 @@ export const useCardPicture = create<CardPicture>((set) => ({
     let formData = new FormData();
     formData.append("images", image);
     await visitorApi
-      .post("/files/upload", formData, {
+      .post(PATH.UPLOAD.FILES, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
