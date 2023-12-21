@@ -1,5 +1,7 @@
 package gifterz.textme.domain.user.service;
 
+import gifterz.textme.domain.oauth.entity.OauthMember;
+import gifterz.textme.domain.oauth.repository.OauthMemberRepository;
 import gifterz.textme.domain.security.WebSecurityConfig;
 import gifterz.textme.domain.security.entity.RefreshToken;
 import gifterz.textme.domain.security.jwt.JwtUtils;
@@ -29,6 +31,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final OauthMemberRepository oauthMemberRepository;
     private final WebSecurityConfig webSecurityConfig;
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenService refreshTokenService;
@@ -37,20 +40,22 @@ public class UserService {
 
     @Transactional
     public UserResponse signUp(SignUpRequest signUpRequest) {
-        User user = new User(signUpRequest.getName(),
-                signUpRequest.getEmail(),
-                signUpRequest.getPassword());
-        Optional<User> userExists = userRepository.findByEmail(user.getEmail());
-
+        String email = signUpRequest.getEmail();
+        String password = signUpRequest.getPassword();
+        String name = signUpRequest.getName();
+        Optional<User> userExists = userRepository.findByEmail(email);
+        Optional<OauthMember> oauthMemberExists = oauthMemberRepository.findByEmail(email);
         if (userExists.isPresent()) {
-            throw new EmailDuplicatedException(user.getEmail());
+            throw new EmailDuplicatedException(email);
+        }
+        if (oauthMemberExists.isPresent()) {
+            OauthMember oauthMember = oauthMemberExists.get();
+            throw new EmailDuplicatedException(oauthMember.getEmail());
         }
 
-        String password = user.getPassword();
         PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
         String encodedPassword = passwordEncoder.encode(password);
-        user.setPassword(encodedPassword);
-
+        User user = User.of(name, email, encodedPassword);
         userRepository.save(user);
         String encryptedUserId = encryptUserId(user);
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
