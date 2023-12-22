@@ -32,11 +32,15 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    public User(String name, String email, String password) {
+    private User(String name, String email, String password) {
         super(StatusType.ACTIVATE.getStatus());
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public static User of(String name, String email, String password) {
+        return new User(name, email, password);
     }
 
     public void setPassword(String encodedPassword) {

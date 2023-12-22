@@ -27,9 +27,7 @@ public class LetterController {
 
     @GetMapping("/members/{id}")
     public ResponseEntity<List<AllLetterResponse>> findLetters(@PathVariable("id") final String id) {
-        String decryptedId = aesUtils.decryption(id);
-        Long decryptedUserId = Long.valueOf(decryptedId);
-        List<AllLetterResponse> letterResponses = letterService.findLettersByUserId(decryptedUserId);
+        List<AllLetterResponse> letterResponses = letterService.findLettersByUserId(id);
         return ResponseEntity.ok().body(letterResponses);
     }
 

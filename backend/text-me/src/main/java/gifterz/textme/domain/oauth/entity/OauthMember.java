@@ -34,4 +34,8 @@ public class OauthMember extends BaseEntity {
         this.email = email;
         this.nickname = nickname;
     }
+
+    public void updateName(String name) {
+        this.nickname = name;
+    }
 }
