@@ -1,6 +1,7 @@
 package gifterz.textme.domain.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import gifterz.textme.domain.user.entity.Member;
 import gifterz.textme.domain.user.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,14 +36,15 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(Member member) {
+        User user = member.getUser();
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
         return new UserDetailsImpl(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getPassword(),
+                member.getPassword(),
                 authorities);
     }
 
