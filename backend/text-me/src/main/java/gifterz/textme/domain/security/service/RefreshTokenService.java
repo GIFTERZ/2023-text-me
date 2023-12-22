@@ -1,12 +1,9 @@
 package gifterz.textme.domain.security.service;
 
-import gifterz.textme.domain.oauth.entity.OauthMember;
-import gifterz.textme.domain.oauth.repository.OauthMemberRepository;
 import gifterz.textme.domain.security.entity.RefreshToken;
 import gifterz.textme.domain.security.jwt.JwtUtils;
 import gifterz.textme.domain.security.repository.RefreshTokenRepository;
 import gifterz.textme.domain.user.dto.response.TokenRefreshResponse;
-import gifterz.textme.domain.user.dto.response.UserResponse;
 import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.TokenRefreshException;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
@@ -27,7 +24,6 @@ public class RefreshTokenService {
     private Long refreshTokenDurationMs;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
-    private final OauthMemberRepository oauthMemberRepository;
     private final JwtUtils jwtUtils;
 
     public Optional<RefreshToken> findByAccessToken(String token) {
@@ -53,31 +49,14 @@ public class RefreshTokenService {
     }
 
     public TokenRefreshResponse refreshJwtToken(String email, String token) {
-        Optional<User> userExists = userRepository.findByEmail(email);
-        if (userExists.isPresent()) {
-            Optional<RefreshToken> refreshTokenExist = findByAccessToken(token);
-            if (refreshTokenExist.isEmpty()) {
-                throw new TokenRefreshException(token,
-                        "refreshToken이 DB에 존재하지 않습니다.");
-            }
-            RefreshToken refreshToken = verifyExpiration(refreshTokenExist.get());
-            User user = userExists.get();
-            String newToken = jwtUtils.generateJwtToken(user);
-            return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        Optional<RefreshToken> refreshTokenExist = findByAccessToken(token);
+        if (refreshTokenExist.isEmpty()) {
+            throw new TokenRefreshException(token,
+                    "refreshToken이 DB에 존재하지 않습니다.");
         }
-
-        Optional<OauthMember> oauthMemberExists = oauthMemberRepository.findByEmail(email);
-        if (oauthMemberExists.isPresent()) {
-            Optional<RefreshToken> refreshTokenExist = findByAccessToken(token);
-            if (refreshTokenExist.isEmpty()) {
-                throw new TokenRefreshException(token,
-                        "refreshToken이 DB에 존재하지 않습니다.");
-            }
-            RefreshToken refreshToken = verifyExpiration(refreshTokenExist.get());
-            OauthMember oauthMember = oauthMemberExists.get();
-            String newToken = jwtUtils.generateJwtToken(oauthMember);
-            return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
-        }
-        throw new UserNotFoundException();
+        RefreshToken refreshToken = verifyExpiration(refreshTokenExist.get());
+        String newToken = jwtUtils.generateJwtToken(user);
+        return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 }

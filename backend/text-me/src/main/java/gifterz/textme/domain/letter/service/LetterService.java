@@ -33,18 +33,20 @@ public class LetterService {
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
-        String userEmail = aesUtils.decrypt(request.getReceiverId());
-        User receiver = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        String userId = aesUtils.decrypt(request.getReceiverId());
+        Long id = Long.parseLong(userId);
+        User receiver = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         Letter letter = Letter.of(receiver, request.getSenderName(), request.getContents(), request.getImageUrl());
         letterRepository.save(letter);
-        fcmService.sendLetterReceivedNotification(receiver.getEmail());
+//        fcmService.sendLetterReceivedNotification(receiver.getEmail());
         return new LetterResponse(letter.getId(), receiver.getName(),
                 request.getSenderName(), request.getContents(), request.getImageUrl());
     }
 
     public List<AllLetterResponse> findLettersByUserId(String encryptedId) {
-        String userEmail = aesUtils.decrypt(encryptedId);
-        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        String userId = aesUtils.decrypt(encryptedId);
+        long id = Long.parseLong(userId);
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         List<Letter> letterList = letterRepository.findAllByUserId(user.getId());
         return letterList.stream()
                 .map(letter -> AllLetterResponse.builder()

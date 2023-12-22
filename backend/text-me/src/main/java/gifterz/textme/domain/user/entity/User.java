@@ -1,22 +1,17 @@
 package gifterz.textme.domain.user.entity;
 
-import gifterz.textme.domain.entity.BaseEntity;
-import gifterz.textme.domain.entity.StatusType;
+import gifterz.textme.domain.oauth.entity.AuthType;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
-
-import jakarta.persistence.*;
 
 @Entity
 @Getter
-@DynamicUpdate
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class User extends BaseEntity {
-
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,23 +23,17 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Lob
     @Column(nullable = false)
-    private String password;
+    private AuthType authType;
 
-    private User(String name, String email, String password) {
-        super(StatusType.ACTIVATE.getStatus());
-        this.name = name;
+    public static User of(String email, String name, AuthType authType) {
+        return new User(email, name, authType);
+    }
+
+    private User(String email, String name, AuthType authType) {
         this.email = email;
-        this.password = password;
-    }
-
-    public static User of(String name, String email, String password) {
-        return new User(name, email, password);
-    }
-
-    public void setPassword(String encodedPassword) {
-        this.password = encodedPassword;
+        this.name = name;
+        this.authType = authType;
     }
 
     public void updateUserName(String name) {
