@@ -1,0 +1,15 @@
+package gifterz.textme.domain.user.repository;
+
+import gifterz.textme.domain.user.entity.Member;
+import gifterz.textme.domain.user.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Transactional(readOnly = true)
+public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    Optional<Member> findByUser(User user);
+
+}

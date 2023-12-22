@@ -1,10 +1,10 @@
 package gifterz.textme.domain.oauth.util;
 
-import gifterz.textme.domain.oauth.entity.OauthServerType;
+import gifterz.textme.domain.oauth.entity.AuthType;
 
 public interface AuthCodeRequestUrlProvider {
 
-    OauthServerType supportServer();
+    AuthType supportServer();
 
     String provide();
 }

@@ -1,12 +1,12 @@
 package gifterz.textme.domain.oauth.util;
 
-import gifterz.textme.domain.oauth.entity.OauthServerType;
+import gifterz.textme.domain.oauth.entity.AuthType;
 import org.springframework.core.convert.converter.Converter;
 
-public class OauthServerTypeConverter implements Converter<String, OauthServerType> {
+public class OauthServerTypeConverter implements Converter<String, AuthType> {
 
     @Override
-    public OauthServerType convert(String source) {
-        return OauthServerType.fromName(source);
+    public AuthType convert(String source) {
+        return AuthType.fromName(source);
     }
 }
