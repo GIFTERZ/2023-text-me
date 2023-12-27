@@ -5,7 +5,6 @@ import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.service.LetterService;
 import gifterz.textme.domain.security.jwt.JwtAuth;
-import gifterz.textme.domain.security.service.AesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LetterController {
     private final LetterService letterService;
-    private final AesUtils aesUtils;
+
     @PostMapping
     public ResponseEntity<LetterResponse> sendLetter(@RequestBody @Valid final LetterRequest request) {
         LetterResponse letterResponse = letterService.makeLetter(request);
@@ -27,9 +26,7 @@ public class LetterController {
 
     @GetMapping("/members/{id}")
     public ResponseEntity<List<AllLetterResponse>> findLetters(@PathVariable("id") final String id) {
-        String decryptedId = aesUtils.decryption(id);
-        Long decryptedUserId = Long.valueOf(decryptedId);
-        List<AllLetterResponse> letterResponses = letterService.findLettersByUserId(decryptedUserId);
+        List<AllLetterResponse> letterResponses = letterService.findLettersByUserId(id);
         return ResponseEntity.ok().body(letterResponses);
     }
 

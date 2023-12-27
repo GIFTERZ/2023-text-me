@@ -49,11 +49,7 @@ public class RefreshTokenService {
     }
 
     public TokenRefreshResponse refreshJwtToken(String email, String token) {
-        Optional<User> userExist = userRepository.findByEmail(email);
-        if (userExist.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-        User user = userExist.get();
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Optional<RefreshToken> refreshTokenExist = findByAccessToken(token);
         if (refreshTokenExist.isEmpty()) {
             throw new TokenRefreshException(token,

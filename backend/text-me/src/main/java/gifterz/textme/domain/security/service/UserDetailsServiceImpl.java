@@ -1,5 +1,7 @@
 package gifterz.textme.domain.security.service;
 
+import gifterz.textme.domain.user.entity.Member;
+import gifterz.textme.domain.user.repository.MemberRepository;
 import gifterz.textme.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,17 +18,18 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
 
+    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String email = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + username))
-                .getEmail();
-        String password = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + username))
-                .getPassword();
+        gifterz.textme.domain.user.entity.User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + username));
+        Member member = memberRepository.findByUser(user)
+                .orElseThrow(() -> new UsernameNotFoundException("Member Not Found with User: " + username));
+        String email = user.getEmail();
+        String password = member.getPassword();
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
         return new User(

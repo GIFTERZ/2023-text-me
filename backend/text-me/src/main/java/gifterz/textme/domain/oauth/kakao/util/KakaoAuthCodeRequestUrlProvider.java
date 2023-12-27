@@ -2,7 +2,7 @@ package gifterz.textme.domain.oauth.kakao.util;
 
 import gifterz.textme.domain.oauth.util.AuthCodeRequestUrlProvider;
 import gifterz.textme.domain.oauth.kakao.config.KakaoOauthConfig;
-import gifterz.textme.domain.oauth.entity.OauthServerType;
+import gifterz.textme.domain.oauth.entity.AuthType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,8 @@ public class KakaoAuthCodeRequestUrlProvider implements AuthCodeRequestUrlProvid
     private final KakaoOauthConfig kakaoOauthConfig;
 
     @Override
-    public OauthServerType supportServer() {
-        return OauthServerType.KAKAO;
+    public AuthType supportServer() {
+        return AuthType.KAKAO;
     }
 
     @Override
