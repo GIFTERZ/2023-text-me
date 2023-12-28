@@ -20,7 +20,6 @@ function SignIn() {
   const { getToken } = useLogin();
 
   useEffect(() => {
-    console.log(member);
     if (member) {
       router.push(`/${member.id}`);
     }

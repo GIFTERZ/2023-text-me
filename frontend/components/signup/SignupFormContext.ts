@@ -74,9 +74,12 @@ SignupFormContext.register(
       message: "비밀번호 확인을 입력해주세요.",
     },
     validate: {
-      value: (v) =>
-        v === document.querySelector("input[name='password'") ||
-        "비밀번호 확인 값이 다릅니다.",
+      value: (v) => {
+        const passwordConfirm = document.querySelector(
+          "input[name='password']"
+        ) as HTMLInputElement;
+        return v === passwordConfirm.value || "비밀번호 확인 값이 다릅니다.";
+      },
     },
   }
 );
