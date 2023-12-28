@@ -76,7 +76,7 @@ SignupFormContext.register(
     validate: {
       value: (v) => {
         const passwordConfirm = document.querySelector(
-          "input[name='password'"
+          "input[name='password']"
         ) as HTMLInputElement;
         return v === passwordConfirm.value || "비밀번호 확인 값이 다릅니다.";
       },
