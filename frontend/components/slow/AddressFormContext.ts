@@ -57,7 +57,7 @@ AddressFormContext.register(
 AddressFormContext.register(
   "phone",
   {
-    placeholder: "휴대폰 번호",
+    placeholder: "휴대폰 번호('-' 포함)",
   },
   {
     required: {
