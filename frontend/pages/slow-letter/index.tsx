@@ -1,0 +1,90 @@
+import React from "react";
+import styled from "styled-components";
+import { useRouter } from "next/navigation";
+import Button from "../../common/button/Button";
+import { GreenRightCorner } from "../../common/button/ButtonStyle";
+
+function SlowLetter() {
+  const router = useRouter();
+
+  const enter = (paragraph: string) => {
+    return paragraph.split("\n").map((sentence) => (
+      <>
+        {sentence}
+        <br />
+      </>
+    ));
+  };
+
+  return (
+    <>
+      <TextContainer>
+        <Head>
+          1년 뒤의 나에게
+          <br />
+          <Green>편지</Green>를 보내보세요
+        </Head>
+        <Sub>
+          {enter(
+            "오늘 나에게 편지를 보내면\n2024년 12월 31일에\n다시 나에게 돌아와요.\n\n2023년을 보내는 소감,\n2024년을 맞이하는 마음가짐,\n무엇이든 좋아요.\n하고싶은 말을 적어보세요!\n"
+          )}
+        </Sub>
+      </TextContainer>
+      <Button
+        props={{ onClick: () => router.push("/slow-letter/get-info") }}
+        Style={ButtonStyle}
+      >
+        나에게 편지 쓰러 가기
+      </Button>
+      <BackgroundImage src="/static/images/slow-letter-background.png" />
+    </>
+  );
+}
+
+export default SlowLetter;
+
+const BackgroundImage = styled.img`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  opacity: 0.25;
+  object-fit: cover;
+  z-index: 0;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+  top: 20px;
+`;
+
+const Head = styled.p`
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+`;
+
+const Sub = styled.p`
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+`;
+
+const Green = styled.span`
+  color: #2db674;
+`;
+
+const ButtonStyle = styled(GreenRightCorner)`
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+`;
