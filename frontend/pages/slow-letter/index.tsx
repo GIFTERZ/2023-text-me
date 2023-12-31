@@ -43,7 +43,7 @@ function SlowLetter() {
 
 export default SlowLetter;
 
-const BackgroundImage = styled.img`
+export const BackgroundImage = styled.img`
   width: 100%;
   height: 100%;
   position: absolute;
