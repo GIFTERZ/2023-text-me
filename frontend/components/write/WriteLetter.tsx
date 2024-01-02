@@ -5,25 +5,23 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import { GreenRightCorner } from "../../common/button/ButtonStyle";
 import { useCardPicture } from "../../stores/useCardPicture";
-import { useSendLetter } from "../../stores/useSendLetter";
 import { Frame } from "../../styles/components/Frame";
 import BackHeader from "../common/BackHeader";
 
 interface Props {
   prev: Function;
   next: Function;
+  sendLetter: Function;
   to: string;
 }
 type LetterForm = {
   contents: string;
   sender: string;
 };
-function WriteLetter({ prev, next, to }: Props) {
+function WriteLetter({ prev, next, sendLetter, to }: Props) {
   const { register, handleSubmit } = useForm<LetterForm>();
 
   const { pictureUrl } = useCardPicture();
-
-  const { loading, error, sendLetter } = useSendLetter();
 
   const sendData = (data: LetterForm) => {
     if (!pictureUrl) {
@@ -92,10 +90,7 @@ function WriteLetter({ prev, next, to }: Props) {
             />
           </FromDiv>
         </LetterContainer>
-        <Button
-          props={{ type: "submit", disabled: loading }}
-          Style={GreenRightCorner}
-        >
+        <Button props={{ type: "submit" }} Style={GreenRightCorner}>
           보내기
         </Button>
       </Form>

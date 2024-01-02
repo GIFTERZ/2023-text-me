@@ -36,7 +36,7 @@ function SlowLetter() {
       >
         나에게 편지 쓰러 가기
       </Button>
-      <BackgroundImage src="/static/images/slow-letter-background.png" />
+      <BackgroundImage src="/static/images/room-background.png" />
     </>
   );
 }

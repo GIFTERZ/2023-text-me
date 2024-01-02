@@ -1,15 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import DaumPostCode from "react-daum-postcode";
-import Form from "../../common/form/Form";
-import EmailFormContext from "../../components/slow/EmailFormContext";
-import { BackgroundImage } from ".";
-import { useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
 import AddressForm from "../../components/slow/AddressForm";
 import SelectMethod from "../../components/slow/SelectMethod";
-import { FieldValues } from "react-hook-form";
 import EmailForm from "../../components/slow/EmailForm";
-import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import PostCodeForm from "../../components/slow/PostCodeForm";
 
@@ -18,8 +11,6 @@ const PROCESS = {
   EMAIL: "EMAIL",
   POSTCODE: "POSTCODE",
   ADDRESS: "ADDRESS",
-  COMPLETE_EMAIL: "COMPLETE_EMAIL",
-  COMPLETE_POST: "COMPLETE_POST",
 };
 
 function getInfo() {
