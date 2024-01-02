@@ -8,8 +8,10 @@ interface CardPicture {
   pictureImage: File | null;
   setPictureImage: (select: File, callback: () => void) => void;
   setPictureUrl: (select: string) => void;
+
   constCard: string[];
   getConstCard: () => void;
+  setConstCard: (constCard: string[]) => void;
   error: AxiosError | null;
   isLoading: boolean;
 }
@@ -34,6 +36,9 @@ export const useCardPicture = create<CardPicture>((set) => ({
         set({ error: error });
       })
       .finally(() => set({ isLoading: false }));
+  },
+  setConstCard: (constCard: string[]) => {
+    set({ constCard });
   },
   setPictureImage: async (image: File, callback: () => void) => {
     let formData = new FormData();

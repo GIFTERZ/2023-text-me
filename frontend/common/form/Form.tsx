@@ -25,6 +25,7 @@ interface FormProps {
     [name: string]: InputType;
   };
   buttonText: string;
+  defaultValues?: any;
   Style?: StyledComponent<"form", any>;
 }
 
@@ -45,12 +46,13 @@ const Form = ({
   inputs,
   buttonText,
   Style = Default,
+  defaultValues,
 }: FormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues });
 
   return (
     <Style onSubmit={handleSubmit(onSubmit)}>
