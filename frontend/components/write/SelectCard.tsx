@@ -8,15 +8,20 @@ import CameraIcon from "./icons/CameraIcon";
 import Compressor from "compressorjs";
 
 interface Props {
+  type: "UPLOAD" | "SELECT";
   next: Function;
 }
 
-function SelectCard({ next }: Props) {
-  const { setPictureUrl, constCard, getConstCard, setPictureImage } =
+function SelectCard({ type, next }: Props) {
+  const { setPictureUrl, constCard, setConstCard, setPictureImage } =
     useCardPicture();
 
   useEffect(() => {
-    getConstCard();
+    setConstCard(
+      Array.from({ length: 4 }, () => "/static/images/card").map(
+        (v, i) => `${v}-${i + 1}.png`
+      )
+    );
   }, []);
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -26,6 +31,7 @@ function SelectCard({ next }: Props) {
 
   const select = (pictureUrl: string) => {
     setPictureUrl(pictureUrl);
+    next();
   };
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +55,7 @@ function SelectCard({ next }: Props) {
       },
     });
   };
+
   return (
     <SelectFrame>
       <Head>
@@ -58,17 +65,21 @@ function SelectCard({ next }: Props) {
         <Title>카드 선택하기</Title>
       </BackHeader>
       <PictureContainer>
-        <InputDiv id="image" onClick={handleClick}>
-          <CameraIcon />
-        </InputDiv>
-        <input
-          style={{ display: "none" }}
-          ref={fileRef}
-          name="file"
-          type="file"
-          accept="image/*"
-          onChange={(e) => fileUploadHandler(e)}
-        />
+        {type === "UPLOAD" && (
+          <>
+            <InputDiv id="image" onClick={handleClick}>
+              <CameraIcon />
+            </InputDiv>
+            <input
+              style={{ display: "none" }}
+              ref={fileRef}
+              name="file"
+              type="file"
+              accept="image/*"
+              onChange={(e) => fileUploadHandler(e)}
+            />
+          </>
+        )}
         {constCard?.map((cards, index) => (
           <CardImage key={index} src={cards} onClick={() => select(cards)} />
         ))}
