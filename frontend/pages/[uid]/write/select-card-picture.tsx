@@ -9,14 +9,20 @@ import { WhiteLeftButton } from "../../../styles/components/Button";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 import Head from "next/head";
 import Compressor from "compressorjs";
+import BackHeader from "../../../components/common/BackHeader";
 
 export default function index() {
   const router = useRouter();
   const userId = useSearchParams().get("uid");
-  const { setPictureUrl, constCard, getConstCard, setPictureImage } = useCardPicture();
+  const { setPictureUrl, constCard, setConstCard, setPictureImage } =
+    useCardPicture();
 
   useEffect(() => {
-    getConstCard();
+    setConstCard(
+      Array.from({ length: 4 }, () => "/static/images/card").map(
+        (v, i) => `${v}-${i + 1}.png`
+      )
+    );
   }, []);
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -29,41 +35,48 @@ export default function index() {
     router.push(`/${userId}/write/preview-card-picture`);
   };
 
-  const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { files },
-    } = e;
-    let file = files[0];
-    new Compressor(file, {
-      maxWidth: 550,
-      maxHeight: 550,
-      success(result) {
-        file = new File([result], "image", { type: result.type });
-        setPictureImage(file, () => router.push(`/${userId}/write/preview-card-picture`));
-      },
-      error() {
-        setPictureImage(file, () => router.push(`/${userId}/write/preview-card-picture`));
-      },
-    });
-  };
+  // const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const {
+  //     currentTarget: { files },
+  //   } = e;
+  //   let file = files[0];
+  //   new Compressor(file, {
+  //     maxWidth: 550,
+  //     maxHeight: 550,
+  //     success(result) {
+  //       file = new File([result], "image", { type: result.type });
+  //       setPictureImage(file, () =>
+  //         router.push(`/${userId}/write/preview-card-picture`)
+  //       );
+  //     },
+  //     error() {
+  //       setPictureImage(file, () =>
+  //         router.push(`/${userId}/write/preview-card-picture`)
+  //       );
+  //     },
+  //   });
+  // };
 
   return (
     <SelectFrame>
       <Head>
         <title>카드 사진 선택 - Text me!</title>
       </Head>
-      <HeaderLayout>
-        <WhiteLeftButton type="button" onClick={() => router.back()}>
-          <ArrowBackIcon />
-        </WhiteLeftButton>
+      <BackHeader>
         <Title>카드 선택하기</Title>
-        <LayoutSpan />
-      </HeaderLayout>
+      </BackHeader>
       <PictureContainer>
-        <InputDiv id="image" onClick={handleClick}>
+        {/* <InputDiv id="image" onClick={handleClick}>
           <CameraIcon />
         </InputDiv>
-        <input style={{ display: "none" }} ref={fileRef} name="file" type="file" accept="image/*" onChange={e => fileUploadHandler(e)} />
+        <input
+          style={{ display: "none" }}
+          ref={fileRef}
+          name="file"
+          type="file"
+          accept="image/*"
+          onChange={(e) => fileUploadHandler(e)}
+        /> */}
         {constCard?.map((cards, index) => (
           <CardImage key={index} src={cards} onClick={() => select(cards)} />
         ))}

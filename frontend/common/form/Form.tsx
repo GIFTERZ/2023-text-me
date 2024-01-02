@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { StyledComponent } from "styled-components";
 import Button from "../button/Button";
-import { GreenRightCorner } from "../button/ButtonStyle";
+import { GreenLeftCorner, GreenRightCorner } from "../button/ButtonStyle";
 import Input from "../input/Input";
 import { Default } from "./FormStyle";
 
@@ -25,6 +25,7 @@ interface FormProps {
     [name: string]: InputType;
   };
   buttonText: string;
+  defaultValues?: any;
   Style?: StyledComponent<"form", any>;
 }
 
@@ -45,24 +46,27 @@ const Form = ({
   inputs,
   buttonText,
   Style = Default,
+  defaultValues,
 }: FormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues });
 
   return (
     <Style onSubmit={handleSubmit(onSubmit)}>
       {children}
-      {Object.entries(inputs).map(([name, input]: [string, InputType]) => (
-        <Input
-          key={name}
-          props={formAdaptor({ register, name, input })}
-          errorMessage={String(errors[name]?.message || "")}
-        />
-      ))}
-      <Button props={{ type: "submit" }} Style={GreenRightCorner}>
+      <div>
+        {Object.entries(inputs).map(([name, input]: [string, InputType]) => (
+          <Input
+            key={name}
+            props={formAdaptor({ register, name, input })}
+            errorMessage={String(errors[name]?.message || "")}
+          />
+        ))}
+      </div>
+      <Button props={{ type: "submit" }} Style={GreenLeftCorner}>
         {buttonText}
       </Button>
     </Style>

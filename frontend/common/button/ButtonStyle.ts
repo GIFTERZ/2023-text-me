@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { WhiteLeftButton } from "../../styles/components/Button";
 
 const Default = styled.button`
   display: flex;
@@ -6,7 +7,7 @@ const Default = styled.button`
   justify-content: center;
 
   width: 100%;
-  padding: 13px 20px;
+  padding-block: 13px;
 
   font-weight: 700;
   line-height: 17px;
@@ -35,8 +36,12 @@ const color = {
     }
   `,
   white: css`
-    color: "#000000";
+    color: #0e976e;
     background: #ffffff;
+  `,
+  kakao: css`
+    color: #000000 75%;
+    background: #fee500;
   `,
 };
 
@@ -49,9 +54,29 @@ const corner = {
   `,
 };
 
+const layout = {
+  icon: css`
+    justify-content: space-around;
+  `,
+  square: css`
+    width: 40px !important;
+    height: 40px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  `,
+};
+
 const GreenRightCorner = styled(Default)`
   ${color.green}
   ${corner.right}
+`;
+
+const GreenLeftCorner = styled(Default)`
+  ${color.green}
+  ${corner.left}
 `;
 
 const WhiteLeftCorner = styled(Default)`
@@ -59,4 +84,34 @@ const WhiteLeftCorner = styled(Default)`
   ${corner.left}
 `;
 
-export { Default, GreenRightCorner };
+const Kakao = styled(Default)`
+  ${layout.icon}
+  ${color.kakao}
+  ${corner.right}
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const WhiteLeftSquare = styled(Default)`
+  ${color.white}
+  ${corner.left}
+  ${layout.square}
+`;
+
+const WhiteRightSquare = styled(Default)`
+  ${color.white}
+  ${corner.right}
+  ${layout.square}
+`;
+
+export {
+  Default,
+  WhiteLeftSquare,
+  GreenRightCorner,
+  GreenLeftCorner,
+  Kakao,
+  WhiteRightSquare,
+};

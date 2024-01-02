@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
+import { PATH } from "../constants/api";
 
 interface RoomEnter {
   isLoading: boolean;
@@ -14,7 +15,7 @@ const useRoomEnter = create<RoomEnter>((set) => ({
   enter: async (data, callback) => {
     set({ isLoading: true, error: null });
     await visitorApi
-      .get("/users/find", {
+      .get(PATH.USER.FIND, {
         params: {
           email: data,
         },

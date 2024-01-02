@@ -1,12 +1,19 @@
 package gifterz.textme.domain.letter.service;
 
 import gifterz.textme.common.firebase.FCMService;
+import gifterz.textme.domain.letter.dto.request.EmailWithContents;
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
+import gifterz.textme.domain.letter.dto.request.ReceiverInfo;
 import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
+import gifterz.textme.domain.letter.dto.response.SlowLetterWithAddressResponse;
+import gifterz.textme.domain.letter.dto.response.SlowLetterWithEmailResponse;
+import gifterz.textme.domain.letter.entity.Address;
 import gifterz.textme.domain.letter.entity.Letter;
+import gifterz.textme.domain.letter.entity.SlowLetter;
 import gifterz.textme.domain.letter.exception.LetterNotFoundException;
 import gifterz.textme.domain.letter.repository.LetterRepository;
+import gifterz.textme.domain.letter.repository.SlowLetterRepository;
 import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.UserNotFoundException;
@@ -28,22 +35,25 @@ public class LetterService {
 
     private final UserRepository userRepository;
     private final LetterRepository letterRepository;
+    private final SlowLetterRepository slowLetterRepository;
     private final FCMService fcmService;
     private final AesUtils aesUtils;
 
     @Transactional
     public LetterResponse makeLetter(LetterRequest request) {
-        String decryptedId = aesUtils.decryption(request.getReceiverId());
-        Long userId = Long.valueOf(decryptedId);
-        User receiver = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        String userId = aesUtils.decrypt(request.getReceiverId());
+        Long id = Long.parseLong(userId);
+        User receiver = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         Letter letter = Letter.of(receiver, request.getSenderName(), request.getContents(), request.getImageUrl());
         letterRepository.save(letter);
-        fcmService.sendLetterReceivedNotification(receiver.getEmail());
+//        fcmService.sendLetterReceivedNotification(receiver.getEmail());
         return new LetterResponse(letter.getId(), receiver.getName(),
                 request.getSenderName(), request.getContents(), request.getImageUrl());
     }
 
-    public List<AllLetterResponse> findLettersByUserId(Long id) {
+    public List<AllLetterResponse> findLettersByUserId(String encryptedId) {
+        String userId = aesUtils.decrypt(encryptedId);
+        long id = Long.parseLong(userId);
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         List<Letter> letterList = letterRepository.findAllByUserId(user.getId());
         return letterList.stream()
@@ -63,5 +73,21 @@ public class LetterService {
         }
         return new LetterResponse(letter.getId(), user.getName(), letter.getSenderName(),
                 letter.getContents(), letter.getImageUrl());
+    }
+
+    @Transactional
+    public SlowLetterWithEmailResponse sendSlowLetterWithEmail(EmailWithContents request) {
+        SlowLetter slowLetter = SlowLetter.of(request.email(), request.contents());
+        slowLetterRepository.save(slowLetter);
+        return new SlowLetterWithEmailResponse(request.email(), request.contents());
+    }
+
+    @Transactional
+    public SlowLetterWithAddressResponse sendSlowLetterWithAddress(
+            Address address, ReceiverInfo receiverInfo, String contents) {
+        SlowLetter slowLetter = SlowLetter.
+                of(address, contents, receiverInfo.receiverName(), receiverInfo.phoneNumber());
+        slowLetterRepository.save(slowLetter);
+        return new SlowLetterWithAddressResponse(address, receiverInfo, contents);
     }
 }

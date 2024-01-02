@@ -3,15 +3,16 @@ package gifterz.textme.domain.oauth.entity;
 import gifterz.textme.domain.entity.BaseEntity;
 
 import gifterz.textme.domain.entity.StatusType;
+import gifterz.textme.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-@Getter
 public class OauthMember extends BaseEntity {
 
     @Id
@@ -19,19 +20,19 @@ public class OauthMember extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Embedded
     private OauthId oauthId;
-    private String email;
-    private String nickname;
 
-    public static OauthMember of(OauthId oauthId, String email, String nickname) {
-        return new OauthMember(oauthId, email, nickname);
+    public static OauthMember of(User user, OauthId oauthId) {
+        return new OauthMember(user, oauthId);
     }
 
-    private OauthMember(OauthId oauthId, String email, String nickname) {
+    private OauthMember(User user, OauthId oauthId) {
         super(StatusType.ACTIVATE.getStatus());
+        this.user = user;
         this.oauthId = oauthId;
-        this.email = email;
-        this.nickname = nickname;
     }
 }

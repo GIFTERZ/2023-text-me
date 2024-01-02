@@ -14,6 +14,7 @@ import { useCardPicture } from "../../../stores/useCardPicture";
 import { HeaderLayout, LayoutSpan } from "../../../styles/components/Layout";
 import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 import Head from "next/head";
+import BackHeader from "../../../components/common/BackHeader";
 
 type LetterForm = {
   contents: string;
@@ -91,14 +92,9 @@ export default function index() {
       <Head>
         <title>편지 쓰기 - Text me!</title>
       </Head>
-
-      <HeaderLayout>
-        <WhiteLeftButton type="button" onClick={goBack}>
-          <ArrowBackIcon />
-        </WhiteLeftButton>
+      <BackHeader>
         <Title>편지 쓰기</Title>
-        <LayoutSpan />
-      </HeaderLayout>
+      </BackHeader>
       <Form onSubmit={handleSubmit(sendData, validateData)}>
         <LetterContainer imgurl={pictureUrl} id="box">
           <ToDiv>To. {roomInfo?.userName}</ToDiv>

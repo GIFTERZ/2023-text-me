@@ -1,27 +1,19 @@
 import { InputHTMLAttributes } from "react";
 import { StyledComponent } from "styled-components";
-import { DefaultLabel, DefaultInput } from "./InputStyle";
+import { Default } from "./InputStyle";
 
 interface InputProps {
   props: InputHTMLAttributes<HTMLInputElement>;
   errorMessage?: string;
-  style?: {
-    Label: StyledComponent<"label", any>;
-    Input: StyledComponent<"input", any>;
-  };
+  Style?: StyledComponent<"label", any>;
 }
 
-const defaultStyle = {
-  Label: DefaultLabel,
-  Input: DefaultInput,
-};
-
-const Input = ({ props, errorMessage, style = defaultStyle }: InputProps) => {
+const Input = ({ props, errorMessage, Style = Default }: InputProps) => {
   return (
-    <style.Label>
-      <style.Input {...props} />
+    <Style>
+      <input {...props} />
       {errorMessage && <em>{errorMessage}</em>}
-    </style.Label>
+    </Style>
   );
 };
 

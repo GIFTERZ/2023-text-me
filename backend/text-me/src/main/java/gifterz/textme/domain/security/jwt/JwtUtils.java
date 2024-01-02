@@ -1,6 +1,5 @@
 package gifterz.textme.domain.security.jwt;
 
-import gifterz.textme.domain.oauth.entity.OauthMember;
 import gifterz.textme.domain.user.entity.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -21,9 +20,6 @@ public class JwtUtils {
     private int jwtExpirationMs;
 
     public String generateJwtToken(User user) {
-        return generateTokenFromSubject(user.getEmail());
-    }
-    public String generateJwtToken(OauthMember user) {
         return generateTokenFromSubject(user.getEmail());
     }
 

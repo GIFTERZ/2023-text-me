@@ -12,7 +12,7 @@ public class AesUtils {
 
     private final String secretKey = "3^mdfo9iu4alkj";
 
-    public String encryption(String text) {
+    public String encrypt(String plaintext) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
 
@@ -25,13 +25,13 @@ public class AesUtils {
 
             cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "AES"));
 
-            return new String(Hex.encodeHex(cipher.doFinal(text.getBytes(StandardCharsets.UTF_8)))).toUpperCase();
+            return new String(Hex.encodeHex(cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8)))).toUpperCase();
         } catch(Exception e) {
-            return text;
+            return plaintext;
         }
     }
 
-    public String decryption(String encryptedText) {
+    public String decrypt(String encryptedText) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
 
