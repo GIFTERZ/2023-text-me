@@ -31,7 +31,6 @@ function SelectMethod({ selectMail, selectPost }: Props) {
           우편으로 받을게요.
         </Button>
       </div>
-      <BackgroundImage src="/static/images/room-background.png" />
     </SelectContainer>
   );
 }

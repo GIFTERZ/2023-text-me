@@ -38,7 +38,6 @@ function PostCodeForm({ complete }: Props) {
         onComplete={completeAddress}
         className="postcode-input"
       />
-      <BackgroundImage src="/static/images/room-background.png" />
     </SelectContainer>
   );
 }
