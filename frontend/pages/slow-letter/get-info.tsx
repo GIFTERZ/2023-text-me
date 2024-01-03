@@ -5,6 +5,8 @@ import SelectMethod from "../../components/slow/SelectMethod";
 import EmailForm from "../../components/slow/EmailForm";
 import { useRouter } from "next/navigation";
 import PostCodeForm from "../../components/slow/PostCodeForm";
+import BackHeader from "../../components/common/BackHeader";
+import Logo from "../../components/common/Logo";
 
 const PROCESS = {
   SELECT: "SELECT",
@@ -19,26 +21,20 @@ function getInfo() {
 
   switch (process) {
     case PROCESS.SELECT:
-      return (
-        <SelectMethod
-          selectMail={() => setProcess(PROCESS.EMAIL)}
-          selectPost={() => setProcess(PROCESS.POSTCODE)}
-        />
-      );
+      return <SelectMethod selectMail={() => setProcess(PROCESS.EMAIL)} selectPost={() => setProcess(PROCESS.POSTCODE)} />;
     case PROCESS.EMAIL:
       return (
-        <EmailForm
-          complete={() => router.push("/slow-letter/write?type=email")}
-        />
+        <>
+          <Back onBackClick={() => setProcess(PROCESS.SELECT)}>
+            <Logo />
+          </Back>
+          <EmailForm complete={() => router.push("/slow-letter/write?type=email")} />
+        </>
       );
     case PROCESS.POSTCODE:
       return <PostCodeForm complete={() => setProcess(PROCESS.ADDRESS)} />;
     case PROCESS.ADDRESS:
-      return (
-        <AddressForm
-          complete={() => router.push("/slow-letter/write?type=post")}
-        />
-      );
+      return <AddressForm complete={() => router.push("/slow-letter/write?type=post")} />;
   }
 }
 
@@ -51,12 +47,11 @@ export const SelectContainer = styled.div`
   flex-direction: column;
   gap: 30px;
 
-  h2 {
+  h3 {
     position: relative;
     z-index: 1;
     margin: 0;
-
-    width: 90%;
+    width: 85%;
     top: 10%;
     left: 50%;
     transform: translateX(-50%);
@@ -97,4 +92,8 @@ export const SelectContainer = styled.div`
     transform: translateX(-50%);
     top: 10%;
   }
+`;
+
+const Back = styled(BackHeader)`
+  z-index: 1;
 `;
