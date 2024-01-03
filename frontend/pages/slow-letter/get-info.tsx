@@ -25,9 +25,6 @@ function getInfo() {
     case PROCESS.EMAIL:
       return (
         <>
-          <Back onBackClick={() => setProcess(PROCESS.SELECT)}>
-            <Logo />
-          </Back>
           <EmailForm complete={() => router.push("/slow-letter/write?type=email")} />
         </>
       );
@@ -39,6 +36,12 @@ function getInfo() {
 }
 
 export default getInfo;
+
+export const Back = styled(BackHeader)`
+  position: relative;
+  align-items: center;
+  z-index: 2;
+`;
 
 export const SelectContainer = styled.div`
   width: 100%;
@@ -92,8 +95,4 @@ export const SelectContainer = styled.div`
     transform: translateX(-50%);
     top: 10%;
   }
-`;
-
-const Back = styled(BackHeader)`
-  z-index: 1;
 `;

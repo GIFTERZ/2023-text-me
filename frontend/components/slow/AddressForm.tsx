@@ -23,7 +23,7 @@ function AddressForm({ complete }: Props) {
 
   return (
     <SelectContainer>
-      <h2>편지를 받을 주소 정보를 입력해주세요.</h2>
+      <h3>편지를 받을 주소 정보를 입력해주세요.</h3>
       <Form
         defaultValues={{ zonecode, defaultAddress }}
         onSubmit={handleAddressSubmit}
