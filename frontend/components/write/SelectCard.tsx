@@ -132,4 +132,6 @@ const CardImage = styled.img`
   border-radius: 10px;
 
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
+
+  cursor: pointer;
 `;
