@@ -6,6 +6,7 @@ import { Frame } from "../../styles/components/Frame";
 import BackHeader from "../common/BackHeader";
 import CameraIcon from "./icons/CameraIcon";
 import Compressor from "compressorjs";
+import { cardAlt } from "../../public/static/images/card-alt";
 
 interface Props {
   type: "UPLOAD" | "SELECT";
@@ -17,10 +18,10 @@ function SelectCard({ type, next }: Props) {
     useCardPicture();
 
   useEffect(() => {
-    setConstCard(
-      Array.from({ length: 4 }, () => "/static/images/card").map(
-        (v, i) => `${v}-${i + 1}.png`
-      )
+    return setConstCard(
+      Array.from({ length: 4 }, () => "/static/images/card").map((v, i) => {
+        return { src: `${v}-${i + 1}.png`, alt: cardAlt[`card-${i + 1}`] };
+      })
     );
   }, []);
 
@@ -80,8 +81,13 @@ function SelectCard({ type, next }: Props) {
             />
           </>
         )}
-        {constCard?.map((cards, index) => (
-          <CardImage key={index} src={cards} onClick={() => select(cards)} />
+        {constCard?.map((card, index) => (
+          <CardImage
+            key={index}
+            src={card.src}
+            onClick={() => select(card.src)}
+            alt={`${card.alt}`}
+          />
         ))}
       </PictureContainer>
     </SelectFrame>
