@@ -6,6 +6,7 @@ import EmailForm from "../../components/slow/EmailForm";
 import { useRouter } from "next/navigation";
 import PostCodeForm from "../../components/slow/PostCodeForm";
 import SlowBackHeader from "../../components/slow/BackHeader";
+import { BackgroundImage } from ".";
 
 const PROCESS = {
   SELECT: "SELECT",
@@ -27,6 +28,7 @@ function getInfo() {
             selectMail={() => setProcess(PROCESS.EMAIL)}
             selectPost={() => setProcess(PROCESS.POSTCODE)}
           />
+          <BackgroundImage src="/static/images/room-background.png" />
         </>
       );
     case PROCESS.EMAIL:
@@ -36,6 +38,7 @@ function getInfo() {
           <EmailForm
             complete={() => router.push("/slow-letter/write?type=email")}
           />
+          <BackgroundImage src="/static/images/room-background.png" />
         </>
       );
     case PROCESS.POSTCODE:
@@ -43,6 +46,7 @@ function getInfo() {
         <>
           <SlowBackHeader onBackClick={() => setProcess(PROCESS.SELECT)} />
           <PostCodeForm complete={() => setProcess(PROCESS.ADDRESS)} />
+          <BackgroundImage src="/static/images/room-background.png" />
         </>
       );
     case PROCESS.ADDRESS:
@@ -52,6 +56,7 @@ function getInfo() {
           <AddressForm
             complete={() => router.push("/slow-letter/write?type=post")}
           />
+          <BackgroundImage src="/static/images/room-background.png" />
         </>
       );
   }

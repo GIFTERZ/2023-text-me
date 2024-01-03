@@ -30,7 +30,6 @@ function AddressForm({ complete }: Props) {
         inputs={AddressFormContext.getContext()}
         buttonText={"확인"}
       ></Form>
-      <BackgroundImage src="/static/images/room-background.png" />
     </SelectContainer>
   );
 }

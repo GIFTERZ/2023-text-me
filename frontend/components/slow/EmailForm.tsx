@@ -40,7 +40,6 @@ function EmailForm({ complete }: Props) {
     <div>
       <SelectContainer>
         <RenderForm email={member ? member.email : ""} />
-        <BackgroundImage src="/static/images/room-background.png" />
       </SelectContainer>
     </div>
   );
