@@ -5,8 +5,7 @@ import SelectMethod from "../../components/slow/SelectMethod";
 import EmailForm from "../../components/slow/EmailForm";
 import { useRouter } from "next/navigation";
 import PostCodeForm from "../../components/slow/PostCodeForm";
-import BackHeader from "../../components/common/BackHeader";
-import Logo from "../../components/common/Logo";
+import SlowBackHeader from "../../components/slow/BackHeader";
 
 const PROCESS = {
   SELECT: "SELECT",
@@ -21,31 +20,47 @@ function getInfo() {
 
   switch (process) {
     case PROCESS.SELECT:
-      return <SelectMethod selectMail={() => setProcess(PROCESS.EMAIL)} selectPost={() => setProcess(PROCESS.POSTCODE)} />;
+      return (
+        <>
+          <SlowBackHeader onBackClick={() => router.push("/slow-letter")} />
+          <SelectMethod
+            selectMail={() => setProcess(PROCESS.EMAIL)}
+            selectPost={() => setProcess(PROCESS.POSTCODE)}
+          />
+        </>
+      );
     case PROCESS.EMAIL:
       return (
         <>
-          <EmailForm complete={() => router.push("/slow-letter/write?type=email")} />
+          <SlowBackHeader onBackClick={() => setProcess(PROCESS.SELECT)} />
+          <EmailForm
+            complete={() => router.push("/slow-letter/write?type=email")}
+          />
         </>
       );
     case PROCESS.POSTCODE:
-      return <PostCodeForm complete={() => setProcess(PROCESS.ADDRESS)} />;
+      return (
+        <>
+          <SlowBackHeader onBackClick={() => setProcess(PROCESS.SELECT)} />
+          <PostCodeForm complete={() => setProcess(PROCESS.ADDRESS)} />
+        </>
+      );
     case PROCESS.ADDRESS:
-      return <AddressForm complete={() => router.push("/slow-letter/write?type=post")} />;
+      return (
+        <>
+          <SlowBackHeader onBackClick={() => setProcess(PROCESS.POSTCODE)} />
+          <AddressForm
+            complete={() => router.push("/slow-letter/write?type=post")}
+          />
+        </>
+      );
   }
 }
 
 export default getInfo;
 
-export const Back = styled(BackHeader)`
-  position: relative;
-  align-items: center;
-  z-index: 2;
-`;
-
 export const SelectContainer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
