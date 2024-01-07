@@ -3,7 +3,7 @@ package gifterz.textme.domain.letter.service;
 import gifterz.textme.common.firebase.FCMService;
 import gifterz.textme.domain.letter.dto.request.EmailWithContents;
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
-import gifterz.textme.domain.letter.dto.request.ReceiverInfo;
+import gifterz.textme.domain.letter.dto.request.SenderInfo;
 import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.dto.response.SlowLetterWithAddressResponse;
@@ -84,10 +84,10 @@ public class LetterService {
 
     @Transactional
     public SlowLetterWithAddressResponse sendSlowLetterWithAddress(
-            Address address, ReceiverInfo receiverInfo, String contents) {
+            Address address, SenderInfo senderInfo, String contents) {
         SlowLetter slowLetter = SlowLetter.
-                of(address, contents, receiverInfo.receiverName(), receiverInfo.phoneNumber());
+                of(address, contents, senderInfo.receiverName(), senderInfo.phoneNumber());
         slowLetterRepository.save(slowLetter);
-        return new SlowLetterWithAddressResponse(address, receiverInfo, contents);
+        return new SlowLetterWithAddressResponse(address, senderInfo, contents);
     }
 }

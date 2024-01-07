@@ -51,7 +51,7 @@ public class LetterController {
     public ResponseEntity<SlowLetterWithAddressResponse> sendSlowLetterWithAddress(
             @RequestBody final SlowLetterWithAddressRequest request) {
         SlowLetterWithAddressResponse letterResponse = letterService.sendSlowLetterWithAddress(
-                request.toAddress(), request.toReceiverInfo(), request.contents());
+                request.toAddress(), request.toSenderInfo(), request.contents());
         return ResponseEntity.ok().body(letterResponse);
     }
 }

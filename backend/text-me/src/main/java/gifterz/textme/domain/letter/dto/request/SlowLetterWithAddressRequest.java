@@ -6,7 +6,7 @@ import gifterz.textme.domain.letter.entity.Address;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record SlowLetterWithAddressRequest(
-        String receiverName,
+        String senderName,
         String postCode,
         String address,
         String addressDetail,
@@ -17,7 +17,7 @@ public record SlowLetterWithAddressRequest(
         return new Address(postCode, address, addressDetail);
     }
 
-    public ReceiverInfo toReceiverInfo() {
-        return new ReceiverInfo(receiverName, phoneNumber);
+    public SenderInfo toSenderInfo() {
+        return new SenderInfo(senderName, phoneNumber);
     }
 }
