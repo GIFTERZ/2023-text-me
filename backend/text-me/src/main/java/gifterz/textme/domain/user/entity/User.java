@@ -40,6 +40,11 @@ public class User {
         this.name = name;
     }
 
+    public void updateAuthType(AuthType authType) {
+        this.authType = authType;
+    }
+
+
     public boolean isUnAuthorized(User user) {
         return this != user;
     }
