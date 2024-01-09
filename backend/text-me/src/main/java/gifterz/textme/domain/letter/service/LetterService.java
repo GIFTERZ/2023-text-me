@@ -1,9 +1,8 @@
 package gifterz.textme.domain.letter.service;
 
 import gifterz.textme.common.firebase.FCMService;
-import gifterz.textme.domain.letter.dto.request.EmailWithContents;
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
-import gifterz.textme.domain.letter.dto.request.ReceiverInfo;
+import gifterz.textme.domain.letter.dto.request.SenderInfo;
 import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
 import gifterz.textme.domain.letter.dto.response.SlowLetterWithAddressResponse;
@@ -76,18 +75,22 @@ public class LetterService {
     }
 
     @Transactional
-    public SlowLetterWithEmailResponse sendSlowLetterWithEmail(EmailWithContents request) {
-        SlowLetter slowLetter = SlowLetter.of(request.email(), request.contents());
+    public SlowLetterWithEmailResponse sendSlowLetterWithEmail(SenderInfo senderInfo, String contents) {
+        String email = senderInfo.getEmail();
+        String senderName = senderInfo.getSenderName();
+        String imageUrl = senderInfo.getImageUrl();
+        SlowLetter slowLetter = SlowLetter.of(email, senderName, imageUrl, contents);
         slowLetterRepository.save(slowLetter);
-        return new SlowLetterWithEmailResponse(request.email(), request.contents());
+        return new SlowLetterWithEmailResponse(senderInfo, contents);
     }
 
     @Transactional
     public SlowLetterWithAddressResponse sendSlowLetterWithAddress(
-            Address address, ReceiverInfo receiverInfo, String contents) {
-        SlowLetter slowLetter = SlowLetter.
-                of(address, contents, receiverInfo.receiverName(), receiverInfo.phoneNumber());
+            Address address, SenderInfo senderInfo, String contents) {
+        String senderName = senderInfo.getSenderName();
+        String phoneNumber = senderInfo.getPhoneNumber();
+        SlowLetter slowLetter = SlowLetter.of(address, contents, senderName, phoneNumber);
         slowLetterRepository.save(slowLetter);
-        return new SlowLetterWithAddressResponse(address, receiverInfo, contents);
+        return new SlowLetterWithAddressResponse(address, senderInfo, contents);
     }
 }

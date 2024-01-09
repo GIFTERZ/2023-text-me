@@ -27,30 +27,34 @@ public class SlowLetter extends BaseEntity {
     @Nullable
     private Address address;
     @Nullable
-    private String receiverName;
+    private String senderName;
     @Nullable
-    String phoneNumber;
+    private String phoneNumber;
+    @Nullable
+    private String imageUrl;
 
 
-    public SlowLetter(String email, String contents) {
+    public SlowLetter(String email, String senderName, String imageUrl, String contents) {
         super(StatusType.ACTIVATE.getStatus());
         this.email = email;
+        this.senderName = senderName;
+        this.imageUrl = imageUrl;
         this.contents = contents;
     }
 
-    public SlowLetter(Address address, String contents, String receiverName, String phoneNumber) {
+    public SlowLetter(Address address, String contents, String senderName, String phoneNumber) {
         super(StatusType.ACTIVATE.getStatus());
         this.address = address;
         this.contents = contents;
-        this.receiverName = receiverName;
+        this.senderName = senderName;
         this.phoneNumber = phoneNumber;
     }
 
-    public static SlowLetter of(String email, String contents) {
-        return new SlowLetter(email, contents);
+    public static SlowLetter of(String email, String senderName, String imageUrl, String contents) {
+        return new SlowLetter(email, senderName, imageUrl, contents);
     }
 
-    public static SlowLetter of(Address address, String contents, String receiverName, String phoneNumber) {
-        return new SlowLetter(address, contents, receiverName, phoneNumber);
+    public static SlowLetter of(Address address, String contents, String senderName, String phoneNumber) {
+        return new SlowLetter(address, contents, senderName, phoneNumber);
     }
 }

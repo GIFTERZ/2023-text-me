@@ -1,7 +1,9 @@
 package gifterz.textme.domain.letter.dto.response;
 
+import gifterz.textme.domain.letter.dto.request.SenderInfo;
+
 public record SlowLetterWithEmailResponse(
-        String email,
+        SenderInfo senderInfo,
         String contents
 ) {
 }
