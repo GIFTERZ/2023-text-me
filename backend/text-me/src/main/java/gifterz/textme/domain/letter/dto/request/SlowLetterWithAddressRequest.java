@@ -18,6 +18,6 @@ public record SlowLetterWithAddressRequest(
     }
 
     public SenderInfo toSenderInfo() {
-        return new SenderInfo(senderName, phoneNumber);
+        return SenderInfo.of(senderName, phoneNumber);
     }
 }
