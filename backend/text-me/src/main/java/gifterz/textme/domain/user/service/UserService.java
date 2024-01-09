@@ -48,9 +48,8 @@ public class UserService {
         String password = signUpRequest.getPassword();
         String name = signUpRequest.getName();
         Optional<User> userExists = userRepository.findByEmail(email);
-        if (userExists.isPresent()) {
-            throw new EmailDuplicatedException(email);
-        }
+        checkEmailDuplicated(userExists, email);
+
         User user = User.of(email, name, AuthType.PASSWORD);
         PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
         String encodedPassword = passwordEncoder.encode(password);
@@ -59,6 +58,15 @@ public class UserService {
         memberRepository.save(member);
         String encryptedUserId = encryptUserId(user.getId());
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
+    }
+
+    private void checkEmailDuplicated(Optional<User> userExists, String email) {
+        if (userExists.isPresent()) {
+            User user = userExists.get();
+            if (user.getAuthType() == AuthType.PASSWORD) {
+                throw new EmailDuplicatedException(email);
+            }
+        }
     }
 
     @Transactional
