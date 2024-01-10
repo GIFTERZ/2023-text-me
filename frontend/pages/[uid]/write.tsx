@@ -32,7 +32,7 @@ function Write() {
     case PROCESS.WRITE:
       return (
         <>
-          {roomInfo.id && (
+          {roomInfo?.id && (
             <WriteLetter
               prev={() => router.push("/slow-letter/get-info")}
               next={() => setProcess(PROCESS.COMPLETE)}

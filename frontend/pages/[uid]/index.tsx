@@ -55,7 +55,7 @@ function Room() {
       <LettersContainer userId={userId} />
       <SnowFall speed={[0.5, 0.8]} wind={[-0.5, 1.0]} />
       {!isCaptureMode && (
-        <Link href={`${pathname}/write/select-card-picture`}>
+        <Link href={`${pathname}/write`}>
           <CTAButton>
             TEXT <br />
             {roomInfo?.userName}
@@ -64,7 +64,9 @@ function Room() {
       )}
       <LetterViewContainer />
       {alertModalOpen && <AlertModal text={LETTER_NOT_OWN_MESSAGE} />}
-      {alertEmptyLetterModalOpen && <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />}
+      {alertEmptyLetterModalOpen && (
+        <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />
+      )}
       {modalOpen && <SaveModal />}
       {isCaptureMode && (
         <CaptureModeButton type="button" onClick={toggleCaptureMode}>
@@ -103,7 +105,8 @@ const Title = styled.h1`
 
   z-index: 10;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
@@ -126,7 +129,8 @@ const CTAButton = styled(RightButton)`
 
   padding: 13px 24px;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
