@@ -2,6 +2,7 @@ package gifterz.textme.domain.letter.service;
 
 import gifterz.textme.common.firebase.FCMService;
 import gifterz.textme.domain.letter.dto.request.LetterRequest;
+import gifterz.textme.domain.letter.dto.request.ReceiverInfo;
 import gifterz.textme.domain.letter.dto.request.SenderInfo;
 import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
@@ -86,11 +87,13 @@ public class LetterService {
 
     @Transactional
     public SlowLetterWithAddressResponse sendSlowLetterWithAddress(
-            Address address, SenderInfo senderInfo, String contents) {
+            SenderInfo senderInfo, ReceiverInfo receiverInfo, String contents) {
         String senderName = senderInfo.getSenderName();
-        String phoneNumber = senderInfo.getPhoneNumber();
-        SlowLetter slowLetter = SlowLetter.of(address, contents, senderName, phoneNumber);
+        String phoneNumber = receiverInfo.getPhoneNumber();
+        Address address = receiverInfo.getAddress();
+        String receiverName = receiverInfo.getReceiverName();
+        SlowLetter slowLetter = SlowLetter.of(address, contents, senderName, receiverName, phoneNumber);
         slowLetterRepository.save(slowLetter);
-        return new SlowLetterWithAddressResponse(address, senderInfo, contents);
+        return new SlowLetterWithAddressResponse(senderInfo, receiverInfo, contents);
     }
 }
