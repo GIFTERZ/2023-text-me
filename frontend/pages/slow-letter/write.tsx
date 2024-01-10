@@ -1,5 +1,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BackgroundImage } from ".";
+import CardRotator from "../../components/slow/CardRotator";
+import WriteFinishBox from "../../components/slow/WriteFinishBox";
 import SelectCard from "../../components/write/SelectCard";
 import WriteLetter from "../../components/write/WriteLetter";
 import { useCardPicture } from "../../stores/useCardPicture";
@@ -74,7 +77,13 @@ function Write() {
         />
       );
     case PROCESS.COMPLETE:
-      return <></>;
+      return (
+        <>
+          <BackgroundImage src="/static/images/room-background.png" />
+          <CardRotator />
+          <WriteFinishBox />
+        </>
+      );
   }
 }
 
