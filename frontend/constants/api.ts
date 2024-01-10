@@ -15,6 +15,7 @@ const PATH = {
     ROOT: "/letters",
     GET_ONE: (id: number) => `/letters/${id}`,
     GET_MEMBER_ALL: (id: string) => `/letters/members/${id}`,
+    SEND: (type: "email" | "address") => `/letters/${type}`,
   },
   CARD: {
     ROOT: "/cards",
