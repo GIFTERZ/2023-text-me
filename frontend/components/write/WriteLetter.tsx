@@ -25,10 +25,6 @@ function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
   const { pictureUrl } = useCardPicture();
 
   const sendData = ({ contents, senderName }: LetterForm) => {
-    if (!pictureUrl) {
-      alert("카드의 배경 사진을 선택해주세요.");
-    }
-
     const body = {
       contents,
       senderName,

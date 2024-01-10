@@ -1,9 +1,10 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import SelectCard from "../../components/write/SelectCard";
-import WriteLetter from "../../components/write/WriteLetter";
-import { useRoomInfo } from "../../stores/useRoomInfo";
-import { useSendLetter } from "../../stores/useSendLetter";
+import SelectCard from "../../../components/write/SelectCard";
+import WriteLetter from "../../../components/write/WriteLetter";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { useRoomInfo } from "../../../stores/useRoomInfo";
+import { useSendLetter } from "../../../stores/useSendLetter";
 
 const PROCESS = {
   SELECT: "SELECT",
@@ -19,9 +20,12 @@ function Write() {
 
   const { sendLetter } = useSendLetter();
   const { roomInfo, getRoomInfo } = useRoomInfo();
+  const { pictureUrl } = useCardPicture();
 
   useEffect(() => {
-    getRoomInfo(searchParams.get("uid"));
+    if (searchParams) {
+      getRoomInfo(searchParams.get("uid"));
+    }
   }, []);
 
   switch (process) {
@@ -34,17 +38,15 @@ function Write() {
         <>
           {roomInfo?.id && (
             <WriteLetter
-              prev={() => router.push("/slow-letter/get-info")}
-              next={() => setProcess(PROCESS.COMPLETE)}
+              prev={() => setProcess(PROCESS.SELECT)}
+              next={() => router.push(`/${roomInfo.id}/write/send-complete`)}
               sendLetter={sendLetter}
-              letterData={{ receiverId: roomInfo.id }}
+              letterData={{ receiverId: roomInfo.id, imageUrl: pictureUrl }}
               to={roomInfo.userName}
             />
           )}
         </>
       );
-    case PROCESS.COMPLETE:
-      return <></>;
   }
 }
 
