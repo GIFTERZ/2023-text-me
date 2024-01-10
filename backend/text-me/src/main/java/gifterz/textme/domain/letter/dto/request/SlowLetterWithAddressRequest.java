@@ -1,12 +1,10 @@
 package gifterz.textme.domain.letter.dto.request;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gifterz.textme.domain.letter.entity.Address;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record SlowLetterWithAddressRequest(
         String senderName,
+        String receiverName,
         String postCode,
         String address,
         String addressDetail,
@@ -18,6 +16,10 @@ public record SlowLetterWithAddressRequest(
     }
 
     public SenderInfo toSenderInfo() {
-        return SenderInfo.of(senderName, phoneNumber);
+        return SenderInfo.from(senderName);
+    }
+
+    public ReceiverInfo toReceiverInfo() {
+        return ReceiverInfo.of(senderName, receiverName, toAddress(), phoneNumber, contents);
     }
 }
