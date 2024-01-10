@@ -3020,6 +3020,7 @@ __metadata:
     react-hook-form: ^7.39.6
     react-icons: ^4.7.1
     react-snowfall: ^1.2.1
+    react-uuid: ^2.0.0
     styled-components: ^5.3.6
     three: ^0.160.0
     typescript: 4.9.3
@@ -5038,6 +5039,13 @@ __metadata:
     react: ">=16.13"
     react-dom: ">=16.13"
   checksum: b8e8939229d463c3c505f7b617925c0228efae0cd6f651371f463846417b06c9170be57df51293a61027c41770f8a090fdb8a08717c4e36290ccb496e0318f1f
+  languageName: node
+  linkType: hard
+
+"react-uuid@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "react-uuid@npm:2.0.0"
+  checksum: edfdd86ce5cd19da9740fae1147ed106e3090f4d9c59b4e3f0001c2dc605f63dc89e225adc5623929a8775363ab355da32adda92dd70a3bb514fff911b93da73
   languageName: node
   linkType: hard
 
