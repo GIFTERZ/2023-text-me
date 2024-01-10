@@ -11,10 +11,9 @@ public class SenderInfo {
     private String phoneNumber;
     private String email;
 
-    public static SenderInfo of(String senderName, String phoneNumber) {
+    public static SenderInfo from(String senderName) {
         return SenderInfo.builder()
                 .senderName(senderName)
-                .phoneNumber(phoneNumber)
                 .build();
     }
 
