@@ -90,11 +90,23 @@ function Background({ letters }: Props) {
         fill="url(#pattern0)"
       />
       {LETTER_PROPS.map((p, i) => (
-        <BackgroundLetter
-          props={p}
-          imageUrl={letters[i]?.imageUrl}
-          key={uuid()}
-        />
+        <>
+          <BackgroundLetter
+            props={p}
+            imageUrl={letters[i]?.imageUrl}
+            key={uuid()}
+          />
+          {i == 20 && (
+            <rect
+              x="2"
+              y="1"
+              width="1560"
+              height="844"
+              fill="url(#pattern21)"
+              style={{ pointerEvents: "none" }}
+            />
+          )}
+        </>
       ))}
       <rect
         x="2"
