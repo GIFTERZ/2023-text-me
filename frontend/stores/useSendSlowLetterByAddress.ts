@@ -4,12 +4,13 @@ import visitorApi from "../auth/visitorApi";
 import { PATH } from "../constants/api";
 
 type LetterBody = {
-  name: string;
+  receiverName: string;
   zonecode: string;
   defaultAddress: string;
   detailAddress: string;
   phoneNumber: string;
   contents: string;
+  senderName: string;
 };
 
 interface SendLetter {
@@ -22,18 +23,27 @@ const useSendSlowLetterByAddress = create<SendLetter>((set) => ({
   loading: false,
   error: null,
   sendLetter: async (
-    { name, zonecode, defaultAddress, detailAddress, phoneNumber, contents },
+    {
+      receiverName,
+      zonecode,
+      defaultAddress,
+      detailAddress,
+      phoneNumber,
+      contents,
+      senderName,
+    },
     callback
   ) => {
     set({ loading: true });
     await visitorApi
       .post(PATH.LETTER.SEND("address"), {
-        receiverName: name,
+        receiverName,
         postCode: zonecode,
         address: defaultAddress,
         addressDetail: detailAddress,
         phoneNumber,
         contents,
+        senderName,
       })
       .then((res) => {
         callback();

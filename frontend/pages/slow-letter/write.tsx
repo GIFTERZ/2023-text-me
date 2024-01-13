@@ -28,7 +28,13 @@ function Write() {
 
   const {
     email,
-    address: { name, zonecode, defaultAddress, detailAddress, phoneNumber },
+    address: {
+      receiverName,
+      zonecode,
+      defaultAddress,
+      detailAddress,
+      phoneNumber,
+    },
   } = useSlowLetterInfo();
 
   useEffect(() => {
@@ -37,9 +43,14 @@ function Write() {
     }
     if (
       getLetterType() == "post" &&
-      !(name && zonecode && defaultAddress && detailAddress && phoneNumber)
+      !(
+        receiverName &&
+        zonecode &&
+        defaultAddress &&
+        detailAddress &&
+        phoneNumber
+      )
     ) {
-      console.log(name, zonecode, defaultAddress, detailAddress, phoneNumber);
       router.push("/slow-letter/get-info");
     }
   });
@@ -70,7 +81,13 @@ function Write() {
           }
           letterData={
             getLetterType() == "post"
-              ? { name, zonecode, defaultAddress, detailAddress, phoneNumber }
+              ? {
+                  receiverName,
+                  zonecode,
+                  defaultAddress,
+                  detailAddress,
+                  phoneNumber,
+                }
               : { email }
           }
           to={"12월 31일의 나"}
