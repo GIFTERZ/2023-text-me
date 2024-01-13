@@ -13,33 +13,25 @@ interface Props {
   next: Function;
   sendLetter: Function;
   to: string;
+  letterData: Object;
 }
 type LetterForm = {
   contents: string;
-  sender: string;
+  senderName: string;
 };
-function WriteLetter({ prev, next, sendLetter, to }: Props) {
+function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
   const { register, handleSubmit } = useForm<LetterForm>();
 
   const { pictureUrl } = useCardPicture();
 
-  const sendData = (data: LetterForm) => {
-    if (!pictureUrl) {
-      alert("카드의 배경 사진을 선택해주세요.");
-    }
+  const sendData = ({ contents, senderName }: LetterForm) => {
+    const body = {
+      contents,
+      senderName,
+      ...letterData,
+    };
 
-    // const body = {
-    //   receiverId: userId,
-    //   contents: data.contents,
-    //   senderName: data.sender,
-    //   imageUrl: pictureUrl,
-    // };
-
-    // sendLetter(body, pushCompletedPage);
-
-    // if (error) {
-    //   alert("편지를 보내는 중 에러가 발생했습니다.");
-    // }
+    sendLetter(body, next);
   };
 
   const validateData = (error: FieldErrors<LetterForm>) => {
@@ -47,8 +39,8 @@ function WriteLetter({ prev, next, sendLetter, to }: Props) {
       alert(error.contents.message);
       return;
     }
-    if (error.sender) {
-      alert(error.sender.message);
+    if (error.senderName) {
+      alert(error.senderName.message);
       return;
     }
   };
@@ -80,7 +72,7 @@ function WriteLetter({ prev, next, sendLetter, to }: Props) {
             <FromInput
               placeholder="보내는 사람"
               maxLength={10}
-              {...register("sender", {
+              {...register("senderName", {
                 required: "보내는 사람을 입력해주세요.",
                 maxLength: {
                   value: 10,

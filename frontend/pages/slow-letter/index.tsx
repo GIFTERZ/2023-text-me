@@ -1,18 +1,18 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import Button from "../../common/button/Button";
 import { GreenRightCorner } from "../../common/button/ButtonStyle";
+import uuid from "react-uuid";
 
 function SlowLetter() {
   const router = useRouter();
-
   const enter = (paragraph: string) => {
     return paragraph.split("\n").map((sentence) => (
-      <>
+      <Fragment key={uuid()}>
         {sentence}
         <br />
-      </>
+      </Fragment>
     ));
   };
 
