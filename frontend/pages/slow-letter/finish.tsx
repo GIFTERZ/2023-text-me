@@ -6,7 +6,7 @@ import WriteFinishBox from "../../components/slow/WriteFinishBox";
 function finish() {
   return (
     <div>
-      <BackgroundImage src="/static/images/room-background.png" />
+      <BackgroundImage src="/static/images/room-background.webp" />
       <CardRotator />
       <WriteFinishBox />
     </div>

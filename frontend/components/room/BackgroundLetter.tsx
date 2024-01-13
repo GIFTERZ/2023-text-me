@@ -36,7 +36,7 @@ interface Props {
 }
 
 function BackgroundLetter({ props, imageUrl }: Props) {
-  const DEFAULT_IMAGE = "static/images/room-default.png";
+  const DEFAULT_IMAGE = "static/images/room-default.webp";
 
   return (
     <g filter={props.g.filter} id={props.g.id}>

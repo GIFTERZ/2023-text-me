@@ -20,7 +20,7 @@ function SelectCard({ type, next }: Props) {
   useEffect(() => {
     return setConstCard(
       Array.from({ length: 4 }, () => "/static/images/card").map((v, i) => {
-        return { src: `${v}-${i + 1}.png`, alt: cardAlt[`card-${i + 1}`] };
+        return { src: `${v}-${i + 1}.webp`, alt: cardAlt[`card-${i + 1}`] };
       })
     );
   }, []);

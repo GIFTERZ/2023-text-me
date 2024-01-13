@@ -58,7 +58,7 @@ function Write() {
   useEffect(() => {
     if (getLetterType() == "post") {
       setProcess(PROCESS.WRITE);
-      setPictureUrl("/static/images/room-background.png");
+      setPictureUrl("/static/images/room-background.webp");
     }
   }, []);
 
@@ -96,7 +96,7 @@ function Write() {
     case PROCESS.COMPLETE:
       return (
         <>
-          <BackgroundImage src="/static/images/room-background.png" />
+          <BackgroundImage src="/static/images/room-background.webp" />
           <CardRotator />
           <WriteFinishBox />
         </>

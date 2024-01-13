@@ -61,7 +61,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
           <meta
             property="og:image"
-            content="static/images/room-background.png"
+            content="static/images/room-background.webp"
           />
           <meta
             property="og:description"

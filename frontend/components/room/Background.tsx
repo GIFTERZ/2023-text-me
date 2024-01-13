@@ -2418,7 +2418,7 @@ function Background({ letters }: Props) {
           id="image0_291_1244"
           width="4096"
           height="2216"
-          xlinkHref="static/images/room-background.png"
+          xlinkHref="static/images/room-background.webp"
         />
         <rect id="image1_291_1244" width="320" height="400" fill="#f4f4f4" />
         <image

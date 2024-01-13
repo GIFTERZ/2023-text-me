@@ -28,7 +28,7 @@ function getInfo() {
             selectMail={() => setProcess(PROCESS.EMAIL)}
             selectPost={() => setProcess(PROCESS.POSTCODE)}
           />
-          <BackgroundImage src="/static/images/room-background.png" />
+          <BackgroundImage src="/static/images/room-background.webp" />
         </>
       );
     case PROCESS.EMAIL:
@@ -38,7 +38,7 @@ function getInfo() {
           <EmailForm
             complete={() => router.push("/slow-letter/write?type=email")}
           />
-          <BackgroundImage src="/static/images/room-background.png" />
+          <BackgroundImage src="/static/images/room-background.webp" />
         </>
       );
     case PROCESS.POSTCODE:
@@ -46,7 +46,7 @@ function getInfo() {
         <>
           <SlowBackHeader onBackClick={() => setProcess(PROCESS.SELECT)} />
           <PostCodeForm complete={() => setProcess(PROCESS.ADDRESS)} />
-          <BackgroundImage src="/static/images/room-background.png" />
+          <BackgroundImage src="/static/images/room-background.webp" />
         </>
       );
     case PROCESS.ADDRESS:
@@ -56,7 +56,7 @@ function getInfo() {
           <AddressForm
             complete={() => router.push("/slow-letter/write?type=post")}
           />
-          <BackgroundImage src="/static/images/room-background.png" />
+          <BackgroundImage src="/static/images/room-background.webp" />
         </>
       );
   }
