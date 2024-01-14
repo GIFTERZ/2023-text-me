@@ -90,8 +90,8 @@ function SelectCard({ type, next }: Props) {
             src={card.src}
             onClick={() => select(card.src)}
             alt={`${card.alt}`}
-            width={272}
-            height={272}
+            width={200}
+            height={200}
           />
         ))}
       </PictureContainer>
