@@ -8,7 +8,6 @@ import { useCaptureMode } from "../../stores/useCaptureMode";
 import { LETTER_PROPS } from "./BackgroundLetterProps";
 import BackgroundLetter from "./BackgroundLetter";
 import uuid from "react-uuid";
-import { image1, image2 } from "./BackgroundImage";
 import Head from "next/head";
 interface Props {
   letters: Letter[];
@@ -98,6 +97,18 @@ function Background({ letters }: Props) {
           fetchpriority="high"
           as="image"
           href="/static/images/card-4.webp"
+        />
+        <link
+          rel="preload"
+          fetchpriority="high"
+          as="image"
+          href="/static/images/line-1.webp"
+        />
+        <link
+          rel="preload"
+          fetchpriority="high"
+          as="image"
+          href="/static/images/line-1.webp"
         />
       </Head>
       <svg
@@ -2459,15 +2470,17 @@ function Background({ letters }: Props) {
           <rect id="image1_291_1244" width="320" height="400" fill="#f4f4f4" />
           <image
             id="image3_291_1244"
-            width="1280"
-            height="720"
-            xlinkHref={image1}
+            height="600"
+            xlinkHref={"/static/images/line-1.webp"}
+            x="130"
+            y="83"
           />
           <image
             id="image4_291_1244"
-            width="1560"
-            height="844"
-            xlinkHref={image2}
+            height="760"
+            xlinkHref={"/static/images/line-2.webp"}
+            x="100"
+            y="80"
           />
         </defs>
       </svg>

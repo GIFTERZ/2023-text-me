@@ -6,7 +6,8 @@ import EmailForm from "../../components/slow/EmailForm";
 import { useRouter } from "next/navigation";
 import PostCodeForm from "../../components/slow/PostCodeForm";
 import SlowBackHeader from "../../components/slow/BackHeader";
-import { BackgroundImage } from ".";
+
+import BackgroundTemplate from "../../components/slow/BackgroundImage";
 
 const PROCESS = {
   SELECT: "SELECT",
@@ -22,42 +23,38 @@ function getInfo() {
   switch (process) {
     case PROCESS.SELECT:
       return (
-        <>
+        <BackgroundTemplate>
           <SlowBackHeader onBackClick={() => router.push("/slow-letter")} />
           <SelectMethod
             selectMail={() => setProcess(PROCESS.EMAIL)}
             selectPost={() => setProcess(PROCESS.POSTCODE)}
           />
-          <BackgroundImage src="/static/images/room-background.webp" />
-        </>
+        </BackgroundTemplate>
       );
     case PROCESS.EMAIL:
       return (
-        <>
+        <BackgroundTemplate>
           <SlowBackHeader onBackClick={() => setProcess(PROCESS.SELECT)} />
           <EmailForm
             complete={() => router.push("/slow-letter/write?type=email")}
           />
-          <BackgroundImage src="/static/images/room-background.webp" />
-        </>
+        </BackgroundTemplate>
       );
     case PROCESS.POSTCODE:
       return (
-        <>
+        <BackgroundTemplate>
           <SlowBackHeader onBackClick={() => setProcess(PROCESS.SELECT)} />
           <PostCodeForm complete={() => setProcess(PROCESS.ADDRESS)} />
-          <BackgroundImage src="/static/images/room-background.webp" />
-        </>
+        </BackgroundTemplate>
       );
     case PROCESS.ADDRESS:
       return (
-        <>
+        <BackgroundTemplate>
           <SlowBackHeader onBackClick={() => setProcess(PROCESS.POSTCODE)} />
           <AddressForm
             complete={() => router.push("/slow-letter/write?type=post")}
           />
-          <BackgroundImage src="/static/images/room-background.webp" />
-        </>
+        </BackgroundTemplate>
       );
   }
 }

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Button from "../../common/button/Button";
 import { GreenRightCorner } from "../../common/button/ButtonStyle";
 import uuid from "react-uuid";
-import Image from "next/image";
+import BackgroundTemplate from "../../components/slow/BackgroundImage";
 
 function SlowLetter() {
   const router = useRouter();
@@ -18,7 +18,7 @@ function SlowLetter() {
   };
 
   return (
-    <>
+    <BackgroundTemplate>
       <TextContainer>
         <Head>
           1년 뒤의 나에게
@@ -37,28 +37,11 @@ function SlowLetter() {
       >
         나에게 편지 쓰러 가기
       </Button>
-      <BackgroundImage
-        src="/static/images/room-background.webp"
-        width={1500}
-        height={1000}
-        alt={"크리스마스 배경"}
-      />
-    </>
+    </BackgroundTemplate>
   );
 }
 
 export default SlowLetter;
-
-export const BackgroundImage = styled(Image)`
-  width: inherit;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  overflow: hidden;
-  opacity: 0.25;
-  object-fit: cover;
-  z-index: 0;
-`;
 
 const TextContainer = styled.div`
   display: flex;
