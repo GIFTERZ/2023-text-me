@@ -4,15 +4,19 @@ import { Kakao } from "../../common/button/ButtonStyle";
 import { Icon } from "@iconify/react";
 import { useKakaoLogin } from "../../stores/useKakaoLogin";
 
+interface Props {
+  complete: Function;
+}
+
 const KAKAO_AUTH_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/oauth/kakao`;
 
-function KakaoLoginButton() {
+function KakaoLoginButton({ complete }: Props) {
   const { getKakaoToken } = useKakaoLogin();
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get("code");
     if (code) {
-      getKakaoToken({ code });
+      getKakaoToken({ code }, complete);
     }
   }, []);
 
