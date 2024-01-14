@@ -23,10 +23,11 @@ function Write() {
   const { pictureUrl } = useCardPicture();
 
   useEffect(() => {
-    if (searchParams) {
-      getRoomInfo(searchParams.get("uid"));
+    const userId = searchParams.get("uid");
+    if (userId) {
+      getRoomInfo(userId);
     }
-  }, []);
+  }, [searchParams]);
 
   switch (process) {
     case PROCESS.SELECT:
