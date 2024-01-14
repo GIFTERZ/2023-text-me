@@ -1,20 +1,23 @@
 import Link from "next/link";
 import { useAlertModal } from "../../stores/useAlertModal";
-import AlertModal from "../../components/room/AlertModal";
-import SnowFall from "react-snowfall";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
-import LettersContainer from "../../components/room/LettersContainer";
-import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
 import styled from "styled-components";
 import ButtonsContainer from "../../components/room/ButtonsContainer";
 import { RightButton } from "../../styles/components/Button";
 import { useCaptureMode } from "../../stores/useCaptureMode";
-import SaveModal from "../../components/room/SaveModal";
 import ErrorContainer from "../../components/common/ErrorContainer";
 import Head from "next/head";
 import LoadingContainer from "../../components/common/LoadingContainer";
+import LettersContainer from "../../components/room/LettersContainer";
+import dynamic from "next/dynamic";
+const AlertModal = dynamic(() => import("../../components/room/AlertModal"));
+const SnowFall = dynamic(() => import("react-snowfall"));
+const LetterViewContainer = dynamic(
+  () => import("../../components/room/LetterViewContainer")
+);
+const SaveModal = dynamic(() => import("../../components/room/SaveModal"));
 
 const LETTER_NOT_OWN_MESSAGE = "본인의 편지만 열어볼 수 있어요!";
 const LETTER_NOT_ARRIVE_MESSAGE = "아직 편지가 도착하지 않았어요!";
