@@ -24,10 +24,25 @@ const deleteAccessToken = () => {
   deleteCookie(STORAGE_NAME.ACCESS_TOKEN);
 };
 
+const setRefreshToken = (token: string) => {
+  localStorage.setItem("textMeRefreshToken", token);
+};
+
+const getRefreshToken = () => {
+  return localStorage.getItem("textMeRefreshToken");
+};
+
+const deleteRefreshToken = () => {
+  localStorage.removeItem("textMeRefreshToken");
+};
+
 export {
   setAccessToken,
   setExpiryTime,
   getAccessToken,
   getExpiryTime,
   deleteAccessToken,
+  setRefreshToken,
+  getRefreshToken,
+  deleteRefreshToken,
 };
