@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../../common/button/Button";
 import { GreenRightCorner } from "../../common/button/ButtonStyle";
-import { BackgroundImage } from "../../pages/slow-letter";
 import { SelectContainer } from "../../pages/slow-letter/get-info";
 
 interface Props {
