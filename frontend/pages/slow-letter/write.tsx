@@ -1,14 +1,15 @@
+import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BackgroundImage } from ".";
-import CardRotator from "../../components/slow/CardRotator";
+import BackgroundTemplate from "../../components/slow/BackgroundImage";
 import WriteFinishBox from "../../components/slow/WriteFinishBox";
 import SelectCard from "../../components/write/SelectCard";
-import WriteLetter from "../../components/write/WriteLetter";
 import { useCardPicture } from "../../stores/useCardPicture";
 import { useSendSlowLetterByAddress } from "../../stores/useSendSlowLetterByAddress";
 import { useSendSlowLetterByEmail } from "../../stores/useSendSlowLetterByEmail";
 import { useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
+const WriteLetter = dynamic(() => import("../../components/write/WriteLetter"));
+const CardRotator = dynamic(() => import("../../components/slow/CardRotator"));
 
 const PROCESS = {
   SELECT: "SELECT",
@@ -95,11 +96,10 @@ function Write() {
       );
     case PROCESS.COMPLETE:
       return (
-        <>
-          <BackgroundImage src="/static/images/room-background.webp" />
+        <BackgroundTemplate>
           <CardRotator />
           <WriteFinishBox />
-        </>
+        </BackgroundTemplate>
       );
   }
 }
