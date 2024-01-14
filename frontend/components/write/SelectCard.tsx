@@ -8,6 +8,7 @@ import CameraIcon from "./icons/CameraIcon";
 import Compressor from "compressorjs";
 import { cardAlt } from "../../public/static/images/card-alt";
 import Image from "next/image";
+import PreloadCardLink from "../common/PreloadCardLink";
 
 interface Props {
   type: "UPLOAD" | "SELECT";
@@ -62,30 +63,7 @@ function SelectCard({ type, next }: Props) {
     <SelectFrame>
       <Head>
         <title>카드 사진 선택 - Text me!</title>
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-1.webp"
-        />
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-2.webp"
-        />
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-3.webp"
-        />
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-4.webp"
-        />
+        <PreloadCardLink />
       </Head>
       <BackHeader>
         <Title>카드 선택하기</Title>

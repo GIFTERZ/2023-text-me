@@ -9,6 +9,7 @@ import { LETTER_PROPS } from "./BackgroundLetterProps";
 import BackgroundLetter from "./BackgroundLetter";
 import uuid from "react-uuid";
 import Head from "next/head";
+import PreloadCardLink from "../common/PreloadCardLink";
 interface Props {
   letters: Letter[];
 }
@@ -78,26 +79,9 @@ function Background({ letters }: Props) {
           rel="preload"
           fetchpriority="high"
           as="image"
-          href="/static/images/card-1.webp"
+          href="/static/images/room-background.webp"
         />
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-2.webp"
-        />
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-3.webp"
-        />
-        <link
-          rel="preload"
-          fetchpriority="high"
-          as="image"
-          href="/static/images/card-4.webp"
-        />
+        <PreloadCardLink />
         <link
           rel="preload"
           fetchpriority="high"
@@ -2465,7 +2449,7 @@ function Background({ letters }: Props) {
             id="image0_291_1244"
             width="4096"
             height="2216"
-            xlinkHref="static/images/room-background.webp"
+            xlinkHref="/static/images/room-background.webp"
           />
           <rect id="image1_291_1244" width="320" height="400" fill="#f4f4f4" />
           <image

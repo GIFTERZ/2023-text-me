@@ -7,6 +7,7 @@ import { GreenRightCorner } from "../../common/button/ButtonStyle";
 import { useCardPicture } from "../../stores/useCardPicture";
 import { Frame } from "../../styles/components/Frame";
 import BackHeader from "../common/BackHeader";
+import PreloadCardLink from "../common/PreloadCardLink";
 
 interface Props {
   prev: Function;
@@ -49,6 +50,7 @@ function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
     <Frame>
       <Head>
         <title>편지 쓰기 - Text me!</title>
+        <PreloadCardLink />
       </Head>
       <BackHeader onBackClick={() => prev()}>
         <Title>편지 쓰기</Title>
