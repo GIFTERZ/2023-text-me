@@ -7,6 +7,7 @@ import BackHeader from "../common/BackHeader";
 import CameraIcon from "./icons/CameraIcon";
 import Compressor from "compressorjs";
 import { cardAlt } from "../../public/static/images/card-alt";
+import Image from "next/image";
 
 interface Props {
   type: "UPLOAD" | "SELECT";
@@ -61,6 +62,30 @@ function SelectCard({ type, next }: Props) {
     <SelectFrame>
       <Head>
         <title>카드 사진 선택 - Text me!</title>
+        <link
+          rel="preload"
+          fetchpriority="high"
+          as="image"
+          href="/static/images/card-1.webp"
+        />
+        <link
+          rel="preload"
+          fetchpriority="high"
+          as="image"
+          href="/static/images/card-2.webp"
+        />
+        <link
+          rel="preload"
+          fetchpriority="high"
+          as="image"
+          href="/static/images/card-3.webp"
+        />
+        <link
+          rel="preload"
+          fetchpriority="high"
+          as="image"
+          href="/static/images/card-4.webp"
+        />
       </Head>
       <BackHeader>
         <Title>카드 선택하기</Title>
@@ -87,6 +112,8 @@ function SelectCard({ type, next }: Props) {
             src={card.src}
             onClick={() => select(card.src)}
             alt={`${card.alt}`}
+            width={272}
+            height={272}
           />
         ))}
       </PictureContainer>
@@ -131,7 +158,7 @@ const InputDiv = styled.div`
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
 `;
 
-const CardImage = styled.img`
+const CardImage = styled(Image)`
   width: 100%;
   height: auto;
 

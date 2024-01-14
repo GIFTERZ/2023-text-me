@@ -5,6 +5,7 @@ import { useLetterView } from "../../stores/useLetterView";
 import { useMembers } from "../../stores/useMembers";
 import { Letter } from "../../types";
 import { useCaptureMode } from "../../stores/useCaptureMode";
+import Image from "next/image";
 
 type CardStyle = {
   top: number;
@@ -47,7 +48,12 @@ function LetterComponent({ letter, cardStyle }: Props) {
       rotate={cardStyle.rotate}
       isCaptureMode={isCaptureMode}
     >
-      <CardImg src={letter.imageUrl} />
+      <CardImg
+        src={letter.imageUrl}
+        alt={"편지 배경"}
+        width={300}
+        height={300}
+      />
     </Card>
   );
 }
@@ -80,7 +86,7 @@ const Card = styled.div<CardStyle>`
   }
 `;
 
-const CardImg = styled.img`
+const CardImg = styled(Image)`
   width: 100%;
   height: 100%;
 

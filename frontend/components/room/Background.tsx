@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { useMembers } from "../../stores/useMembers";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useLetterView } from "../../stores/useLetterView";
 import { Letter } from "../../types";
 import { useAlertModal } from "../../stores/useAlertModal";
@@ -118,12 +118,8 @@ function Background({ letters }: Props) {
           fill="url(#pattern0)"
         />
         {LETTER_PROPS.map((p, i) => (
-          <>
-            <BackgroundLetter
-              props={p}
-              imageUrl={letters[i]?.imageUrl}
-              key={uuid()}
-            />
+          <Fragment key={uuid()}>
+            <BackgroundLetter props={p} imageUrl={letters[i]?.imageUrl} />
             {i == 20 && (
               <rect
                 x="2"
@@ -134,7 +130,7 @@ function Background({ letters }: Props) {
                 style={{ pointerEvents: "none" }}
               />
             )}
-          </>
+          </Fragment>
         ))}
         <rect
           x="2"
