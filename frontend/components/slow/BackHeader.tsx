@@ -20,5 +20,5 @@ export default SlowBackHeader;
 const HeaderContainer = styled.div`
   position: relative;
   z-index: 2;
-  margin: 20px;
+  padding: 20px;
 `;

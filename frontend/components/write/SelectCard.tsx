@@ -7,6 +7,8 @@ import BackHeader from "../common/BackHeader";
 import CameraIcon from "./icons/CameraIcon";
 import Compressor from "compressorjs";
 import { cardAlt } from "../../public/static/images/card-alt";
+import Image from "next/image";
+import PreloadCardLink from "../common/PreloadCardLink";
 
 interface Props {
   type: "UPLOAD" | "SELECT";
@@ -20,7 +22,7 @@ function SelectCard({ type, next }: Props) {
   useEffect(() => {
     return setConstCard(
       Array.from({ length: 4 }, () => "/static/images/card").map((v, i) => {
-        return { src: `${v}-${i + 1}.png`, alt: cardAlt[`card-${i + 1}`] };
+        return { src: `${v}-${i + 1}.webp`, alt: cardAlt[`card-${i + 1}`] };
       })
     );
   }, []);
@@ -61,6 +63,7 @@ function SelectCard({ type, next }: Props) {
     <SelectFrame>
       <Head>
         <title>카드 사진 선택 - Text me!</title>
+        <PreloadCardLink />
       </Head>
       <BackHeader>
         <Title>카드 선택하기</Title>
@@ -87,6 +90,8 @@ function SelectCard({ type, next }: Props) {
             src={card.src}
             onClick={() => select(card.src)}
             alt={`${card.alt}`}
+            width={200}
+            height={200}
           />
         ))}
       </PictureContainer>
@@ -131,7 +136,7 @@ const InputDiv = styled.div`
   box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4);
 `;
 
-const CardImage = styled.img`
+const CardImage = styled(Image)`
   width: 100%;
   height: auto;
 

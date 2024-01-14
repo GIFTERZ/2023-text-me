@@ -2,47 +2,11 @@
 
 @font-face {
   font-family: "Pretendard";
-  font-weight: 900;
-  font-display: swap;
-  src: local("Pretendard Black"),
-    url("./woff2/Pretendard-Black.woff2") format("woff2"),
-    url("./woff/Pretendard-Black.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 800;
-  font-display: swap;
-  src: local("Pretendard ExtraBold"),
-    url("./woff2/Pretendard-ExtraBold.woff2") format("woff2"),
-    url("./woff/Pretendard-ExtraBold.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
   font-weight: 700;
   font-display: swap;
   src: local("Pretendard Bold"),
-    url("./woff2/Pretendard-Bold.woff2") format("woff2"),
-    url("./woff/Pretendard-Bold.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 600;
-  font-display: swap;
-  src: local("Pretendard SemiBold"),
-    url("./woff2/Pretendard-SemiBold.woff2") format("woff2"),
-    url("./woff/Pretendard-SemiBold.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 500;
-  font-display: swap;
-  src: local("Pretendard Medium"),
-    url("./woff2/Pretendard-Medium.woff2") format("woff2"),
-    url("./woff/Pretendard-Medium.woff") format("woff");
+    url("subset-Pretendard-Bold.woff2") format("woff2"),
+    url("subset-Pretendard-Bold.woff") format("woff");
 }
 
 @font-face {
@@ -50,95 +14,16 @@
   font-weight: 400;
   font-display: swap;
   src: local("Pretendard Regular"),
-    url("./woff2/Pretendard-Regular.woff2") format("woff2"),
-    url("./woff/Pretendard-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 300;
-  font-display: swap;
-  src: local("Pretendard Light"),
-    url("./woff2/Pretendard-Light.woff2") format("woff2"),
-    url("./woff/Pretendard-Light.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 200;
-  font-display: swap;
-  src: local("Pretendard ExtraLight"),
-    url("./woff2/Pretendard-ExtraLight.woff2") format("woff2"),
-    url("./woff/Pretendard-ExtraLight.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 100;
-  font-display: swap;
-  src: local("Pretendard Thin"),
-    url("./woff2/Pretendard-Thin.woff2") format("woff2"),
-    url("./woff/Pretendard-Thin.woff") format("woff");
-}
-
-/* 어비폰트  */
-@font-face {
-  font-family: "UhBeemysen";
-  src: url("UhBeemysen.eot");
-}
-@font-face {
-  font-family: "UhBeemysen";
-  src: url("UhBeemysen.woff") format("woff");
-}
-@font-face {
-  font-family: "UhBeemysen";
-  src: url("UhBeemysen.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "UhBeemysen";
-  src: url("UhBeemysenBold.ttf") format("truetype");
-  font-weight: bold;
-}
-
-/* 카페 서라운드 */
-
-@font-face {
-  font-family: "Cafe24Ssurround";
-  src: url("Cafe24Ssurround.ttf") format("truetype");
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: "Cafe24Ssurround";
-  src: url("Cafe24SsurroundAir.ttf") format("truetype");
-  font-weight: lighter;
-}
-
-/* 강원 교육 새음 */
-
-@font-face {
-  font-family: "GangwonEduSaeeum";
-  src: url("GangwonEduSaeeumMedium.woff2") format("woff2"),
-    url("GangwonEduSaeeumMedium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+    url("subset-Pretendard-Regular.woff2") format("woff2"),
+    url("subset-Pretendard-Regular.woff") format("woff");
 }
 
 /* 어비 미미 */
 
 @font-face {
   font-family: "UhBeeMiMi";
-  src: url("UhBee-MiMi-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "UhBeeMiMi";
-  src: url("UhBee-MiMi.woff") format("woff");
+  src: url("subset-UhBeeMiMi.woff2") format("woff2"),
+    url("subset-UhBeeMiMi.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

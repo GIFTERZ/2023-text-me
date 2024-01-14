@@ -11,13 +11,13 @@ type LoginBody = {
 interface KakaoLogin {
   loading: boolean;
   error: AxiosError | null;
-  getKakaoToken: (data: LoginBody) => void;
+  getKakaoToken: (data: LoginBody, complete: Function) => void;
 }
 
 const useKakaoLogin = create<KakaoLogin>((set) => ({
   loading: false,
   error: null,
-  getKakaoToken: async ({ code }) => {
+  getKakaoToken: async ({ code }, complete) => {
     set({ loading: true });
     await visitorApi
       .post(PATH.USER.LOGIN.KAKAO, {
@@ -30,6 +30,7 @@ const useKakaoLogin = create<KakaoLogin>((set) => ({
         let createdTime = new Date().getTime();
         setAccessToken(token);
         setExpiryTime(createdTime);
+        complete();
       })
       .catch((error) => {
         set({ error });

@@ -1,6 +1,5 @@
 import React from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
-import { BackgroundImage } from "../../pages/slow-letter";
 import { SelectContainer } from "../../pages/slow-letter/get-info";
 import { useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
 

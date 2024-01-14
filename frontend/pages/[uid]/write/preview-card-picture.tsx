@@ -92,7 +92,7 @@ const WhiteRightButton = styled(WhiteLeftButton)`
   border-radius: 10px 10px 0px 10px;
   color: #0eca92;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   line-height: 17px;
 `;

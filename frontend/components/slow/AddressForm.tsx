@@ -1,7 +1,6 @@
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import Form from "../../common/form/Form";
-import { BackgroundImage } from "../../pages/slow-letter";
 import { SelectContainer } from "../../pages/slow-letter/get-info";
 import { Address, useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
 import AddressFormContext from "./AddressFormContext";

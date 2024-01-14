@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Spinner } from "../../styles/indicators/Loader";
 import DeferredComponent from "../common/DeferredComponent";
 import uuid from "react-uuid";
+import Image from "next/image";
 
 function LetterView() {
   const {
@@ -66,7 +67,13 @@ function LetterView() {
         flipSpeedFrontToBack={1}
       >
         <Card>
-          <img src={letter?.imageUrl} onClick={flip} />
+          <Image
+            src={letter?.imageUrl}
+            onClick={flip}
+            alt="크리스마스 카드"
+            width={272}
+            height={272}
+          />
         </Card>
         <CardBack imgUrl={letter?.imageUrl} onClick={flip}>
           <ToText>To. {roomInfo?.userName}</ToText>

@@ -7,6 +7,7 @@ import { GreenRightCorner } from "../../common/button/ButtonStyle";
 import { useCardPicture } from "../../stores/useCardPicture";
 import { Frame } from "../../styles/components/Frame";
 import BackHeader from "../common/BackHeader";
+import PreloadCardLink from "../common/PreloadCardLink";
 
 interface Props {
   prev: Function;
@@ -49,6 +50,7 @@ function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
     <Frame>
       <Head>
         <title>편지 쓰기 - Text me!</title>
+        <PreloadCardLink />
       </Head>
       <BackHeader onBackClick={() => prev()}>
         <Title>편지 쓰기</Title>
@@ -57,12 +59,12 @@ function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
         <LetterContainer imgurl={pictureUrl} id="box">
           <ToDiv>To. {to}</ToDiv>
           <TextArea
-            maxLength={300}
+            maxLength={500}
             {...register("contents", {
               required: "편지를 입력해주세요.",
               maxLength: {
-                value: 300,
-                message: "편지는 300자 이내여야 합니다.",
+                value: 500,
+                message: "편지는 500자 이내여야 합니다.",
               },
             })}
             placeholder="편지를 입력해주세요."
