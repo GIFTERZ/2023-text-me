@@ -18,7 +18,7 @@ public class Card extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Lob
+    @Column(length = 300)
     private String imageUrl;
 
     public static Card from(String imageUrl) {

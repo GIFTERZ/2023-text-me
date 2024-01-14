@@ -22,12 +22,11 @@ public class Letter extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private User user;
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String senderName;
-    @Lob
-    @Column(nullable = false)
+    @Column(length = 1000, nullable = false)
     private String contents;
-    @Lob
+    @Column(length = 300)
     private String imageUrl;
 
     public static Letter of(User user, String senderName, String contents, String imageUrl) {
