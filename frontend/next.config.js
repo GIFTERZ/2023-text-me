@@ -7,7 +7,9 @@ const nextConfig = {
   },
 };
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")();
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  openAnalyzer: false,
+});
 
-// module.exports = withBundleAnalyzer(nextConfig);
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
+// module.exports = nextConfig;
