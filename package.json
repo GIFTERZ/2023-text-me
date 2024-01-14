@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@next/bundle-analyzer": "^14.0.4"
+  }
+}
