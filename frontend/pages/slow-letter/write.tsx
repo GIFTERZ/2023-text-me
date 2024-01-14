@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import BackgroundTemplate from "../../components/slow/BackgroundImage";
+import BackgroundTemplate from "../../components/slow/BackgroundTemplate";
 import WriteFinishBox from "../../components/slow/WriteFinishBox";
 import SelectCard from "../../components/write/SelectCard";
 import { useCardPicture } from "../../stores/useCardPicture";

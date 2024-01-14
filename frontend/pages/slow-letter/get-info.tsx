@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import PostCodeForm from "../../components/slow/PostCodeForm";
 import SlowBackHeader from "../../components/slow/BackHeader";
 
-import BackgroundTemplate from "../../components/slow/BackgroundImage";
+import BackgroundTemplate from "../../components/slow/BackgroundTemplate";
 
 const PROCESS = {
   SELECT: "SELECT",

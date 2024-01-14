@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Button from "../../common/button/Button";
 import { GreenRightCorner } from "../../common/button/ButtonStyle";
 import uuid from "react-uuid";
-import BackgroundTemplate from "../../components/slow/BackgroundImage";
+import BackgroundTemplate from "../../components/slow/BackgroundTemplate";
 
 function SlowLetter() {
   const router = useRouter();
