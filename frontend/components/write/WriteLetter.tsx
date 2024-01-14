@@ -57,12 +57,12 @@ function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
         <LetterContainer imgurl={pictureUrl} id="box">
           <ToDiv>To. {to}</ToDiv>
           <TextArea
-            maxLength={300}
+            maxLength={500}
             {...register("contents", {
               required: "편지를 입력해주세요.",
               maxLength: {
-                value: 300,
-                message: "편지는 300자 이내여야 합니다.",
+                value: 500,
+                message: "편지는 500자 이내여야 합니다.",
               },
             })}
             placeholder="편지를 입력해주세요."
