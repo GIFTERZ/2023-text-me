@@ -54,7 +54,7 @@ const TextContainer = styled.div`
 
 const Head = styled.p`
   font-size: 36px;
-  font-weight: 800;
+  font-weight: 700;
   text-align: center;
 `;
 
