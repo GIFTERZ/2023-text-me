@@ -30,7 +30,7 @@ public class SlowLetter extends BaseEntity {
     private String receiverName;
     @Column(length = 15)
     private String phoneNumber;
-    @Column(length = 300)
+    @Column(length = 125)
     private String imageUrl;
 
     public SlowLetter(String email, String senderName, String imageUrl, String contents) {
