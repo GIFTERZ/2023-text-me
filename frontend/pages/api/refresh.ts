@@ -10,7 +10,7 @@ export default function handler(
   res: NextApiResponse<ResponseData>
 ) {
   res.status(200).json({
-    accessToken: "at",
-    refreshToken: "rt",
+    accessToken: `New Access Token: ${Math.random()}`,
+    refreshToken: "New Refresh Token",
   });
 }
