@@ -23,7 +23,7 @@ public class Member extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 15, nullable = false)
     private String password;
 
     private Member(User user, String password) {
