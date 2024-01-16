@@ -16,7 +16,9 @@ public class SlowLetter extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(length = 500, nullable = false)
     private String contents;
+    @Column(length = 25, nullable = false)
     private String senderName;
 
     @Nullable
@@ -24,11 +26,11 @@ public class SlowLetter extends BaseEntity {
     @Embedded
     @Nullable
     private Address address;
-    @Nullable
+    @Column(length = 25)
     private String receiverName;
-    @Nullable
+    @Column(length = 15)
     private String phoneNumber;
-    @Nullable
+    @Column(length = 125)
     private String imageUrl;
 
     public SlowLetter(String email, String senderName, String imageUrl, String contents) {
