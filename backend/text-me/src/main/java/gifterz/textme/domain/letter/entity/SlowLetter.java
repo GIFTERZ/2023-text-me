@@ -18,7 +18,7 @@ public class SlowLetter extends BaseEntity {
     private Long id;
     @Column(length = 500, nullable = false)
     private String contents;
-    @Column(length = 50, nullable = false)
+    @Column(length = 25, nullable = false)
     private String senderName;
 
     @Nullable
@@ -26,7 +26,7 @@ public class SlowLetter extends BaseEntity {
     @Embedded
     @Nullable
     private Address address;
-    @Column(length = 50)
+    @Column(length = 25)
     private String receiverName;
     @Column(length = 15)
     private String phoneNumber;
