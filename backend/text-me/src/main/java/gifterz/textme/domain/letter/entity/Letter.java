@@ -24,7 +24,7 @@ public class Letter extends BaseEntity {
     private User user;
     @Column(length = 50, nullable = false)
     private String senderName;
-    @Column(length = 1000, nullable = false)
+    @Column(length = 500, nullable = false)
     private String contents;
     @Column(length = 125)
     private String imageUrl;

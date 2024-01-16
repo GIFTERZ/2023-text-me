@@ -16,7 +16,7 @@ public class SlowLetter extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(length = 1000, nullable = false)
+    @Column(length = 500, nullable = false)
     private String contents;
     @Column(length = 50, nullable = false)
     private String senderName;
