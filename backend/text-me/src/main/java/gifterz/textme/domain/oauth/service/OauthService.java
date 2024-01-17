@@ -46,7 +46,7 @@ public class OauthService {
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
         String encryptedUserId = encryptUserId(user.getId());
         return new LoginResponse(encryptedUserId, user.getEmail(), user.getName(), accessToken,
-                refreshToken.getId(), refreshToken.getCreatedAt());
+                refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 
     private String encryptUserId(Long id) {

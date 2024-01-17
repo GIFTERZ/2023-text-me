@@ -21,13 +21,12 @@ public class JwtUtils {
 
 
     public String generateAccessToken(String email) {
-        return generateTokenFromSubject("ATK", email, jwtExpirationMs);
+        return generateTokenFromSubject(email, jwtExpirationMs);
     }
 
-    private String generateTokenFromSubject(String subject, String payload, Long expirationMs) {
-        return Jwts.builder().setSubject(subject).setIssuedAt(new Date())
+    private String generateTokenFromSubject(String email, Long expirationMs) {
+        return Jwts.builder().setSubject(email).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + expirationMs))
-                .setPayload(payload)
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
