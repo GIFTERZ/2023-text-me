@@ -17,18 +17,21 @@ public class JwtUtils {
     private String jwtSecret;
 
     @Value("${security.jwt.token.expirationMs}")
-    private int jwtExpirationMs;
+    private Long jwtExpirationMs;
 
-    public String generateJwtToken(User user) {
-        return generateTokenFromSubject(user.getEmail());
+
+    public String generateAccessToken(String email) {
+        return generateTokenFromSubject("ATK", email, jwtExpirationMs);
     }
 
-    private String generateTokenFromSubject(String subject) {
+    private String generateTokenFromSubject(String subject, String payload, Long expirationMs) {
         return Jwts.builder().setSubject(subject).setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(new Date((new Date()).getTime() + expirationMs))
+                .setPayload(payload)
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
+
 
     public String getUserEmailFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
