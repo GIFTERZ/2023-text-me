@@ -13,16 +13,17 @@ public class LoginResponse {
     private String id;
     private String email;
     private String userName;
-    private String token;
-    private Long refreshTokenId;
+    private String accessToken;
+    private String refreshToken;
     private LocalDateTime createdAt;
 
-    public LoginResponse(String id, String email, String userName, String token, Long refreshTokenId, LocalDateTime createdAt) {
+    public LoginResponse(String id, String email, String userName,
+                         String accessToken, String refreshToken, LocalDateTime createdAt) {
         this.id = id;
         this.email = email;
         this.userName = userName;
-        this.token = token;
-        this.refreshTokenId = refreshTokenId;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.createdAt = createdAt;
     }
 }
