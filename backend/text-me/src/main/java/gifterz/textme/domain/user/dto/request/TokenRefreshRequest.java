@@ -7,6 +7,5 @@ import jakarta.validation.constraints.NotBlank;
 @Data
 public class TokenRefreshRequest {
     @NotBlank
-    private String accessToken;
-
+    private String refreshToken;
 }
