@@ -36,6 +36,10 @@ public class RefreshTokenService {
         RefreshToken refreshToken = findByToken(token)
                 .orElseThrow(() -> new TokenRefreshException(token, "refreshToken이 DB에 존재하지 않습니다."));
         verifyExpiration(refreshToken);
+        checkStatus(refreshToken);
+        String newRefreshToken = UUID.randomUUID().toString();
+        Instant expiryDate = Instant.now().plusMillis(refreshTokenDurationMs);
+        refreshToken.updateRefreshToken(newRefreshToken, expiryDate);
         User user = refreshToken.getUser();
         String newToken = jwtUtils.generateAccessToken(user.getEmail());
         return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
