@@ -24,11 +24,16 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtUtils jwtUtils;
 
-
     public RefreshToken createRefreshToken(User user) {
-        RefreshToken refreshToken =
-                new RefreshToken(user, UUID.randomUUID().toString(), Instant.now().plusMillis(refreshTokenDurationMs));
-
+        Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUser(user);
+        String newRefreshToken = UUID.randomUUID().toString();
+        Instant expiryDate = Instant.now().plusMillis(refreshTokenDurationMs);
+        if (optionalRefreshToken.isPresent()) {
+            RefreshToken refreshToken = optionalRefreshToken.get();
+            refreshToken.updateRefreshToken(newRefreshToken, expiryDate);
+            return refreshToken;
+        }
+        RefreshToken refreshToken = new RefreshToken(user, newRefreshToken, expiryDate);
         refreshTokenRepository.save(refreshToken);
         return refreshToken;
     }
