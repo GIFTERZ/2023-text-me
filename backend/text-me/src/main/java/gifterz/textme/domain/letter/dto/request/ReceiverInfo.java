@@ -1,11 +1,26 @@
 package gifterz.textme.domain.letter.dto.request;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gifterz.textme.domain.letter.entity.Address;
+import lombok.Builder;
+import lombok.Getter;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record ReceiverInfo(
-        String receiverName,
-        String phoneNumber
-) {
+@Builder
+@Getter
+public class ReceiverInfo {
+    private String senderName;
+    private String receiverName;
+    private Address address;
+    private String phoneNumber;
+    private String contents;
+
+    public static ReceiverInfo of(String senderName, String receiverName,
+                                  Address address, String phoneNumber, String contents) {
+        return ReceiverInfo.builder()
+                .senderName(senderName)
+                .receiverName(receiverName)
+                .address(address)
+                .phoneNumber(phoneNumber)
+                .contents(contents)
+                .build();
+    }
 }

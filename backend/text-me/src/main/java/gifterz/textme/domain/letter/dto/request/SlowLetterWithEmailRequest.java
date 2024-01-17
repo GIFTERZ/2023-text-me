@@ -5,9 +5,11 @@ import jakarta.validation.constraints.Email;
 public record SlowLetterWithEmailRequest(
         @Email
         String email,
-        String contents
+        String senderName,
+        String contents,
+        String imageUrl
 ) {
-    public EmailWithContents toEmailWithContents() {
-        return new EmailWithContents(email, contents);
+    public SenderInfo toSenderInfo() {
+        return SenderInfo.of(email, senderName, imageUrl);
     }
 }

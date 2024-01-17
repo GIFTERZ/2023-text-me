@@ -7,39 +7,32 @@ import { GreenRightCorner } from "../../common/button/ButtonStyle";
 import { useCardPicture } from "../../stores/useCardPicture";
 import { Frame } from "../../styles/components/Frame";
 import BackHeader from "../common/BackHeader";
+import PreloadCardLink from "../common/PreloadCardLink";
 
 interface Props {
   prev: Function;
   next: Function;
   sendLetter: Function;
   to: string;
+  letterData: Object;
 }
 type LetterForm = {
   contents: string;
-  sender: string;
+  senderName: string;
 };
-function WriteLetter({ prev, next, sendLetter, to }: Props) {
+function WriteLetter({ prev, next, sendLetter, letterData, to }: Props) {
   const { register, handleSubmit } = useForm<LetterForm>();
 
   const { pictureUrl } = useCardPicture();
 
-  const sendData = (data: LetterForm) => {
-    if (!pictureUrl) {
-      alert("카드의 배경 사진을 선택해주세요.");
-    }
+  const sendData = ({ contents, senderName }: LetterForm) => {
+    const body = {
+      contents,
+      senderName,
+      ...letterData,
+    };
 
-    // const body = {
-    //   receiverId: userId,
-    //   contents: data.contents,
-    //   senderName: data.sender,
-    //   imageUrl: pictureUrl,
-    // };
-
-    // sendLetter(body, pushCompletedPage);
-
-    // if (error) {
-    //   alert("편지를 보내는 중 에러가 발생했습니다.");
-    // }
+    sendLetter(body, next);
   };
 
   const validateData = (error: FieldErrors<LetterForm>) => {
@@ -47,8 +40,8 @@ function WriteLetter({ prev, next, sendLetter, to }: Props) {
       alert(error.contents.message);
       return;
     }
-    if (error.sender) {
-      alert(error.sender.message);
+    if (error.senderName) {
+      alert(error.senderName.message);
       return;
     }
   };
@@ -57,6 +50,7 @@ function WriteLetter({ prev, next, sendLetter, to }: Props) {
     <Frame>
       <Head>
         <title>편지 쓰기 - Text me!</title>
+        <PreloadCardLink />
       </Head>
       <BackHeader onBackClick={() => prev()}>
         <Title>편지 쓰기</Title>
@@ -65,12 +59,12 @@ function WriteLetter({ prev, next, sendLetter, to }: Props) {
         <LetterContainer imgurl={pictureUrl} id="box">
           <ToDiv>To. {to}</ToDiv>
           <TextArea
-            maxLength={300}
+            maxLength={500}
             {...register("contents", {
               required: "편지를 입력해주세요.",
               maxLength: {
-                value: 300,
-                message: "편지는 300자 이내여야 합니다.",
+                value: 500,
+                message: "편지는 500자 이내여야 합니다.",
               },
             })}
             placeholder="편지를 입력해주세요."
@@ -80,7 +74,7 @@ function WriteLetter({ prev, next, sendLetter, to }: Props) {
             <FromInput
               placeholder="보내는 사람"
               maxLength={10}
-              {...register("sender", {
+              {...register("senderName", {
                 required: "보내는 사람을 입력해주세요.",
                 maxLength: {
                   value: 10,

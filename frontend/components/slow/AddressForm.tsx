@@ -1,7 +1,6 @@
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import Form from "../../common/form/Form";
-import { BackgroundImage } from "../../pages/slow-letter";
 import { SelectContainer } from "../../pages/slow-letter/get-info";
 import { Address, useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
 import AddressFormContext from "./AddressFormContext";
@@ -23,14 +22,13 @@ function AddressForm({ complete }: Props) {
 
   return (
     <SelectContainer>
-      <h2>편지를 받을 주소 정보를 입력해주세요.</h2>
+      <h3>편지를 받을 주소 정보를 입력해주세요.</h3>
       <Form
         defaultValues={{ zonecode, defaultAddress }}
         onSubmit={handleAddressSubmit}
         inputs={AddressFormContext.getContext()}
         buttonText={"확인"}
       ></Form>
-      <BackgroundImage src="/static/images/room-background.png" />
     </SelectContainer>
   );
 }

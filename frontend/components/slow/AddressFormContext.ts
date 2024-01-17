@@ -3,7 +3,7 @@ import FormContext from "../../common/form/FormContext";
 const AddressFormContext = new FormContext();
 
 AddressFormContext.register(
-  "name",
+  "receiverName",
   {
     placeholder: "받으시는 분 성함",
   },
@@ -55,7 +55,7 @@ AddressFormContext.register(
 );
 
 AddressFormContext.register(
-  "phone",
+  "phoneNumber",
   {
     placeholder: "휴대폰 번호('-' 포함)",
   },

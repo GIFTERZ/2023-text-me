@@ -44,7 +44,7 @@ function SignIn() {
       >
         <h2>로그인</h2>
       </Form>
-      <KakaoLoginButton />
+      <KakaoLoginButton complete={() => getMember()} />
       <LinkContainer>
         <Link href="/signup">이메일로 회원가입</Link>
       </LinkContainer>

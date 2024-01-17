@@ -48,9 +48,8 @@ public class UserService {
         String password = signUpRequest.getPassword();
         String name = signUpRequest.getName();
         Optional<User> userExists = userRepository.findByEmail(email);
-        if (userExists.isPresent()) {
-            throw new EmailDuplicatedException(email);
-        }
+        checkEmailDuplicated(userExists, email);
+
         User user = User.of(email, name, AuthType.PASSWORD);
         PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
         String encodedPassword = passwordEncoder.encode(password);
@@ -59,6 +58,15 @@ public class UserService {
         memberRepository.save(member);
         String encryptedUserId = encryptUserId(user.getId());
         return new UserResponse(encryptedUserId, user.getName(), user.getEmail());
+    }
+
+    private void checkEmailDuplicated(Optional<User> userExists, String email) {
+        if (userExists.isPresent()) {
+            User user = userExists.get();
+            if (user.getAuthType() == AuthType.PASSWORD) {
+                throw new EmailDuplicatedException(email);
+            }
+        }
     }
 
     @Transactional
@@ -71,11 +79,11 @@ public class UserService {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
 
-        String accessToken = jwtUtils.generateJwtToken(user);
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
+        String accessToken = jwtUtils.generateAccessToken(email);
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
         String encryptedUserId = encryptUserId(user.getId());
         return new LoginResponse(encryptedUserId, user.getEmail(), user.getName(), accessToken,
-                refreshToken.getId(), refreshToken.getCreatedAt());
+                refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 
     public UserResponse findUserInfo(String email) {

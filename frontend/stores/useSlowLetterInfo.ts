@@ -1,6 +1,6 @@
 import create from "zustand";
 export interface Address {
-  name?: string;
+  receiverName?: string;
   zonecode: string;
   defaultAddress: string;
   detailAddress?: string;
@@ -16,7 +16,7 @@ interface SlowLetterInfo {
 const useSlowLetterInfo = create<SlowLetterInfo>((set, get) => ({
   email: null,
   address: {
-    name: null,
+    receiverName: null,
     zonecode: null,
     defaultAddress: null,
     detailAddress: null,

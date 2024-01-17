@@ -10,6 +10,7 @@ import ArrowBackIcon from "../../../components/common/icons/ArrowBackIcon";
 import Head from "next/head";
 import Compressor from "compressorjs";
 import BackHeader from "../../../components/common/BackHeader";
+import { cardAlt } from "../../../public/static/images/card-alt";
 
 export default function index() {
   const router = useRouter();
@@ -18,10 +19,10 @@ export default function index() {
     useCardPicture();
 
   useEffect(() => {
-    setConstCard(
-      Array.from({ length: 4 }, () => "/static/images/card").map(
-        (v, i) => `${v}-${i + 1}.png`
-      )
+    return setConstCard(
+      Array.from({ length: 4 }, () => "/static/images/card").map((v, i) => {
+        return { src: `${v}-${i + 1}.webp`, alt: cardAlt[`card-${i + 1}`] };
+      })
     );
   }, []);
 
@@ -78,7 +79,11 @@ export default function index() {
           onChange={(e) => fileUploadHandler(e)}
         /> */}
         {constCard?.map((cards, index) => (
-          <CardImage key={index} src={cards} onClick={() => select(cards)} />
+          <CardImage
+            key={index}
+            src={cards.src}
+            onClick={() => select(cards.src)}
+          />
         ))}
       </PictureContainer>
     </SelectFrame>

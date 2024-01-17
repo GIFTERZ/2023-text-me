@@ -3,8 +3,6 @@ package gifterz.textme.domain.letter.controller;
 import gifterz.textme.domain.letter.dto.request.*;
 import gifterz.textme.domain.letter.dto.response.AllLetterResponse;
 import gifterz.textme.domain.letter.dto.response.LetterResponse;
-import gifterz.textme.domain.letter.dto.response.SlowLetterWithAddressResponse;
-import gifterz.textme.domain.letter.dto.response.SlowLetterWithEmailResponse;
 import gifterz.textme.domain.letter.service.LetterService;
 import gifterz.textme.domain.security.jwt.JwtAuth;
 import lombok.RequiredArgsConstructor;
@@ -40,18 +38,16 @@ public class LetterController {
     }
 
     @PostMapping("/email")
-    public ResponseEntity<SlowLetterWithEmailResponse> sendSlowLetterWithEmail(
+    public ResponseEntity<Void> sendSlowLetterWithEmail(
             @RequestBody final SlowLetterWithEmailRequest request) {
-        SlowLetterWithEmailResponse letterResponse =
-                letterService.sendSlowLetterWithEmail(request.toEmailWithContents());
-        return ResponseEntity.ok().body(letterResponse);
+        letterService.sendSlowLetterWithEmail(request.toSenderInfo(), request.contents());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/address")
-    public ResponseEntity<SlowLetterWithAddressResponse> sendSlowLetterWithAddress(
+    public ResponseEntity<Void> sendSlowLetterWithAddress(
             @RequestBody final SlowLetterWithAddressRequest request) {
-        SlowLetterWithAddressResponse letterResponse = letterService.sendSlowLetterWithAddress(
-                request.toAddress(), request.toReceiverInfo(), request.contents());
-        return ResponseEntity.ok().body(letterResponse);
+        letterService.sendSlowLetterWithAddress(request.toSenderInfo(), request.toReceiverInfo(), request.contents());
+        return ResponseEntity.ok().build();
     }
 }

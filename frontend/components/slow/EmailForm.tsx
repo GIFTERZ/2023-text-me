@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { FieldValues } from "react-hook-form";
 import Form from "../../common/form/Form";
-import { BackgroundImage } from "../../pages/slow-letter";
 import { SelectContainer } from "../../pages/slow-letter/get-info";
 import { useMembers } from "../../stores/useMembers";
 import { useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
@@ -37,10 +36,11 @@ function EmailForm({ complete }: Props) {
   };
 
   return (
-    <SelectContainer>
-      <RenderForm email={member ? member.email : ""} />
-      <BackgroundImage src="/static/images/room-background.png" />
-    </SelectContainer>
+    <div>
+      <SelectContainer>
+        <RenderForm email={member ? member.email : ""} />
+      </SelectContainer>
+    </div>
   );
 }
 

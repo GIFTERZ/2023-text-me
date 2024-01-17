@@ -2,6 +2,10 @@ import create from "zustand";
 import { AxiosError } from "axios";
 import visitorApi from "../auth/visitorApi";
 import { PATH } from "../constants/api";
+interface Card {
+  src: string;
+  alt: string;
+}
 
 interface CardPicture {
   pictureUrl: string | null;
@@ -9,9 +13,9 @@ interface CardPicture {
   setPictureImage: (select: File, callback: () => void) => void;
   setPictureUrl: (select: string) => void;
 
-  constCard: string[];
+  constCard: Card[] | [];
   getConstCard: () => void;
-  setConstCard: (constCard: string[]) => void;
+  setConstCard: (constCard: Card[]) => void;
   error: AxiosError | null;
   isLoading: boolean;
 }
@@ -37,7 +41,7 @@ export const useCardPicture = create<CardPicture>((set) => ({
       })
       .finally(() => set({ isLoading: false }));
   },
-  setConstCard: (constCard: string[]) => {
+  setConstCard: (constCard: Card[]) => {
     set({ constCard });
   },
   setPictureImage: async (image: File, callback: () => void) => {

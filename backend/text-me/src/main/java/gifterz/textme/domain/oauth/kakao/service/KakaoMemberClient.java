@@ -18,6 +18,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 
+import java.util.Optional;
+
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 @Component
@@ -40,9 +42,18 @@ public class KakaoMemberClient implements OauthMemberClient {
         OauthId oauthId = OauthId.of(response.id(), AuthType.KAKAO);
         KakaoAccount kakaoAccount = response.kakaoAccount();
         KakaoProfile kakaoProfile = kakaoAccount.getProfile();
-        User user = User.of(kakaoAccount.getEmail(), kakaoProfile.getNickname(), AuthType.KAKAO);
-        userRepository.save(user);
-        return OauthMember.of(user, oauthId);
+        String email = kakaoAccount.getEmail();
+        String nickname = kakaoProfile.getNickname();
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User originUser = userOptional.get();
+            originUser.updateAuthType(AuthType.KAKAO);
+            userRepository.save(originUser);
+            return OauthMember.of(originUser, oauthId);
+        }
+        User newUser = User.of(email, nickname, AuthType.KAKAO);
+        userRepository.save(newUser);
+        return OauthMember.of(newUser, oauthId);
     }
 
     private KakaoToken fetchKakaoToken(String authCode) {

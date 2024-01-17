@@ -1,23 +1,24 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import Button from "../../common/button/Button";
 import { GreenRightCorner } from "../../common/button/ButtonStyle";
+import uuid from "react-uuid";
+import BackgroundTemplate from "../../components/slow/BackgroundTemplate";
 
 function SlowLetter() {
   const router = useRouter();
-
   const enter = (paragraph: string) => {
     return paragraph.split("\n").map((sentence) => (
-      <>
+      <Fragment key={uuid()}>
         {sentence}
         <br />
-      </>
+      </Fragment>
     ));
   };
 
   return (
-    <>
+    <BackgroundTemplate>
       <TextContainer>
         <Head>
           1년 뒤의 나에게
@@ -36,23 +37,11 @@ function SlowLetter() {
       >
         나에게 편지 쓰러 가기
       </Button>
-      <BackgroundImage src="/static/images/room-background.png" />
-    </>
+    </BackgroundTemplate>
   );
 }
 
 export default SlowLetter;
-
-export const BackgroundImage = styled.img`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  overflow: hidden;
-  opacity: 0.25;
-  object-fit: cover;
-  z-index: 0;
-`;
 
 const TextContainer = styled.div`
   display: flex;
@@ -65,7 +54,7 @@ const TextContainer = styled.div`
 
 const Head = styled.p`
   font-size: 36px;
-  font-weight: 800;
+  font-weight: 700;
   text-align: center;
 `;
 

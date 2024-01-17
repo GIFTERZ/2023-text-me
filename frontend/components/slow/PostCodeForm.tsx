@@ -1,6 +1,5 @@
 import React from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
-import { BackgroundImage } from "../../pages/slow-letter";
 import { SelectContainer } from "../../pages/slow-letter/get-info";
 import { useSlowLetterInfo } from "../../stores/useSlowLetterInfo";
 
@@ -32,13 +31,12 @@ function PostCodeForm({ complete }: Props) {
 
   return (
     <SelectContainer>
-      <h2>편지를 받을 주소 정보를 입력해주세요.</h2>
+      <h3>편지를 받을 주소 정보를 입력해주세요.</h3>
       <DaumPostcodeEmbed
         autoClose
         onComplete={completeAddress}
         className="postcode-input"
       />
-      <BackgroundImage src="/static/images/room-background.png" />
     </SelectContainer>
   );
 }
