@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class RefreshTokenService {
     }
 
     public TokenRefreshResponse refreshTokens(String token) {
-        RefreshToken refreshToken = findByToken(token)
+        RefreshToken refreshToken = findByRefreshToken(token)
                 .orElseThrow(() -> new TokenRefreshException(token, "refreshToken이 DB에 존재하지 않습니다."));
         verifyExpiration(refreshToken);
         checkStatus(refreshToken);
@@ -54,6 +55,12 @@ public class RefreshTokenService {
             refreshTokenRepository.delete(token);
             throw new TokenRefreshException(token.getRefreshToken(),
                     "리프레시토큰이 만료되었습니다.");
+        }
+    }
+
+    private void checkStatus(RefreshToken refreshToken) {
+        if (!Objects.equals(refreshToken.getStatus(), "ACTIVATE")) {
+            throw new TokenRefreshException(refreshToken.getRefreshToken(), "리프레시토큰이 만료되었습니다.");
         }
     }
 }
