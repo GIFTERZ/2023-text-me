@@ -41,8 +41,8 @@ public class RefreshTokenService {
         return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 
-    private Optional<RefreshToken> findByToken(String token) {
-        return refreshTokenRepository.findByToken(token);
+    private Optional<RefreshToken> findByRefreshToken(String token) {
+        return refreshTokenRepository.findByRefreshToken(token);
     }
 
     private void verifyExpiration(RefreshToken token) {
