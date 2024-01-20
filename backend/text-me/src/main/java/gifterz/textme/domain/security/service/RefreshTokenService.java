@@ -6,7 +6,9 @@ import gifterz.textme.domain.security.repository.RefreshTokenRepository;
 import gifterz.textme.domain.user.dto.response.TokenRefreshResponse;
 import gifterz.textme.domain.user.entity.User;
 import gifterz.textme.domain.user.exception.TokenRefreshException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtUtils jwtUtils;
 
+    @Transactional
     public RefreshToken createRefreshToken(User user) {
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUser(user);
         String newRefreshToken = UUID.randomUUID().toString();
@@ -38,6 +41,7 @@ public class RefreshTokenService {
         return refreshToken;
     }
 
+    @Transactional
     public TokenRefreshResponse refreshTokens(String token) {
         RefreshToken refreshToken = findByRefreshToken(token)
                 .orElseThrow(() -> new TokenRefreshException(token, "refreshToken이 DB에 존재하지 않습니다."));
@@ -47,7 +51,8 @@ public class RefreshTokenService {
         Instant expiryDate = Instant.now().plusMillis(refreshTokenDurationMs);
         refreshToken.updateRefreshToken(newRefreshToken, expiryDate);
         User user = refreshToken.getUser();
-        String newToken = jwtUtils.generateAccessToken(user.getEmail());
+        String email = user.getEmail();
+        String newToken = jwtUtils.generateAccessToken(email);
         return new TokenRefreshResponse(newToken, refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 
