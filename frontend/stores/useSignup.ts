@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
 import { FieldValues } from "react-hook-form";
-import { setAccessToken, setExpiryTime } from "../auth/utils";
 import { PATH } from "../constants/api";
 
 interface Signup {
@@ -18,12 +17,7 @@ const useSignup = create<Signup>((set) => ({
     await visitorApi
       .post(PATH.USER.SIGNUP, data)
       .then((res) => {
-        const {
-          data: { token },
-        } = res;
-        let createdTime = new Date().getTime();
-        setAccessToken(token);
-        setExpiryTime(createdTime);
+        callback();
       })
       .catch((error) => {
         if (error.response.data.message) {
@@ -31,9 +25,6 @@ const useSignup = create<Signup>((set) => ({
         } else {
           alert("에러가 발생했습니다.");
         }
-      })
-      .finally(() => {
-        callback();
       });
   },
 }));
