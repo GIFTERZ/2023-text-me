@@ -2,7 +2,8 @@ import { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
 import { PATH } from "../constants/api";
-import { setAccessToken, setExpiryTime } from "../auth/utils";
+import { setRefreshToken } from "../auth/utils";
+import { refreshTokenRotation } from "../auth/refreshTokenRotation";
 
 type LoginBody = {
   code: string;
@@ -19,17 +20,19 @@ const useKakaoLogin = create<KakaoLogin>((set) => ({
   error: null,
   getKakaoToken: async ({ code }, complete) => {
     set({ loading: true });
+    const { setAccessToken } = refreshTokenRotation();
+
     await visitorApi
       .post(PATH.USER.LOGIN.KAKAO, {
         authCode: code,
       })
       .then((res) => {
         const {
-          data: { token },
+          data: { accessToken, refreshToken, createdAt },
         } = res;
-        let createdTime = new Date().getTime();
-        setAccessToken(token);
-        setExpiryTime(createdTime);
+        setAccessToken(accessToken, createdAt);
+        setRefreshToken(refreshToken);
+        console.log("here?");
         complete();
       })
       .catch((error) => {
