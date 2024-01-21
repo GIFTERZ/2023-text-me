@@ -31,4 +31,22 @@ const Spinner = styled.span`
   }
 `;
 
-export { Spinner };
+const LoginSpinner = styled(Spinner)`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+  animation: ${Rotate} 2s linear infinite;
+
+  &::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 3px solid black;
+    animation: ${PrixClipFix} 2s linear infinite;
+  }
+`;
+
+export { Spinner, LoginSpinner };
