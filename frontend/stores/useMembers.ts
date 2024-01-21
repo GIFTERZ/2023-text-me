@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import create from "zustand";
 import api from "../auth/api";
-import { setCookie } from "../auth/Cookie";
+import { refreshTokenRotation } from "../auth/refreshTokenRotation";
+import { deleteRefreshToken } from "../auth/utils";
 import { PATH } from "../constants/api";
-import { STORAGE_NAME } from "../constants/token";
 
 type Member = {
   id: string;
@@ -57,8 +57,10 @@ const useMembers = create<Members>((set) => ({
       });
   },
   logoutMember: () => {
+    const { deleteAccessToken } = refreshTokenRotation();
     set({ member: null });
-    setCookie(STORAGE_NAME.ACCESS_TOKEN, null);
+    deleteRefreshToken();
+    deleteAccessToken();
   },
 }));
 

@@ -1,25 +1,17 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { deleteRefreshToken, getRefreshToken, setRefreshToken } from "./utils";
+import { AxiosRequestConfig } from "axios";
+import { PATH } from "../constants/api";
+import { getRefreshToken, setRefreshToken } from "./utils";
+import visitorApi from "./visitorApi";
 
-const api = axios.create();
+const ACCESS_TOKEN_TIME = 1800_000;
 
 const refreshTokenRotation = () => {
   let accessToken: string = null;
   let expirationTime: number = null;
 
-  const setAccessToken = (at: string, et: number) => {
-    accessToken = at;
-    expirationTime = et;
-  };
-
-  const deleteTokens = () => {
-    accessToken = null;
-    expirationTime = null;
-    deleteRefreshToken();
-  };
-
-  const moveHome = () => {
-    window.location.href = "/";
+  const setAccessToken = (token: string, createdAt: string) => {
+    accessToken = token;
+    expirationTime = new Date(createdAt).getTime() + ACCESS_TOKEN_TIME;
   };
 
   const isExpired = () => {
@@ -29,21 +21,19 @@ const refreshTokenRotation = () => {
 
   const getNewTokens = async function () {
     const refreshToken = getRefreshToken();
-    await axios
-      .post("/api/refresh", {
+    await visitorApi
+      .post(PATH.USER.REFRESH, {
         refreshToken,
       })
       .then((res) => {
         const {
-          data: { accessToken, expirationTime, refreshToken },
+          data: { accessToken, createdAt, refreshToken },
         } = res;
-        setAccessToken(accessToken, expirationTime);
+        setAccessToken(accessToken, createdAt);
         setRefreshToken(refreshToken);
       })
-      .catch(() => {
-        deleteTokens();
-        alert("로그인이 만료되었습니다.");
-        moveHome();
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -52,7 +42,6 @@ const refreshTokenRotation = () => {
       config: AxiosRequestConfig
     ): Promise<AxiosRequestConfig> {
       if (!accessToken || isExpired()) {
-        console.log("no access token");
         await getNewTokens();
       }
 
@@ -60,11 +49,15 @@ const refreshTokenRotation = () => {
 
       return config;
     },
+    setAccessToken: (at: string, createdAt: string) => {
+      accessToken = at;
+      expirationTime = new Date(createdAt).getTime() + ACCESS_TOKEN_TIME;
+    },
+    deleteAccessToken: () => {
+      accessToken = null;
+      expirationTime = null;
+    },
   };
 };
 
-const { setAuthHeader } = refreshTokenRotation();
-
-api.interceptors.request.use(setAuthHeader);
-
-export default api;
+export { refreshTokenRotation };

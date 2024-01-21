@@ -16,17 +16,14 @@ import Logo from "../components/common/Logo";
 function SignIn() {
   const router = useRouter();
 
-  const { member, getMember } = useMembers();
   const { getToken } = useLogin();
 
-  useEffect(() => {
-    if (member) {
-      router.push(`/${member.id}`);
-    }
-  }, [member]);
+  const goHome = () => {
+    router.push("/");
+  };
 
   const signIn = (data: FieldValues) => {
-    getToken(data, getMember);
+    getToken(data, goHome);
   };
 
   return (
@@ -34,7 +31,7 @@ function SignIn() {
       <Head>
         <title>로그인 - Text me!</title>
       </Head>
-      <BackHeader onBackClick={() => router.push("/")}>
+      <BackHeader onBackClick={goHome}>
         <Logo />
       </BackHeader>
       <Form
@@ -44,7 +41,7 @@ function SignIn() {
       >
         <h2>로그인</h2>
       </Form>
-      <KakaoLoginButton complete={() => getMember()} />
+      <KakaoLoginButton complete={goHome} />
       <LinkContainer>
         <Link href="/signup">이메일로 회원가입</Link>
       </LinkContainer>
