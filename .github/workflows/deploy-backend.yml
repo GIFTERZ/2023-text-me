@@ -33,7 +33,6 @@ jobs:
           envs: GITHUB_SHA
           script: |
             whoami
-            sudo docker pull {${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo}:${GITHUB_REF##*/}
-            sudo docker tag {${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo}:${GITHUB_REF##*/} {${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo}:${GITHUB_REF##*/}
+            sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
             sudo docker stop text-me-api
-            sudo docker run -d --rm --name text-me-api -p 8080:8080 {${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo}:${GITHUB_REF##*/}
+            sudo docker run -d --rm --name text-me-api -p 8080:8080 "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
