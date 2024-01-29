@@ -35,21 +35,22 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
-          echo "::set-env name=DB_URL::${{ secrets.DB_URL }}"
-          echo "::set-env name=DB_USERNAME::${{ secrets.DB_USERNAME }}"
-          echo "::set-env name=DB_PASSWORD::${{ secrets.DB_PASSWORD }}"
-          echo "::set-env name=JWT_KEY::${{ secrets.JWT_KEY }}"
-          echo "::set-env name=JWT_EXPIRY::${{ secrets.JWT_EXPIRY }}"
-          echo "::set-env name=REFRESH_EXPIRY::${{ secrets.REFRESH_EXPIRY }}"
-          echo "::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_ID }}"
-          echo "::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          echo "::set-env name=KAKAO_CLIENT_SECRET::${{ secrets.KAKAO_CLIENT_SECRET }}"
-          echo "::set-env name=KAKAO_CLIENT_ID::${{ secrets.KAKAO_CLIENT_ID }}"
-          echo "::set-env name=KAKAO_REDIRECT_URI::${{ secrets.KAKAO_REDIRECT_URI }}"
-          echo "::set-env name=KAKAO_SCOPE::${{ secrets.KAKAO_SCOPE }}"
-          echo "::set-env name=REDIS_HOST::${{ secrets.REDIS_HOST }}"
-          echo "::set-env name=REDIS_PORT::${{ secrets.REDIS_PORT }}"
-          echo "::set-env name=GOOGLE_APPLICATION_CREDENTIALS::${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+          echo "DB_URL=${{ secrets.DB_URL }}" >> "$GITHUB_ENV"
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> "$GITHUB_ENV"
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> "$GITHUB_ENV"
+          echo "JWT_EXPIRY=${{ secrets.JWT_EXPIRY }}" >> "$GITHUB_ENV"
+          echo "REFRESH_EXPIRY=${{ secrets.REFRESH_EXPIRY }}" >> "$GITHUB_ENV"
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> "$GITHUB_ENV"
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> "$GITHUB_ENV"
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> "$GITHUB_ENV"
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> "$GITHUB_ENV"
+          echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> "$GITHUB_ENV"
+          echo "KAKAO_SCOPE=${{ secrets.KAKAO_SCOPE }}" >> "$GITHUB_ENV"
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> "$GITHUB_ENV"
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> "$GITHUB_ENV"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" >> "$GITHUB_ENV"
+
 
 
       - name: Login to Docker Hub
@@ -68,6 +69,15 @@ jobs:
           -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} \
           -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }} \
           -Djib.to.image="${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
+          
+          ./gradlew jibDockerBuild \
+          -Djib.container.environment=DB_URL="$DB_URL",DB_USERNAME="$DB_USERNAME",DB_PASSWORD="$DB_PASSWORD", \
+          JWT_KEY="$JWT_KEY",JWT_EXPIRY="$JWT_EXPIRY",REFRESH_EXPIRY="$REFRESH_EXPIRY", \
+          AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID",AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY", \
+          KAKAO_CLIENT_SECRET="$KAKAO_CLIENT_SECRET",KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID", \
+          KAKAO_REDIRECT_URI="$KAKAO_REDIRECT_URI",KAKAO_SCOPE="$KAKAO_SCOPE", \
+          REDIS_HOST="$REDIS_HOST",REDIS_PORT="$REDIS_PORT", \
+          GOOGLE_APPLICATION_CREDENTIALS="$GOOGLE_APPLICATION_CREDENTIALS"
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2
