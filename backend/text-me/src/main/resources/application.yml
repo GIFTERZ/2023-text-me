@@ -67,3 +67,7 @@ oauth:
     redirect_uri: ${KAKAO_REDIRECT_URI}
     client_secret: ${KAKAO_CLIENT_SECRET}
     scope: ${KAKAO_SCOPE}
+logging:
+  level:
+    org.springframework.core:
+      LocalVariableTableParameterNameDiscoverer: error
