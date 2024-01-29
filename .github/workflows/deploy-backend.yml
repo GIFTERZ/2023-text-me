@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -33,7 +33,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             whoami
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
-            docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/} ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
-            docker stop text-me-api
-            docker run -d --rm --name text-me-api -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+            sudo docker tag ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/} ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}
+            sudo docker stop text-me-api
+            sudo docker run -d --rm --name text-me-api -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}

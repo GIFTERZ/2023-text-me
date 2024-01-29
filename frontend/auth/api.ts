@@ -1,10 +1,12 @@
-import axios from 'axios';
-import { refresh, refreshError } from './refresh';
+import axios from "axios";
+import { refreshTokenRotation } from "./refreshTokenRotation";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
-api.interceptors.request.use(refresh, refreshError);
+const { setAuthHeader } = refreshTokenRotation();
+
+api.interceptors.request.use(setAuthHeader);
 
 export default api;

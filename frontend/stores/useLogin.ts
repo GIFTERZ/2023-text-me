@@ -2,8 +2,9 @@ import { AxiosError } from "axios";
 import create from "zustand";
 import visitorApi from "../auth/visitorApi";
 import { FieldValues } from "react-hook-form";
-import { setAccessToken, setExpiryTime } from "../auth/utils";
+import { setRefreshToken } from "../auth/utils";
 import { PATH } from "../constants/api";
+import { refreshTokenRotation } from "../auth/refreshTokenRotation";
 
 interface Login {
   loading: boolean;
@@ -15,15 +16,15 @@ const useLogin = create<Login>((set) => ({
   loading: false,
   error: null,
   getToken: async (data, callback) => {
+    const { setAccessToken } = refreshTokenRotation();
     await visitorApi
       .post(PATH.USER.LOGIN.EMAIL, data)
       .then((res) => {
         const {
-          data: { token },
+          data: { accessToken, refreshToken, createdAt },
         } = res;
-        let createdTime = new Date().getTime();
-        setAccessToken(token);
-        setExpiryTime(createdTime);
+        setAccessToken(accessToken, createdAt);
+        setRefreshToken(refreshToken);
       })
       .catch((error) => {
         if (error.response.data.message) {
