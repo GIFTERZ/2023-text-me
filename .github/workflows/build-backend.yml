@@ -69,7 +69,9 @@ jobs:
           -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} \
           -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }} \
           -Djib.to.image="${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
-          
+
+      - name: Build with jibDockerBuild
+        run: |
           ./gradlew jibDockerBuild \
           -Djib.container.environment=DB_URL="$DB_URL",DB_USERNAME="$DB_USERNAME",DB_PASSWORD="$DB_PASSWORD", \
           JWT_KEY="$JWT_KEY",JWT_EXPIRY="$JWT_EXPIRY",REFRESH_EXPIRY="$REFRESH_EXPIRY", \
