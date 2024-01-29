@@ -5,6 +5,7 @@ on:
     branches: [ production, master ]
     paths:
       - "backend/**"
+      - ".github/workflows/build-backend.yml"
   pull_request:
     branches: [ production, master ]
     paths:
@@ -69,14 +70,16 @@ jobs:
           -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} \
           -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }} \
           -Djib.to.image="${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
-          
+
+      - name: Build with jibDockerBuild
+        run: |
           ./gradlew jibDockerBuild \
-          -Djib.container.environment=DB_URL="$DB_URL",DB_USERNAME="$DB_USERNAME",DB_PASSWORD="$DB_PASSWORD", \
-          JWT_KEY="$JWT_KEY",JWT_EXPIRY="$JWT_EXPIRY",REFRESH_EXPIRY="$REFRESH_EXPIRY", \
-          AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID",AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY", \
-          KAKAO_CLIENT_SECRET="$KAKAO_CLIENT_SECRET",KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID", \
-          KAKAO_REDIRECT_URI="$KAKAO_REDIRECT_URI",KAKAO_SCOPE="$KAKAO_SCOPE", \
-          REDIS_HOST="$REDIS_HOST",REDIS_PORT="$REDIS_PORT", \
+          -Djib.container.environment=DB_URL="$DB_URL",DB_USERNAME="$DB_USERNAME",DB_PASSWORD="$DB_PASSWORD",\
+          JWT_KEY="$JWT_KEY",JWT_EXPIRY="$JWT_EXPIRY",REFRESH_EXPIRY="$REFRESH_EXPIRY",\
+          AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID",AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY",\
+          KAKAO_CLIENT_SECRET="$KAKAO_CLIENT_SECRET",KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID",\
+          KAKAO_REDIRECT_URI="$KAKAO_REDIRECT_URI",KAKAO_SCOPE="$KAKAO_SCOPE",\
+          REDIS_HOST="$REDIS_HOST",REDIS_PORT="$REDIS_PORT",\
           GOOGLE_APPLICATION_CREDENTIALS="$GOOGLE_APPLICATION_CREDENTIALS"
 
       - name: Get current time
