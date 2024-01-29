@@ -1,6 +1,5 @@
 package gifterz.textme.domain.security.jwt;
 
-import gifterz.textme.domain.oauth.entity.OauthMember;
 import gifterz.textme.domain.user.entity.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -18,21 +17,20 @@ public class JwtUtils {
     private String jwtSecret;
 
     @Value("${security.jwt.token.expirationMs}")
-    private int jwtExpirationMs;
+    private Long jwtExpirationMs;
 
-    public String generateJwtToken(User user) {
-        return generateTokenFromSubject(user.getEmail());
-    }
-    public String generateJwtToken(OauthMember user) {
-        return generateTokenFromSubject(user.getEmail());
+
+    public String generateAccessToken(String email) {
+        return generateTokenFromSubject(email, jwtExpirationMs);
     }
 
-    private String generateTokenFromSubject(String subject) {
-        return Jwts.builder().setSubject(subject).setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+    private String generateTokenFromSubject(String email, Long expirationMs) {
+        return Jwts.builder().setSubject(email).setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + expirationMs))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
+
 
     public String getUserEmailFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();

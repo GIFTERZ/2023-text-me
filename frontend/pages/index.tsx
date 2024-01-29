@@ -11,7 +11,7 @@ import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
-  const { member, getMember, logoutMember } = useMembers();
+  const { member, getMember, logoutMember, isLoading } = useMembers();
 
   const logout = () => {
     logoutMember();
@@ -31,30 +31,29 @@ export default function Home() {
         <Logo />
       </HeaderLayout>
       <RoomEnterForm />
-      <ButtonsContainer>
-        {member?.id ? (
-          <>
-            <LeftButton
-              type="button"
-              onClick={() => router.push(`/${member?.id}`)}
-            >
-              내 방으로 가기
-            </LeftButton>
-            <RightButton onClick={logout} type="button">
-              로그아웃
-            </RightButton>
-          </>
-        ) : (
-          <>
-            <LeftButton type="button" onClick={() => router.push("/signup")}>
-              내 방 만들기
-            </LeftButton>
-            <RightButton type="button" onClick={() => router.push("/signin")}>
-              로그인
-            </RightButton>
-          </>
-        )}
-      </ButtonsContainer>
+      {!isLoading && (
+        <ButtonsContainer>
+          {member?.id ? (
+            <>
+              <LeftButton
+                type="button"
+                onClick={() => router.push(`/${member?.id}`)}
+              >
+                내 방으로 가기
+              </LeftButton>
+              <RightButton onClick={logout} type="button">
+                로그아웃
+              </RightButton>
+            </>
+          ) : (
+            <>
+              <RightButton type="button" onClick={() => router.push("/signin")}>
+                로그인하고 내 방으로 가기
+              </RightButton>
+            </>
+          )}
+        </ButtonsContainer>
+      )}
     </Frame>
   );
 }

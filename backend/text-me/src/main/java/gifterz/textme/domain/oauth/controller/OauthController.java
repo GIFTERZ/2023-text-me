@@ -1,7 +1,7 @@
 package gifterz.textme.domain.oauth.controller;
 
 import gifterz.textme.domain.oauth.dto.OauthRequest;
-import gifterz.textme.domain.oauth.entity.OauthServerType;
+import gifterz.textme.domain.oauth.entity.AuthType;
 import gifterz.textme.domain.oauth.service.OauthService;
 import gifterz.textme.domain.user.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,20 +19,20 @@ public class OauthController {
 
     private final OauthService oauthService;
 
-    @GetMapping("/{oauthServerType}")
+    @GetMapping("/{authType}")
     public ResponseEntity<Void> redirectAuthCodeRequestUrl(
-            @PathVariable OauthServerType oauthServerType,
+            @PathVariable AuthType authType,
             HttpServletResponse response) throws IOException {
-        String redirectUrl = oauthService.getAuthCodeRequestUrl(oauthServerType);
+        String redirectUrl = oauthService.getAuthCodeRequestUrl(authType);
         response.sendRedirect(redirectUrl);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/login/{oauthServerType}")
+    @PostMapping("/login/{authType}")
     public ResponseEntity<LoginResponse> login(
-            @PathVariable OauthServerType oauthServerType,
+            @PathVariable AuthType authType,
             @RequestBody OauthRequest oauthRequest) {
-        LoginResponse loginResponse = oauthService.login(oauthServerType, oauthRequest);
+        LoginResponse loginResponse = oauthService.login(authType, oauthRequest);
         return ResponseEntity.ok().body(loginResponse);
     }
 }

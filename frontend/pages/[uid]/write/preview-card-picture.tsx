@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useCardPicture } from '../../../stores/useCardPicture';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Frame } from '../../../styles/components/Frame';
-import styled from 'styled-components';
-import { WhiteLeftButton } from '../../../styles/components/Button';
-import ArrowBackIcon from '../../../components/common/icons/ArrowBackIcon';
-import Head from 'next/head';
-import { HeaderLayout } from '../../../styles/components/Layout';
+import React, { useEffect } from "react";
+import { useCardPicture } from "../../../stores/useCardPicture";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Frame } from "../../../styles/components/Frame";
+import styled from "styled-components";
+import { WhiteLeftButton } from "../../../styles/components/Button";
+import Head from "next/head";
+import { HeaderLayout } from "../../../styles/components/Layout";
+import BackHeader from "../../../components/common/BackHeader";
 
 export default function index() {
   const router = useRouter();
-  const userId = useSearchParams().get('uid');
+  const userId = useSearchParams().get("uid");
   const { pictureUrl, setPictureUrl } = useCardPicture();
 
   const pushWriteScreen = () => {
@@ -19,30 +19,25 @@ export default function index() {
 
   useEffect(() => {
     if (!pictureUrl) {
-      alert('카드의 배경 사진을 선택해주세요.');
+      alert("카드의 배경 사진을 선택해주세요.");
       router.back();
     }
+
+    return () => {
+      setPictureUrl(null);
+    };
   }, []);
-
-  const moveBack = () => {
-    setPictureUrl(null);
-    router.back();
-  };
-
   return (
     <PreviewFrame>
       <Head>
         <title>카드 사진 미리보기</title>
       </Head>
-      <HeaderLayout>
-        <WhiteLeftButton onClick={() => moveBack()}>
-          <ArrowBackIcon />
-        </WhiteLeftButton>
+      <BackHeader>
         <Title>카드 미리보기</Title>
         <WhiteRightButton type="button" onClick={pushWriteScreen}>
           선택
         </WhiteRightButton>
-      </HeaderLayout>
+      </BackHeader>
       <PreviewDiv>{pictureUrl && <CardImage src={pictureUrl} />}</PreviewDiv>
     </PreviewFrame>
   );
@@ -97,7 +92,7 @@ const WhiteRightButton = styled(WhiteLeftButton)`
   border-radius: 10px 10px 0px 10px;
   color: #0eca92;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   line-height: 17px;
 `;

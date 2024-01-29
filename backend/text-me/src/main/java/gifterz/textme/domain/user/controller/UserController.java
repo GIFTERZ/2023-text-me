@@ -2,7 +2,6 @@ package gifterz.textme.domain.user.controller;
 
 import gifterz.textme.common.firebase.FCMService;
 import gifterz.textme.domain.security.jwt.JwtAuth;
-import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.security.service.RefreshTokenService;
 import gifterz.textme.domain.user.dto.request.LoginRequest;
 import gifterz.textme.domain.user.dto.request.SignUpRequest;
@@ -25,7 +24,6 @@ public class UserController {
     private final UserService userService;
     private final RefreshTokenService refreshTokenService;
     private final FCMService fcmService;
-    private final AesUtils aesUtils;
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid final SignUpRequest request) {
@@ -46,10 +44,8 @@ public class UserController {
     }
 
     @PostMapping("/token/refresh")
-    public ResponseEntity<TokenRefreshResponse> refreshToken(@JwtAuth String email,
-                                                             @RequestBody @Valid final TokenRefreshRequest request) {
-        String token = request.getAccessToken();
-        TokenRefreshResponse tokenRefreshResponse = refreshTokenService.refreshJwtToken(email, token);
+    public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody @Valid final TokenRefreshRequest request) {
+        TokenRefreshResponse tokenRefreshResponse = refreshTokenService.refreshTokens(request.getRefreshToken());
         return ResponseEntity.ok().body(tokenRefreshResponse);
     }
 
@@ -73,9 +69,7 @@ public class UserController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<UserResponse> findUserInfoByUserId(@PathVariable("id") final String id) {
-        String decryptedId = aesUtils.decryption(id);
-        Long decryptedUserId = Long.valueOf(decryptedId);
-        UserResponse userResponse = userService.findUserInfoByUserId(decryptedUserId);
+        UserResponse userResponse = userService.findUserInfoByUserId(id);
         return ResponseEntity.ok().body(userResponse);
     }
 }

@@ -10,6 +10,11 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Head from "next/head";
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   setMocking();
@@ -51,7 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name="description" content="추억이 담긴 편지를 작성해보세요!" />
           <meta
             property="og:image"
-            content="static/images/room-background.png"
+            content="static/images/room-background.webp"
           />
           <meta
             property="og:description"
@@ -61,6 +66,8 @@ export default function App({ Component, pageProps }: AppProps) {
             property="og:title"
             content="Text me! 추억이 담긴 편지를 작성해보세요"
           />
+          <link rel="preconnect" href={process.env.NEXT_PUBLIC_BASE_URL} />
+          <link rel="preconnect" href={"https://www.googletagmanager.com"} />
         </Head>
         <Script
           strategy="afterInteractive"

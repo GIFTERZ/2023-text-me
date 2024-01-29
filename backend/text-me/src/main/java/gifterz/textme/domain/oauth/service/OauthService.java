@@ -4,13 +4,14 @@ import gifterz.textme.domain.oauth.dto.OauthRequest;
 import gifterz.textme.domain.oauth.entity.OauthId;
 import gifterz.textme.domain.oauth.entity.OauthMember;
 import gifterz.textme.domain.oauth.util.AuthCodeRequestUrlProviderMapper;
-import gifterz.textme.domain.oauth.entity.OauthServerType;
+import gifterz.textme.domain.oauth.entity.AuthType;
 import gifterz.textme.domain.oauth.util.OauthMemberClientMapper;
 import gifterz.textme.domain.security.entity.RefreshToken;
 import gifterz.textme.domain.security.jwt.JwtUtils;
 import gifterz.textme.domain.security.service.AesUtils;
 import gifterz.textme.domain.security.service.RefreshTokenService;
 import gifterz.textme.domain.user.dto.response.LoginResponse;
+import gifterz.textme.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import gifterz.textme.domain.oauth.repository.OauthMemberRepository;
@@ -28,26 +29,28 @@ public class OauthService {
     private final AesUtils aesUtils;
     private final RefreshTokenService refreshTokenService;
 
-    public String getAuthCodeRequestUrl(OauthServerType oauthServerType) {
-        return authCodeRequestUrlProviderMapper.provide(oauthServerType);
+    public String getAuthCodeRequestUrl(AuthType authType) {
+        return authCodeRequestUrlProviderMapper.provide(authType);
     }
 
-    public LoginResponse login(OauthServerType oauthServerType, OauthRequest oauthRequest) {
-        OauthMember oauthMember = oauthMemberClientMapper.fetch(oauthServerType, oauthRequest.authCode());
+    public LoginResponse login(AuthType authType, OauthRequest oauthRequest) {
+        OauthMember oauthMember = oauthMemberClientMapper.fetch(authType, oauthRequest.authCode());
         OauthId oauthId = oauthMember.getOauthId();
         Optional<OauthMember> oauthMemberOptional = oauthMemberRepository.findByOauthId(oauthId);
         if (oauthMemberOptional.isEmpty()) {
             oauthMemberRepository.save(oauthMember);
         }
-        String accessToken = jwtUtils.generateJwtToken(oauthMember);
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(accessToken);
-        String encryptedUserId = encryptUserId(oauthMember);
-        return new LoginResponse(encryptedUserId, oauthMember.getEmail(), oauthMember.getNickname(), accessToken,
-                refreshToken.getId(), refreshToken.getCreatedAt());
+        User user = oauthMember.getUser();
+        String email = user.getEmail();
+        String accessToken = jwtUtils.generateAccessToken(email);
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
+        String encryptedUserId = encryptUserId(user.getId());
+        return new LoginResponse(encryptedUserId, user.getEmail(), user.getName(), accessToken,
+                refreshToken.getRefreshToken(), refreshToken.getCreatedAt());
     }
 
-    private String encryptUserId(OauthMember user) {
-        String userId = String.valueOf(user.getId());
-        return aesUtils.encryption(userId);
+    private String encryptUserId(Long id) {
+        String userId = id.toString();
+        return aesUtils.encrypt(userId);
     }
 }

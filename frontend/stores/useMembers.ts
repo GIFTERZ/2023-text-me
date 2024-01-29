@@ -1,7 +1,9 @@
 import { AxiosError } from "axios";
 import create from "zustand";
 import api from "../auth/api";
-import { setCookie } from "../auth/Cookie";
+import { refreshTokenRotation } from "../auth/refreshTokenRotation";
+import { deleteRefreshToken } from "../auth/utils";
+import { PATH } from "../constants/api";
 
 type Member = {
   id: string;
@@ -29,7 +31,7 @@ const useMembers = create<Members>((set) => ({
   getMember: async () => {
     set({ isLoading: true, error: null });
     await api
-      .get("/users")
+      .get(PATH.USER.ROOT)
       .then((res) => {
         set({ member: res.data });
       })
@@ -43,7 +45,7 @@ const useMembers = create<Members>((set) => ({
   patchNickname: async (data) => {
     set({ isPatchLoading: true, patchError: null });
     await api
-      .patch("/users", null, { params: { name: data } })
+      .patch(PATH.USER.ROOT, null, { params: { name: data } })
       .then((res) => {
         set({ member: res.data });
       })
@@ -54,10 +56,11 @@ const useMembers = create<Members>((set) => ({
         set({ isPatchLoading: false });
       });
   },
-
   logoutMember: () => {
+    const { deleteAccessToken } = refreshTokenRotation();
     set({ member: null });
-    setCookie("textMeAccessToken", null);
+    deleteRefreshToken();
+    deleteAccessToken();
   },
 }));
 

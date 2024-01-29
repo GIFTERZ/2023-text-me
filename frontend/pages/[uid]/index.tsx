@@ -1,20 +1,23 @@
 import Link from "next/link";
 import { useAlertModal } from "../../stores/useAlertModal";
-import AlertModal from "../../components/room/AlertModal";
-import SnowFall from "react-snowfall";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
-import LettersContainer from "../../components/room/LettersContainer";
-import LetterViewContainer from "../../components/room/LetterViewContainer";
 import { useRoomInfo } from "../../stores/useRoomInfo";
 import styled from "styled-components";
 import ButtonsContainer from "../../components/room/ButtonsContainer";
 import { RightButton } from "../../styles/components/Button";
 import { useCaptureMode } from "../../stores/useCaptureMode";
-import SaveModal from "../../components/room/SaveModal";
 import ErrorContainer from "../../components/common/ErrorContainer";
 import Head from "next/head";
 import LoadingContainer from "../../components/common/LoadingContainer";
+import LettersContainer from "../../components/room/LettersContainer";
+import dynamic from "next/dynamic";
+const AlertModal = dynamic(() => import("../../components/room/AlertModal"));
+const SnowFall = dynamic(() => import("react-snowfall"));
+const LetterViewContainer = dynamic(
+  () => import("../../components/room/LetterViewContainer")
+);
+const SaveModal = dynamic(() => import("../../components/room/SaveModal"));
 
 const LETTER_NOT_OWN_MESSAGE = "본인의 편지만 열어볼 수 있어요!";
 const LETTER_NOT_ARRIVE_MESSAGE = "아직 편지가 도착하지 않았어요!";
@@ -55,7 +58,7 @@ function Room() {
       <LettersContainer userId={userId} />
       <SnowFall speed={[0.5, 0.8]} wind={[-0.5, 1.0]} />
       {!isCaptureMode && (
-        <Link href={`${pathname}/write/select-card-picture`}>
+        <Link href={`${pathname}/write`}>
           <CTAButton>
             TEXT <br />
             {roomInfo?.userName}
@@ -64,7 +67,9 @@ function Room() {
       )}
       <LetterViewContainer />
       {alertModalOpen && <AlertModal text={LETTER_NOT_OWN_MESSAGE} />}
-      {alertEmptyLetterModalOpen && <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />}
+      {alertEmptyLetterModalOpen && (
+        <AlertModal text={LETTER_NOT_ARRIVE_MESSAGE} />
+      )}
       {modalOpen && <SaveModal />}
       {isCaptureMode && (
         <CaptureModeButton type="button" onClick={toggleCaptureMode}>
@@ -103,7 +108,8 @@ const Title = styled.h1`
 
   z-index: 10;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
@@ -126,7 +132,8 @@ const CTAButton = styled(RightButton)`
 
   padding: 13px 24px;
 
-  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4), inset -2px -2px 3px rgba(106, 106, 106, 0.25),
+  box-shadow: 2px 2px 5px 1px rgba(62, 78, 82, 0.4),
+    inset -2px -2px 3px rgba(106, 106, 106, 0.25),
     inset 2px 2px 3px rgba(255, 255, 255, 0.5);
 
   @media ${({ theme }) => theme.device.small} {
