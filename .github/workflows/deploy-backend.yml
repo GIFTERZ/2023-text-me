@@ -31,10 +31,10 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
-          run: |
-            sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
+          script: |
+            sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:latest"
             if [ "$(sudo docker ps -aq -f name=text-me-api)" ]; then
             sudo docker rm -f text-me-api
             fi
             sudo docker run -d --rm --name "text-me-api" -p 8080:8080 \
-            "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:${GITHUB_REF##*/}"
+            "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:latest"
