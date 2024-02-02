@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - production
-  workflow_dispatch:
 
 defaults:
   run:
@@ -30,7 +29,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.PRIVATE_KEY }}
-          envs: GITHUB_SHA
           script: |
             sudo docker pull "${{ secrets.DOCKERHUB_USERNAME }}/text-me-docker-repo:latest"
             if [ "$(sudo docker ps -aq -f name=text-me-api)" ]; then
