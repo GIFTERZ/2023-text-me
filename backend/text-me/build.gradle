@@ -68,7 +68,7 @@ jib {
     }
     to {
         image = "juy4556/text-me-docker-repo"
-        tags = ["latest"]
+        tags = ["dev"]
     }
 
     container {
