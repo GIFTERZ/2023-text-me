@@ -13,7 +13,7 @@ public class AuthCodeRequestUrlProviderMapper {
 
     private final Map<AuthType, AuthCodeRequestUrlProvider> authCodeProviders;
 
-    public AuthCodeRequestUrlProviderMapper(Set<AuthCodeRequestUrlProvider> providers) {;
+    public AuthCodeRequestUrlProviderMapper(Set<AuthCodeRequestUrlProvider> providers) {
         authCodeProviders = providers.stream()
                 .collect(Collectors.toMap(AuthCodeRequestUrlProvider::supportServer, provider -> provider));
     }
