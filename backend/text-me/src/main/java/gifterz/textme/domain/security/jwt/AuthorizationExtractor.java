@@ -3,6 +3,7 @@ package gifterz.textme.domain.security.jwt;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Enumeration;
 
 @Slf4j
